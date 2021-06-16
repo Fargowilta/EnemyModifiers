@@ -1,0 +1,52 @@
+Adds Modifiers for Enemies. See the config to set chances
+
+Current Modifiers:
+
+Unrelenting - immune to knockback
+Regenerating - regen 10% HP every 5 seconds
+Menacing - damage increased by 50%
+Armored - defense increased by 50%
+Huge - size increased by 50%, HP increased by 25%, speed decreased by 15%
+Miniature - size halved, HP reduced by 25%, speed increased by 20%
+Swift - move speed increased by 50%
+Slow - move speed decreased by 50%
+Hyper - 2x AI speed
+Sluggish - 1/2 AI speed
+Inpenetrable - destroys projectiles on hit
+Light - takes increased knockback
+Rampaging - deals insane knockback
+Wealthy - drops 5x coins
+Rare - drops 5x loot (not including coins)
+Splitting - spawns 2-3 smaller versions of itself with reduced stats on death
+Stealthy - partially invsible, becomes fully visible when hit
+Infested - periodically spawns mini spiders
+Accelerating - constantly gains speed up to a cap, they return to normal speed if they hit you or you hit them with a melee attack
+Hexproof - damage over time does not work on them
+Shielded - 80% resistance to melee damage
+Bulletproof - 80% resistance to ranged
+Veiled - 80% resistance to magic and summon damage
+Bloodthirsty - gains 25% damage every time they hit you
+Possessed - replaces its AI with Ghost AI
+Warping - when they reach half HP, you swich places with them
+Rallying - has an aura that buffs other enemies: +25% damage, +25% speed
+
+NPC Blacklist is real
+
+
+Merchant - has town npc AI, will give you one random free item from the travelling merchants shop.
+Worm - 2x hp, kb immunity, it now has 7 body segments following it, seems like some just dont work with it, will prob make a black list to not apply it to
+Juggernaut - +150% HP, +25% damage, defense, and size. But has Sluggish built in (half AI speed)
+Rainbow - its just rainbow
+Devouring - VORES any enemy it comes across with less or equal HP, heals itself, gains max HP, size, and damage
+Fortifying - has 50% less defense. Has an aura that gives other enemies 50% DR
+Chained - npc is chained to you and cannot leave a radius around you
+
+
+
+
+
+
+modifier list of toggles blacklost thing
+
+
+

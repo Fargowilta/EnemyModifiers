@@ -1,0 +1,3 @@
+displayName = Fargo's Enemy Modifiers
+author = Fargowilta
+version = 0.1
