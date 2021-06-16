@@ -23,6 +23,7 @@ namespace FargoEnemyModifiers.Modifiers
         public float kbMultiplier = 1f;
 
         public float originalScale;
+        public string originalName = "";
 
         public void UpdateModifierStats(NPC npc)
         {
@@ -58,7 +59,12 @@ namespace FargoEnemyModifiers.Modifiers
             npc.position.X = npc.position.X - (float)(npc.width / 2);
             npc.position.Y = npc.position.Y - (float)npc.height;
 
-            npc.GivenName = name + " " + npc.FullName;
+            if (originalName == "")
+            {
+                originalName = npc.FullName;
+            }
+
+            npc.GivenName = name + " " + originalName;
         }
 
         public static void Aura(NPC npc, float distance, bool reverse = false, int dustid = DustID.GoldFlame)

@@ -43,7 +43,7 @@ Chained - npc is chained to you and cannot leave a radius around you
 
 
 
-
+-Fixed mp meme multi modifier names?
 
 
 modifier list of toggles blacklost thing
