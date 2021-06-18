@@ -10,15 +10,23 @@ namespace FargoEnemyModifiers
 {
     public class EnemyModifiers : Mod
     {
-        public static List<Modifier> Modifiers = new List<Modifier>();
+        public static List<Modifier> Modifiers;
 
         public static TModifier GetModifer<TModifier>() where TModifier : Modifier =>
             (TModifier) Modifiers.FirstOrDefault(x => x.GetType() == typeof(TModifier));
 
         public override void PostSetupContent()
         {
+            Modifiers = new List<Modifier>();
+
             foreach (Mod mod in ModLoader.Mods)
             {
+                if (mod.Code is null)
+                {
+                    Logger.Warn($"Mod assembly was null: {mod.Name}");
+                    continue;
+                }
+
                 foreach (Type type in mod.Code.GetTypes().Where(x =>
                     !x.IsAbstract && x.IsSubclassOf(typeof(Modifier)) && x.GetConstructor(new Type[0]) != null))
                 {

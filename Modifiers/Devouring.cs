@@ -5,8 +5,8 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class Devouring : Modifier
     {
-        protected int baseHeight = 0;
-        protected int baseWidth = 0;
+        protected int baseHeight;
+        protected int baseWidth;
 
         public override string Name => "Devouring";
 

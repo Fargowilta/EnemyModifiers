@@ -21,8 +21,8 @@ namespace FargoEnemyModifiers.Modifiers
 
             for (int i = 0; i < 7; i++)
             {
-                int index = NPC.NewNPC((int) (npc.position.X + npc.width / 2f), (int) (npc.position.Y + npc.height),
-                    npc.type, prevIndex);
+                int index = NPC.NewNPC((int) (npc.position.X + npc.width / 2f),
+                    (int) (npc.position.Y + npc.height), npc.type, prevIndex);
 
                 NPC newNPC = Main.npc[index];
                 newNPC.GetGlobalNPC<EnemyModifiersGlobalNPC>().firstTick = false;
@@ -30,7 +30,9 @@ namespace FargoEnemyModifiers.Modifiers
                 newNPC.realLife = npc.whoAmI;
 
                 if (i != 0)
+                {
                     Main.npc[prevIndex].localAI[0] = index;
+                }
 
                 newNPC.localAI[1] = prevIndex;
                 npc.netUpdate = true;
@@ -39,6 +41,7 @@ namespace FargoEnemyModifiers.Modifiers
             }
 
             bodySpawned = true;
+
             return true;
         }
     }

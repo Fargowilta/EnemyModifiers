@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
-using FargoEnemyModifiers.Modifiers;
 using Terraria.ID;
 using Terraria.ModLoader.Config;
 
