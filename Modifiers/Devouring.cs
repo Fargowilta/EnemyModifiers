@@ -33,13 +33,12 @@ namespace FargoEnemyModifiers.Modifiers
 
                     npc.defDamage = (int)(npc.defDamage * 1.05f);
                     npc.damage = (int)(npc.damage * 1.05f);
+
+                    otherNpc.GetGlobalNPC<EnemyModifiersGlobalNPC>().DropLoot = false;
+                    otherNpc.StrikeNPC(otherNpc.lifeMax, 0, 1, true);
+
+                    Main.PlaySound(new LegacySoundStyle(4, 13), npc.Center);
                 }
-
-
-                otherNpc.GetGlobalNPC<EnemyModifiersGlobalNPC>().DropLoot = false;
-                otherNpc.StrikeNPC(otherNpc.lifeMax, 0, 1, true);
-
-                Main.PlaySound(new LegacySoundStyle(4, 13), npc.Center);
             }
         }
     }
