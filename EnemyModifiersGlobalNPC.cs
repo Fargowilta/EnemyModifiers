@@ -188,9 +188,9 @@ namespace FargoEnemyModifiers
                     //case (int)ModifierID.Burning:
                     //    //name = "Burning";
                     //    break;
-                    //case (int)ModifierID.Delerious:
-                    //    modifier = new Delerious();
-                    //    break;
+                    case (int)ModifierID.Delerious:
+                        modifier = new Delerious();
+                        break;
 
                     //case (int)ModifierID.Laggy:
                     //    //name = "Laggy";
@@ -246,9 +246,9 @@ namespace FargoEnemyModifiers
                     //    //name = "Explosive";
                     //    break;
 
-                    //case (int)ModifierID.Duke:
-                    //    //name = "Duke";
-                    //    break;
+                    case (int)ModifierID.Duke:
+                        name = "Duke";
+                        break;
                     //case (int)ModifierID.Multiplying:
                     //    //name = "Multiplying";
                     //    break;

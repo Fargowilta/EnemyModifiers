@@ -27,13 +27,16 @@ namespace FargoEnemyModifiers.Modifiers
             {
                 NPC otherNpc = Main.npc[i];
 
-                if (otherNpc.active && npc.whoAmI != otherNpc.whoAmI && otherNpc.realLife != npc.whoAmI && npc.realLife != otherNpc.whoAmI && otherNpc.Hitbox.Intersects(npc.Hitbox) && otherNpc.lifeMax <= npc.lifeMax)
+                if (otherNpc.active && npc.whoAmI != otherNpc.whoAmI && otherNpc.realLife != npc.whoAmI && npc.realLife != otherNpc.whoAmI
+                    && otherNpc.Hitbox.Intersects(npc.Hitbox) && otherNpc.lifeMax <= npc.lifeMax
+                    && !otherNpc.dontTakeDamage && !otherNpc.immortal)
                 {
                     int lifeGained = otherNpc.lifeMax / 4;
                     npc.lifeMax += lifeGained;
                     npc.life += lifeGained;
                     npc.HealEffect(lifeGained);
 
+                    npc.defDamage = (int)(npc.defDamage * 1.05f);
                     npc.damage = (int)(npc.damage * 1.05f);
 
                     npc.position = npc.Center;

@@ -29,6 +29,8 @@ Bloodthirsty - gains 25% damage every time they hit you
 Possessed - replaces its AI with Ghost AI
 Warping - when they reach half HP, you swich places with them
 Rallying - has an aura that buffs other enemies: +25% damage, +25% speed
+Delerious - changes aistyle and sprays projectiles whenever it does
+Duke - It's literally just Duke Fishron
 
 NPC Blacklist is real
 
@@ -41,12 +43,11 @@ Devouring - VORES any enemy it comes across with less or equal HP, heals itself,
 Fortifying - has 50% less defense. Has an aura that gives other enemies 50% DR
 Chained - npc is chained to you and cannot leave a radius around you
 
-
-
 -Fixed mp meme multi modifier names?
+-Fixed Devouring devouring invincible NPCs
+-Fixed stat modifiers not actually working on enemies that use defDamage or defDefense
+-Regenerating only regens 5% for bosses and doesn't work on worm segments or similar enemies
+-Warped should only happen client-side, may fix some multiplayer issues, won't work on dead players, gives iframes on alternative timers too
 
 
-modifier list of toggles blacklost thing
-
-
-
+modifier list of toggles blacklist thing

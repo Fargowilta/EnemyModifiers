@@ -29,7 +29,9 @@ namespace FargoEnemyModifiers.Modifiers
         {
             npc.lifeMax = (int)(npc.lifeMax * healthMultiplier);
             npc.life = npc.lifeMax;
+            npc.defDamage = (int)(npc.defDamage * damageMultiplier);
             npc.damage = (int)(npc.damage * damageMultiplier);
+            npc.defDefense = (int)(npc.defDefense * defenseMultiplier);
             npc.defense = (int)(npc.defense * defenseMultiplier);
 
             //things that already have no kb only get it for kb adding modifiers

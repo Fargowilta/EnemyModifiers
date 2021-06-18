@@ -41,7 +41,7 @@ namespace FargoEnemyModifiers.Modifiers
         Worm,
         Rainbow,
         Devouring,
-        Juggernaut
+        Juggernaut,
 
         //Healer, //Healer - heals nearby enemy
         //Flammable, //Flammable - takes increased dot damage
@@ -55,7 +55,7 @@ namespace FargoEnemyModifiers.Modifiers
         //Shapeshifting, //shapeshifting - randomly becomes a different npc type with the same stats and this modifier
         //Royal, //king - more health, maybe slower, can spawn more of its npc type when hurt (reference to king slime)
         //Burning, //Burning - perma on fire and lights you on fire
-        //Delerious, //Delerious -  uses radom aistyle every so often, shoots a ring of projectiles eveeyt ime it changes - isaac ref
+        Delerious, //Delerious -  uses radom aistyle every so often, shoots a ring of projectiles eveeyt ime it changes - isaac ref
         //Laggy, //laggy - occasionally rubberbands back to where it was up to 10 seconds ago, or moves by up to 30x its velocity in one tick, or (hyper mode) up to 60 times in one tick
         //Unstable, //unstable - teleports on hit or randomly
         //Vampiric, //vampiric - life steal on hit
@@ -79,7 +79,7 @@ namespace FargoEnemyModifiers.Modifiers
         //public const int Draining = 62; //draining - life steal aura (derpling) OR drains other enemies
         //public const int Explosive = 63; //explosive - starts ticking when near, kill it fast or it explodes (no tile damage)
 
-        //public const int Duke = 65; //Duke - DukeAI
+        Duke, //Duke - DukeAI
         //public const int Multiplying = 66; //cloning - emode illum bats
         //public const int Pyro = 67; //pyro - immune to lava, heals from fire debuffs
 

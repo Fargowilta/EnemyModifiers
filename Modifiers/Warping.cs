@@ -42,8 +42,12 @@ namespace FargoEnemyModifiers.Modifiers
             Vector2 playerPos = player.position;
             playerPos.Y -= 10;
 
-
             if (Vector2.Distance(npcPos, playerPos) > 1000 || !Collision.CanHitLine(npcPos, npc.width, npc.height, playerPos, player.width, player.height))
+            {
+                return;
+            }
+
+            if (player.whoAmI != Main.myPlayer || !player.active || player.dead || player.ghost)
             {
                 return;
             }
@@ -52,7 +56,12 @@ namespace FargoEnemyModifiers.Modifiers
             player.Teleport(npcPos);
 
             player.immune = true;
-            player.immuneTime = 30;
+            if (player.immuneTime < 30)
+                player.immuneTime = 30;
+            if (player.hurtCooldown[0] < 30)
+                player.hurtCooldown[0] = 30;
+            if (player.hurtCooldown[1] < 30)
+                player.hurtCooldown[1] = 30;
 
             Warped = true;
         }
