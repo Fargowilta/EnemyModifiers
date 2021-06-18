@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria;
+﻿using Terraria;
 
 namespace FargoEnemyModifiers.Modifiers
 {
@@ -14,7 +9,7 @@ namespace FargoEnemyModifiers.Modifiers
             name = "Regenerating";
         }
 
-        private int counter = 0;
+        private int counter;
         public override void AI(NPC npc)
         {
             if (npc.life < npc.lifeMax)

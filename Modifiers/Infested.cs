@@ -1,10 +1,5 @@
 ﻿using FargoEnemyModifiers.NPCs;
 using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -18,7 +13,7 @@ namespace FargoEnemyModifiers.Modifiers
             name = "Infested";
         }
 
-        private int counter = 0;
+        private int counter;
         public override void AI(NPC npc)
         {
             if (NPC.CountNPCS(ModContent.NPCType<BabySpider>()) < 10 && ++counter > 120)

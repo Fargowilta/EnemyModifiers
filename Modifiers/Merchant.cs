@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria;
+﻿using Terraria;
 
 namespace FargoEnemyModifiers.Modifiers
 {
     public class Merchant : Modifier
     {
-        private int counter = 0;
+        private int counter;
         public override bool PreAI(NPC npc)
         {
             npc.aiStyle = 7;

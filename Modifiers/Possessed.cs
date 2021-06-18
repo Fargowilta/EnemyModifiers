@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria;
+﻿using Terraria;
 
 namespace FargoEnemyModifiers.Modifiers
 {
@@ -14,7 +9,7 @@ namespace FargoEnemyModifiers.Modifiers
             name = "Possessed";
         }
 
-        private int counter = 0;
+        private int counter;
 
         public override bool PreAI(NPC npc)
         {
@@ -47,7 +42,7 @@ namespace FargoEnemyModifiers.Modifiers
                 int num282 = 16;
                 bool flag21 = false;
                 bool flag22 = false;
-                if (npc.position.X > npc.ai[0] - (float)num282 && npc.position.X < npc.ai[0] + (float)num282)
+                if (npc.position.X > npc.ai[0] - num282 && npc.position.X < npc.ai[0] + num282)
                 {
                     flag21 = true;
                 }
@@ -56,7 +51,7 @@ namespace FargoEnemyModifiers.Modifiers
                     flag21 = true;
                 }
                 num282 += 24;
-                if (npc.position.Y > npc.ai[1] - (float)num282 && npc.position.Y < npc.ai[1] + (float)num282)
+                if (npc.position.Y > npc.ai[1] - num282 && npc.position.Y < npc.ai[1] + num282)
                 {
                     flag22 = true;
                 }
@@ -71,23 +66,18 @@ namespace FargoEnemyModifiers.Modifiers
                     {
                         npc.ai[2] = -200f;
                         npc.direction *= -1;
-                        npc.velocity.X = npc.velocity.X * -1f;
+                        npc.velocity.X *= -1f;
                         npc.collideX = false;
                     }
                 }
-                else
-                {
-                    //        npc.ai[0] = npc.position.X;
-                    //        npc.ai[1] = npc.position.Y;
-                    //        npc.ai[2] = 0f;
-                }
-                npc.TargetClosest(true);
+
+                npc.TargetClosest();
             }
             else
             {
                 npc.ai[2] += 1f;
 
-                if (Main.player[npc.target].position.X + (float)(Main.player[npc.target].width / 2) > npc.position.X + (float)(npc.width / 2))
+                if (Main.player[npc.target].position.X + Main.player[npc.target].width / 2 > npc.position.X + npc.width / 2)
                 {
                     npc.direction = -1;
                 }
@@ -96,8 +86,8 @@ namespace FargoEnemyModifiers.Modifiers
                     npc.direction = 1;
                 }
             }
-            int num283 = (int)((npc.position.X + (float)(npc.width / 2)) / 16f) + npc.direction * 2;
-            int num284 = (int)((npc.position.Y + (float)npc.height) / 16f);
+            int num283 = (int)((npc.position.X + npc.width / 2) / 16f) + npc.direction * 2;
+            int num284 = (int)((npc.position.Y + npc.height) / 16f);
             bool flag23 = true;
             bool flag24 = false;
             int num285 = 3;
@@ -108,7 +98,7 @@ namespace FargoEnemyModifiers.Modifiers
                 {
                     Main.tile[num283, num308] = new Tile();
                 }
-                if ((Main.tile[num283, num308].nactive() && Main.tileSolid[(int)Main.tile[num283, num308].type]) || Main.tile[num283, num308].liquid > 0)
+                if ((Main.tile[num283, num308].nactive() && Main.tileSolid[Main.tile[num283, num308].type]) || Main.tile[num283, num308].liquid > 0)
                 {
                     if (num308 <= num284 + 1)
                     {
@@ -127,7 +117,7 @@ namespace FargoEnemyModifiers.Modifiers
                     {
                         Main.tile[num283, num309] = new Tile();
                     }
-                    if ((Main.tile[num283, num309].nactive() && Main.tileSolid[(int)Main.tile[num283, num309].type]) || Main.tile[num283, num309].liquid > 0)
+                    if ((Main.tile[num283, num309].nactive() && Main.tileSolid[Main.tile[num283, num309].type]) || Main.tile[num283, num309].liquid > 0)
                     {
                         flag25 = true;
                         break;
@@ -143,7 +133,7 @@ namespace FargoEnemyModifiers.Modifiers
             }
             if (flag23)
             {
-                npc.velocity.Y = npc.velocity.Y + 0.1f;
+                npc.velocity.Y += 0.1f;
                 if (npc.velocity.Y > 3f)
                 {
                     npc.velocity.Y = 3f;
@@ -153,7 +143,7 @@ namespace FargoEnemyModifiers.Modifiers
             {
                 if (npc.directionY < 0 && npc.velocity.Y > 0f)
                 {
-                    npc.velocity.Y = npc.velocity.Y - 0.1f;
+                    npc.velocity.Y -= 0.1f;
                 }
                 if (npc.velocity.Y < -4f)
                 {
@@ -189,14 +179,14 @@ namespace FargoEnemyModifiers.Modifiers
 
             if (npc.direction == -1 && npc.velocity.X > -num311)
             {
-                npc.velocity.X = npc.velocity.X - 0.1f;
+                npc.velocity.X -= 0.1f;
                 if (npc.velocity.X > num311)
                 {
-                    npc.velocity.X = npc.velocity.X - 0.1f;
+                    npc.velocity.X -= 0.1f;
                 }
                 else if (npc.velocity.X > 0f)
                 {
-                    npc.velocity.X = npc.velocity.X + 0.05f;
+                    npc.velocity.X += 0.05f;
                 }
                 if (npc.velocity.X < -num311)
                 {
@@ -205,14 +195,14 @@ namespace FargoEnemyModifiers.Modifiers
             }
             else if (npc.direction == 1 && npc.velocity.X < num311)
             {
-                npc.velocity.X = npc.velocity.X + 0.1f;
+                npc.velocity.X += 0.1f;
                 if (npc.velocity.X < -num311)
                 {
-                    npc.velocity.X = npc.velocity.X + 0.1f;
+                    npc.velocity.X += 0.1f;
                 }
                 else if (npc.velocity.X < 0f)
                 {
-                    npc.velocity.X = npc.velocity.X - 0.05f;
+                    npc.velocity.X -= 0.05f;
                 }
                 if (npc.velocity.X > num311)
                 {
@@ -224,14 +214,14 @@ namespace FargoEnemyModifiers.Modifiers
 
             if (npc.directionY == -1 && npc.velocity.Y > -num311)
             {
-                npc.velocity.Y = npc.velocity.Y - 0.04f;
+                npc.velocity.Y -= 0.04f;
                 if (npc.velocity.Y > num311)
                 {
-                    npc.velocity.Y = npc.velocity.Y - 0.05f;
+                    npc.velocity.Y -= 0.05f;
                 }
                 else if (npc.velocity.Y > 0f)
                 {
-                    npc.velocity.Y = npc.velocity.Y + 0.03f;
+                    npc.velocity.Y += 0.03f;
                 }
                 if (npc.velocity.Y < -num311)
                 {
@@ -240,14 +230,14 @@ namespace FargoEnemyModifiers.Modifiers
             }
             else if (npc.directionY == 1 && npc.velocity.Y < num311)
             {
-                npc.velocity.Y = npc.velocity.Y + 0.04f;
+                npc.velocity.Y += 0.04f;
                 if (npc.velocity.Y < -num311)
                 {
-                    npc.velocity.Y = npc.velocity.Y + 0.05f;
+                    npc.velocity.Y += 0.05f;
                 }
                 else if (npc.velocity.Y < 0f)
                 {
-                    npc.velocity.Y = npc.velocity.Y - 0.03f;
+                    npc.velocity.Y -= 0.03f;
                 }
                 if (npc.velocity.Y > num311)
                 {

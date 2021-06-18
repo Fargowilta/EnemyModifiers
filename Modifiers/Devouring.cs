@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria;
+﻿using Terraria;
 using Terraria.Audio;
 
 namespace FargoEnemyModifiers.Modifiers
@@ -37,7 +32,7 @@ namespace FargoEnemyModifiers.Modifiers
                     npc.damage = (int)(npc.damage * 1.05f);
 
                     npc.position = npc.Center;
-                    npc.scale = npc.scale * 1.1f;
+                    npc.scale *= 1.1f;
                     npc.width = (int)(baseWidth * npc.scale);
                     npc.height = (int)(baseHeight * npc.scale);
                     npc.Center = npc.position;

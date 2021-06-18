@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria;
+﻿using Terraria;
 
 namespace FargoEnemyModifiers.Modifiers
 {
@@ -14,12 +9,12 @@ namespace FargoEnemyModifiers.Modifiers
             name = "Accelerating";
         }
 
-        private int counter = 0;
+        private int counter;
         public override bool PreAI(NPC npc)
         {
-            if (++counter > 30 && speedMultiplier < 4f)
+            if (++counter > 30 && SpeedMultiplier < 4f)
             {
-                speedMultiplier *= 1.05f;
+                SpeedMultiplier *= 1.05f;
                 counter = 0;
             }
 
@@ -28,12 +23,12 @@ namespace FargoEnemyModifiers.Modifiers
 
         public override void OnHitByItem(NPC npc, Player player)
         {
-            speedMultiplier = 0.5f;
+            SpeedMultiplier = 0.5f;
         }
 
         public override void OnHitPlayer(NPC npc, Player target)
         {
-            speedMultiplier = 0.5f;
+            SpeedMultiplier = 0.5f;
         }
     }
 }

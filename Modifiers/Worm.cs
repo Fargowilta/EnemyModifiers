@@ -1,10 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria;
+﻿using Terraria;
 
 namespace FargoEnemyModifiers.Modifiers
 {
@@ -13,11 +7,11 @@ namespace FargoEnemyModifiers.Modifiers
         public Worm()
         {
             name = "Worm";
-            healthMultiplier = 2f;
-            kbMultiplier = 0;
+            HealthMultiplier = 2f;
+            KnockBackMultiplier = 0;
         }
 
-        private bool BodySpawned = false;
+        private bool BodySpawned;
 
         public override bool PreAI(NPC npc)
         {
@@ -27,7 +21,7 @@ namespace FargoEnemyModifiers.Modifiers
 
                 for (int i = 0; i < 7; i++)
                 {
-                    int index = NPC.NewNPC((int)(npc.position.X + (float)(npc.width / 2)), (int)(npc.position.Y + (float)npc.height), npc.type, prevIndex, 0f, 0f, 0f, 0f, 255);
+                    int index = NPC.NewNPC((int)(npc.position.X + npc.width / 2), (int)(npc.position.Y + npc.height), npc.type, prevIndex);
 
                     NPC newNPC = Main.npc[index];
 					newNPC.GetGlobalNPC<EnemyModifiersGlobalNPC>().firstTick = false;

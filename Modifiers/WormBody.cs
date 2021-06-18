@@ -1,9 +1,5 @@
-﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Terraria;
 
 namespace FargoEnemyModifiers.Modifiers
@@ -13,7 +9,7 @@ namespace FargoEnemyModifiers.Modifiers
 		public WormBody()
 		{
 			name = "Worm";
-			kbMultiplier = 0;
+			KnockBackMultiplier = 0;
 		}
 
 		private bool firstTick = true;
@@ -37,11 +33,11 @@ namespace FargoEnemyModifiers.Modifiers
 			bool flag = false;
 			float num4 = 0.2f;
 
-			if (npc.target < 0 || npc.target == 255 || Main.player[npc.target].dead || (flag && (double)Main.player[npc.target].position.Y < Main.worldSurface * 16.0))
+			if (npc.target < 0 || npc.target == 255 || Main.player[npc.target].dead || (flag && Main.player[npc.target].position.Y < Main.worldSurface * 16.0))
 			{
-				npc.TargetClosest(true);
+				npc.TargetClosest();
 			}
-			if (Main.player[npc.target].dead || (flag && (double)Main.player[npc.target].position.Y < Main.worldSurface * 16.0))
+			if (Main.player[npc.target].dead || (flag && Main.player[npc.target].position.Y < Main.worldSurface * 16.0))
 			{
 				if (npc.timeLeft > 300)
 				{
@@ -49,7 +45,7 @@ namespace FargoEnemyModifiers.Modifiers
 				}
 				if (flag)
 				{
-					npc.velocity.Y = npc.velocity.Y + num4;
+					npc.velocity.Y += num4;
 				}
 			}
 			if (Main.netMode != 1)
@@ -57,22 +53,22 @@ namespace FargoEnemyModifiers.Modifiers
 				if (!Main.npc[npc.realLife].active)
 				{
 					npc.life = 0;
-					npc.HitEffect(0, 10.0);
+					npc.HitEffect();
 					npc.active = false;
-					NetMessage.SendData(28, -1, -1, null, npc.whoAmI, -1f, 0f, 0f, 0, 0, 0);
+					NetMessage.SendData(28, -1, -1, null, npc.whoAmI, -1f);
 				}
 
                 
 
                 if (!npc.active && Main.netMode == 2)
 				{
-					NetMessage.SendData(28, -1, -1, null, npc.whoAmI, -1f, 0f, 0f, 0, 0, 0);
+					NetMessage.SendData(28, -1, -1, null, npc.whoAmI, -1f);
 				}
 			}
 			int num29 = (int)(npc.position.X / 16f) - 1;
-			int num30 = (int)((npc.position.X + (float)npc.width) / 16f) + 2;
+			int num30 = (int)((npc.position.X + npc.width) / 16f) + 2;
 			int num31 = (int)(npc.position.Y / 16f) - 1;
-			int num32 = (int)((npc.position.Y + (float)npc.height) / 16f) + 2;
+			int num32 = (int)((npc.position.Y + npc.height) / 16f) + 2;
 			if (num29 < 0)
 			{
 				num29 = 0;
@@ -97,17 +93,17 @@ namespace FargoEnemyModifiers.Modifiers
 				{
 					for (int num34 = num31; num34 < num32; num34++)
 					{
-						if (Main.tile[num33, num34] != null && ((Main.tile[num33, num34].nactive() && (Main.tileSolid[(int)Main.tile[num33, num34].type] || (Main.tileSolidTop[(int)Main.tile[num33, num34].type] && Main.tile[num33, num34].frameY == 0))) || Main.tile[num33, num34].liquid > 64))
+						if (Main.tile[num33, num34] != null && ((Main.tile[num33, num34].nactive() && (Main.tileSolid[Main.tile[num33, num34].type] || (Main.tileSolidTop[Main.tile[num33, num34].type] && Main.tile[num33, num34].frameY == 0))) || Main.tile[num33, num34].liquid > 64))
 						{
 							Vector2 vector;
-							vector.X = (float)(num33 * 16);
-							vector.Y = (float)(num34 * 16);
-							if (npc.position.X + (float)npc.width > vector.X && npc.position.X < vector.X + 16f && npc.position.Y + (float)npc.height > vector.Y && npc.position.Y < vector.Y + 16f)
+							vector.X = num33 * 16;
+							vector.Y = num34 * 16;
+							if (npc.position.X + npc.width > vector.X && npc.position.X < vector.X + 16f && npc.position.Y + npc.height > vector.Y && npc.position.Y < vector.Y + 16f)
 							{
 								flag2 = true;
 								if (Main.rand.Next(100) == 0 && Main.tile[num33, num34].nactive())
 								{
-									WorldGen.KillTile(num33, num34, true, true, false);
+									WorldGen.KillTile(num33, num34, true, true);
 								}
 							}
 						}
@@ -117,39 +113,39 @@ namespace FargoEnemyModifiers.Modifiers
 
 			float num37 = 8f;
 			float num38 = 0.07f;
-			Vector2 vector2 = new Vector2(npc.position.X + (float)npc.width * 0.5f, npc.position.Y + (float)npc.height * 0.5f);
-			float num40 = Main.player[npc.target].position.X + (float)(Main.player[npc.target].width / 2);
-			float num41 = Main.player[npc.target].position.Y + (float)(Main.player[npc.target].height / 2);
+			Vector2 vector2 = new Vector2(npc.position.X + npc.width * 0.5f, npc.position.Y + npc.height * 0.5f);
+			float num40 = Main.player[npc.target].position.X + Main.player[npc.target].width / 2;
+			float num41 = Main.player[npc.target].position.Y + Main.player[npc.target].height / 2;
 
-			num40 = (float)((int)(num40 / 16f) * 16);
-			num41 = (float)((int)(num41 / 16f) * 16);
-			vector2.X = (float)((int)(vector2.X / 16f) * 16);
-			vector2.Y = (float)((int)(vector2.Y / 16f) * 16);
+			num40 = (int)(num40 / 16f) * 16;
+			num41 = (int)(num41 / 16f) * 16;
+			vector2.X = (int)(vector2.X / 16f) * 16;
+			vector2.Y = (int)(vector2.Y / 16f) * 16;
 			num40 -= vector2.X;
 			num41 -= vector2.Y;
 
-			float num53 = (float)Math.Sqrt((double)(num40 * num40 + num41 * num41));
-			if (npc.localAI[1] > 0f && npc.localAI[1] < (float)Main.npc.Length)
+			float num53 = (float)Math.Sqrt(num40 * num40 + num41 * num41);
+			if (npc.localAI[1] > 0f && npc.localAI[1] < Main.npc.Length)
 			{
 				try
 				{
-					vector2 = new Vector2(npc.position.X + (float)npc.width * 0.5f, npc.position.Y + (float)npc.height * 0.5f);
-					num40 = Main.npc[(int)npc.localAI[1]].position.X + (float)(Main.npc[(int)npc.localAI[1]].width / 2) - vector2.X;
-					num41 = Main.npc[(int)npc.localAI[1]].position.Y + (float)(Main.npc[(int)npc.localAI[1]].height / 2) - vector2.Y;
+					vector2 = new Vector2(npc.position.X + npc.width * 0.5f, npc.position.Y + npc.height * 0.5f);
+					num40 = Main.npc[(int)npc.localAI[1]].position.X + Main.npc[(int)npc.localAI[1]].width / 2 - vector2.X;
+					num41 = Main.npc[(int)npc.localAI[1]].position.Y + Main.npc[(int)npc.localAI[1]].height / 2 - vector2.Y;
 				}
 				catch
 				{
 				}
-				npc.rotation = (float)Math.Atan2((double)num41, (double)num40) + 1.57f;
-				num53 = (float)Math.Sqrt((double)(num40 * num40 + num41 * num41));
+				npc.rotation = (float)Math.Atan2(num41, num40) + 1.57f;
+				num53 = (float)Math.Sqrt(num40 * num40 + num41 * num41);
 				int num54 = npc.width;
 
-				num53 = (num53 - (float)num54) / num53;
+				num53 = (num53 - num54) / num53;
 				num40 *= num53;
 				num41 *= num53;
 				npc.velocity = Vector2.Zero;
-				npc.position.X = npc.position.X + num40;
-				npc.position.Y = npc.position.Y + num41;
+				npc.position.X += num40;
+				npc.position.Y += num41;
 
 
 			}
@@ -157,43 +153,43 @@ namespace FargoEnemyModifiers.Modifiers
 			{
 				if (!flag2)
 				{
-					npc.TargetClosest(true);
-					npc.velocity.Y = npc.velocity.Y + 0.11f;
+					npc.TargetClosest();
+					npc.velocity.Y += 0.11f;
 					if (npc.velocity.Y > num37)
 					{
 						npc.velocity.Y = num37;
 					}
-					if ((double)(Math.Abs(npc.velocity.X) + Math.Abs(npc.velocity.Y)) < (double)num37 * 0.4)
+					if (Math.Abs(npc.velocity.X) + Math.Abs(npc.velocity.Y) < num37 * 0.4)
 					{
 						if (npc.velocity.X < 0f)
 						{
-							npc.velocity.X = npc.velocity.X - num38 * 1.1f;
+							npc.velocity.X -= num38 * 1.1f;
 						}
 						else
 						{
-							npc.velocity.X = npc.velocity.X + num38 * 1.1f;
+							npc.velocity.X += num38 * 1.1f;
 						}
 					}
 					else if (npc.velocity.Y == num37)
 					{
 						if (npc.velocity.X < num40)
 						{
-							npc.velocity.X = npc.velocity.X + num38;
+							npc.velocity.X += num38;
 						}
 						else if (npc.velocity.X > num40)
 						{
-							npc.velocity.X = npc.velocity.X - num38;
+							npc.velocity.X -= num38;
 						}
 					}
 					else if (npc.velocity.Y > 4f)
 					{
 						if (npc.velocity.X < 0f)
 						{
-							npc.velocity.X = npc.velocity.X + num38 * 0.9f;
+							npc.velocity.X += num38 * 0.9f;
 						}
 						else
 						{
-							npc.velocity.X = npc.velocity.X - num38 * 0.9f;
+							npc.velocity.X -= num38 * 0.9f;
 						}
 					}
 				}
@@ -211,9 +207,9 @@ namespace FargoEnemyModifiers.Modifiers
 							num55 = 20f;
 						}
 						npc.soundDelay = (int)num55;
-						Main.PlaySound(15, (int)npc.position.X, (int)npc.position.Y, 1, 1f, 0f);
+						Main.PlaySound(15, (int)npc.position.X, (int)npc.position.Y);
 					}
-					num53 = (float)Math.Sqrt((double)(num40 * num40 + num41 * num41));
+					num53 = (float)Math.Sqrt(num40 * num40 + num41 * num41);
 					float num56 = Math.Abs(num40);
 					float num57 = Math.Abs(num41);
 					float num58 = num37 / num53;
@@ -234,7 +230,7 @@ namespace FargoEnemyModifiers.Modifiers
 						}
 						if (flag5)
 						{
-							if (Main.netMode != 1 && (double)(npc.position.Y / 16f) > (Main.rockLayer + (double)Main.maxTilesY) / 2.0)
+							if (Main.netMode != 1 && npc.position.Y / 16f > (Main.rockLayer + Main.maxTilesY) / 2.0)
 							{
 								npc.active = false;
 								int num60 = (int)npc.localAI[0];
@@ -245,13 +241,13 @@ namespace FargoEnemyModifiers.Modifiers
 									npc.life = 0;
 									if (Main.netMode == 2)
 									{
-										NetMessage.SendData(23, -1, -1, null, num60, 0f, 0f, 0f, 0, 0, 0);
+										NetMessage.SendData(23, -1, -1, null, num60);
 									}
 									num60 = num61;
 								}
 								if (Main.netMode == 2)
 								{
-									NetMessage.SendData(23, -1, -1, null, npc.whoAmI, 0f, 0f, 0f, 0, 0, 0);
+									NetMessage.SendData(23, -1, -1, null, npc.whoAmI);
 								}
 							}
 							num40 = 0f;
@@ -267,40 +263,40 @@ namespace FargoEnemyModifiers.Modifiers
 						{
 							if (npc.velocity.X < num40)
 							{
-								npc.velocity.X = npc.velocity.X + num38;
+								npc.velocity.X += num38;
 							}
 							else if (npc.velocity.X > num40)
 							{
-								npc.velocity.X = npc.velocity.X - num38;
+								npc.velocity.X -= num38;
 							}
 							if (npc.velocity.Y < num41)
 							{
-								npc.velocity.Y = npc.velocity.Y + num38;
+								npc.velocity.Y += num38;
 							}
 							else if (npc.velocity.Y > num41)
 							{
-								npc.velocity.Y = npc.velocity.Y - num38;
+								npc.velocity.Y -= num38;
 							}
-							if ((double)Math.Abs(num41) < (double)num37 * 0.2 && ((npc.velocity.X > 0f && num40 < 0f) || (npc.velocity.X < 0f && num40 > 0f)))
+							if (Math.Abs(num41) < num37 * 0.2 && ((npc.velocity.X > 0f && num40 < 0f) || (npc.velocity.X < 0f && num40 > 0f)))
 							{
 								if (npc.velocity.Y > 0f)
 								{
-									npc.velocity.Y = npc.velocity.Y + num38 * 2f;
+									npc.velocity.Y += num38 * 2f;
 								}
 								else
 								{
-									npc.velocity.Y = npc.velocity.Y - num38 * 2f;
+									npc.velocity.Y -= num38 * 2f;
 								}
 							}
-							if ((double)Math.Abs(num40) < (double)num37 * 0.2 && ((npc.velocity.Y > 0f && num41 < 0f) || (npc.velocity.Y < 0f && num41 > 0f)))
+							if (Math.Abs(num40) < num37 * 0.2 && ((npc.velocity.Y > 0f && num41 < 0f) || (npc.velocity.Y < 0f && num41 > 0f)))
 							{
 								if (npc.velocity.X > 0f)
 								{
-									npc.velocity.X = npc.velocity.X + num38 * 2f;
+									npc.velocity.X += num38 * 2f;
 								}
 								else
 								{
-									npc.velocity.X = npc.velocity.X - num38 * 2f;
+									npc.velocity.X -= num38 * 2f;
 								}
 							}
 						}
@@ -308,21 +304,21 @@ namespace FargoEnemyModifiers.Modifiers
 						{
 							if (npc.velocity.X < num40)
 							{
-								npc.velocity.X = npc.velocity.X + num38 * 1.1f;
+								npc.velocity.X += num38 * 1.1f;
 							}
 							else if (npc.velocity.X > num40)
 							{
-								npc.velocity.X = npc.velocity.X - num38 * 1.1f;
+								npc.velocity.X -= num38 * 1.1f;
 							}
-							if ((double)(Math.Abs(npc.velocity.X) + Math.Abs(npc.velocity.Y)) < (double)num37 * 0.5)
+							if (Math.Abs(npc.velocity.X) + Math.Abs(npc.velocity.Y) < num37 * 0.5)
 							{
 								if (npc.velocity.Y > 0f)
 								{
-									npc.velocity.Y = npc.velocity.Y + num38;
+									npc.velocity.Y += num38;
 								}
 								else
 								{
-									npc.velocity.Y = npc.velocity.Y - num38;
+									npc.velocity.Y -= num38;
 								}
 							}
 						}
@@ -330,27 +326,27 @@ namespace FargoEnemyModifiers.Modifiers
 						{
 							if (npc.velocity.Y < num41)
 							{
-								npc.velocity.Y = npc.velocity.Y + num38 * 1.1f;
+								npc.velocity.Y += num38 * 1.1f;
 							}
 							else if (npc.velocity.Y > num41)
 							{
-								npc.velocity.Y = npc.velocity.Y - num38 * 1.1f;
+								npc.velocity.Y -= num38 * 1.1f;
 							}
-							if ((double)(Math.Abs(npc.velocity.X) + Math.Abs(npc.velocity.Y)) < (double)num37 * 0.5)
+							if (Math.Abs(npc.velocity.X) + Math.Abs(npc.velocity.Y) < num37 * 0.5)
 							{
 								if (npc.velocity.X > 0f)
 								{
-									npc.velocity.X = npc.velocity.X + num38;
+									npc.velocity.X += num38;
 								}
 								else
 								{
-									npc.velocity.X = npc.velocity.X - num38;
+									npc.velocity.X -= num38;
 								}
 							}
 						}
 					}
 				}
-				npc.rotation = (float)Math.Atan2((double)npc.velocity.Y, (double)npc.velocity.X) + 1.57f;
+				npc.rotation = (float)Math.Atan2(npc.velocity.Y, npc.velocity.X) + 1.57f;
 			}
 		}
 	}

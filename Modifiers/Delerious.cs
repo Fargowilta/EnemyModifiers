@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria;
-using Terraria.ModLoader;
+﻿using Terraria;
 
 namespace FargoEnemyModifiers.Modifiers
 {
@@ -15,7 +9,7 @@ namespace FargoEnemyModifiers.Modifiers
             name = "Delerious";
         }
 
-        private int counter = 0;
+        private int counter;
 
         private int aiStyle = 1;
         public override bool PreAI(NPC npc)

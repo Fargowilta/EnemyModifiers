@@ -12,7 +12,7 @@ namespace FargoEnemyModifiers
 
         public override void PostSetupContent()
         {
-            ModifierTypes = new List<int>{};
+            ModifierTypes = new List<int>();
 
             for (int i = 0; i <= numModifiers; i++)
             {

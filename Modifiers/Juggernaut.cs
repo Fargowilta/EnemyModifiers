@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria;
+﻿using Terraria;
 
 namespace FargoEnemyModifiers.Modifiers
 {
@@ -13,13 +8,13 @@ namespace FargoEnemyModifiers.Modifiers
         {
             name = "Juggernaut";
 
-            healthMultiplier = 2.5f;
-            defenseMultiplier = 1.25f;
-            damageMultiplier = 1.25f;
-            sizeMultiplier = 1.25f;
+            HealthMultiplier = 2.5f;
+            DefenseMultiplier = 1.25f;
+            DamageMultiplier = 1.25f;
+            SizeMultiplier = 1.25f;
         }
 
-        private bool sluggishGo = false;
+        private bool sluggishGo;
         public override bool PreAI(NPC npc)
         {
             if (sluggishGo)
@@ -27,11 +22,9 @@ namespace FargoEnemyModifiers.Modifiers
                 sluggishGo = false;
                 return true;
             }
-            else
-            {
-                sluggishGo = true;
-                return false;
-            }
+
+            sluggishGo = true;
+            return false;
         }
     }
 }

@@ -1,9 +1,5 @@
-﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -50,7 +46,7 @@ namespace FargoEnemyModifiers.NPCs
 
 			if (!flag20)
 			{
-				npc.velocity.X = npc.velocity.X * 0.95f;
+				npc.velocity.X *= 0.95f;
 			}
 			else
 			{
@@ -73,7 +69,7 @@ namespace FargoEnemyModifiers.NPCs
 					num596 = 8f;
 					num597 = 0.12f;
 				}
-				npc.velocity.X = npc.velocity.X + (float)Math.Sign(value14.X - npc.Center.X) * num597;
+				npc.velocity.X += Math.Sign(value14.X - npc.Center.X) * num597;
 				if (npc.velocity.X < -num596)
 				{
 					npc.velocity.X = -num596;
@@ -84,19 +80,18 @@ namespace FargoEnemyModifiers.NPCs
 				}
 			}
 			float num598 = 0f;
-			Collision.StepUp(ref npc.position, ref npc.velocity, npc.width, npc.height, ref num598, ref npc.gfxOffY, 1, false, 0);
+			Collision.StepUp(ref npc.position, ref npc.velocity, npc.width, npc.height, ref num598, ref npc.gfxOffY);
 			
 			if (npc.velocity.X != 0f)
 			{
 				npc.direction = Math.Sign(npc.velocity.X);
 			}
 			npc.spriteDirection = npc.direction;
-			npc.velocity.Y = npc.velocity.Y + 0.2f;
+			npc.velocity.Y += 0.2f;
 			if (npc.velocity.Y > 16f)
 			{
 				npc.velocity.Y = 16f;
-				return;
-			}
+            }
 
 			//if (this.velocity.X != velocity.X)
 			//{
@@ -143,8 +138,8 @@ namespace FargoEnemyModifiers.NPCs
         {
 			for (int num512 = 0; num512 < 5; num512++)
 			{
-				int num513 = Dust.NewDust(npc.position, npc.width, npc.height, 171, 0f, 0f, 100, default(Color), 1f);
-				Main.dust[num513].scale = (float)Main.rand.Next(1, 10) * 0.1f;
+				int num513 = Dust.NewDust(npc.position, npc.width, npc.height, 171, 0f, 0f, 100);
+				Main.dust[num513].scale = Main.rand.Next(1, 10) * 0.1f;
 				Main.dust[num513].noGravity = true;
 				Main.dust[num513].fadeIn = 1.5f;
 				Main.dust[num513].velocity *= 0.75f;

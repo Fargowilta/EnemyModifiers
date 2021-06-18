@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "wlCq/vBS4jhzwrxb9ivwn8BYHwX23/m5aHYjvy5Pqv+oXaqiMy64N/oOY7BIg3wyh2rUFMfBLoR09CL2eWucfQ==",
+  "dgSpecHash": "SLX4PDUGdd8FGe0ucE3wBGvPisazsLiReXkqL27jHFiP39VTsstX4eMPpKHdq2Jnijv5BbQTrCJRZXraH3MJyg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\leele\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\FargoEnemyModifiers\\FargoEnemyModifiers.csproj",
+  "projectFilePath": "C:\\Users\\xxlen\\OneDrive\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\EnemyModifiers\\FargoEnemyModifiers.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\leele\\.nuget\\packages\\tmodloader.codeassist\\0.1.2\\tmodloader.codeassist.0.1.2.nupkg.sha512"
+    "C:\\Users\\xxlen\\.nuget\\packages\\tmodloader.codeassist\\0.1.2\\tmodloader.codeassist.0.1.2.nupkg.sha512"
   ],
   "logs": []
 }

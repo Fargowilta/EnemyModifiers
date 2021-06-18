@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria;
+﻿using Terraria;
 
 namespace FargoEnemyModifiers.Modifiers
 {
@@ -12,7 +7,7 @@ namespace FargoEnemyModifiers.Modifiers
         public Hyper()
         {
             name = "Hyper";
-            speedMultiplier = 1.5f;
+            SpeedMultiplier = 1.5f;
         }
 
         private bool hyperGo = true;

@@ -1,9 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 
 namespace FargoEnemyModifiers.Modifiers
@@ -15,7 +10,7 @@ namespace FargoEnemyModifiers.Modifiers
             name = "Warping";
         }
 
-        private bool Warped = false;
+        private bool Warped;
 
         public override void ModifyHitByItem(NPC npc, Player player, Item item, ref int damage, ref float knockback)
         {
