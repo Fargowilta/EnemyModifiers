@@ -1,4 +1,4 @@
-﻿namespace FargoEnemyModifiers.Modifiers
+﻿/*namespace FargoEnemyModifiers.Modifiers
 {
     public enum ModifierID
     {
@@ -72,18 +72,16 @@
         Duke, //Duke - DukeAI
         //public const int Multiplying = 66; //cloning - emode illum bats
         //public const int Pyro = 67; //pyro - immune to lava, heals from fire debuffs
-
-
-        ///* 
-//allergic - increased damage from bees
-//unpredictable - inflict any debuff on hit
-//fiery - trail of fire (pumpkin echant equipped echreal)
-//aggressive - can dash towards you
-//shiny - they glow in the dark and drop torches
-//sad - a rain cloud is always above them
-//protected - gains iframes between attacks
-//shroomified - spawn spores on death
-//greedy - collects nearby items, steals money on hit
-//healthy - HP buff*/
+        
+        //allergic - increased damage from bees
+        //unpredictable - inflict any debuff on hit
+        //fiery - trail of fire (pumpkin echant equipped echreal)
+        //aggressive - can dash towards you
+        //shiny - they glow in the dark and drop torches
+        //sad - a rain cloud is always above them
+        //protected - gains iframes between attacks
+        //shroomified - spawn spores on death
+        //greedy - collects nearby items, steals money on hit
+        //healthy - HP buff
     }
-}
+}*/

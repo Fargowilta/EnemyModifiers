@@ -45,13 +45,33 @@ namespace FargoEnemyModifiers
         {
             switch (reader.ReadByte())
             {
-                case 0:
-                    NPC npc = Main.npc[reader.ReadByte()]; // npc whoAmI
-                    EnemyModifiersGlobalNPC globalNPC = npc.GetGlobalNPC<EnemyModifiersGlobalNPC>();
-                    int index = reader.ReadByte();
-                    globalNPC.Modifier = Modifiers[index]; // modifier index in array, array should be same across clients because all mods should match
-                    globalNPC.firstTick = false;
-                    globalNPC.ApplyModifier(npc, index);
+                case 0: //clients sync modifier data
+                    {
+                        NPC npc = Main.npc[reader.ReadByte()]; // npc whoAmI
+                        EnemyModifiersGlobalNPC globalNPC = npc.GetGlobalNPC<EnemyModifiersGlobalNPC>();
+                        int index = reader.ReadByte();
+                        if (npc.active)
+                        {
+                            globalNPC.Modifier = Modifiers[index]; // modifier index in array, array should be same across clients because all mods should match
+                            globalNPC.ApplyModifier(npc, index);
+                            //globalNPC.firstTick = false;
+                        }
+                    }
+                    break;
+
+                case 1: //server receives request from ONE client to sync npc
+                    {
+                        NPC npc = Main.npc[reader.ReadByte()]; // npc whoAmI
+                        EnemyModifiersGlobalNPC globalNPC = npc.GetGlobalNPC<EnemyModifiersGlobalNPC>();
+
+                        int playerToSendTo = reader.ReadByte();
+
+                        ModPacket packet = GetPacket();
+                        packet.Write((byte) 0);
+                        packet.Write((byte) npc.whoAmI);
+                        packet.Write((byte) EnemyModifiers.Modifiers.IndexOf(globalNPC.Modifier));
+                        packet.Send(playerToSendTo); //send this info ONLY to player that requested it
+                    }
                     break;
             }
         }

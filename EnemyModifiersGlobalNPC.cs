@@ -37,36 +37,36 @@ namespace FargoEnemyModifiers
 
         public void ApplyModifier(NPC npc, int randomType)
         {
-            //if (EnemyModifiersConfig.Instance.SetModifier)
-            //    randomType = (int) EnemyModifiersConfig.Instance.ModifierEnum;
-
             Modifier = Activator.CreateInstance(EnemyModifiers.Modifiers[randomType].GetType()) as Modifier;
             Modifier?.Setup(npc);
             Modifier?.UpdateModifierStats(npc);
-
-            if (Main.netMode != NetmodeID.Server)
-                return;
-
-            ModPacket packet = mod.GetPacket();
-            packet.Write((byte) 0);
-            packet.Write((byte) npc.whoAmI);
-            packet.Write((byte) EnemyModifiers.Modifiers.IndexOf(Modifier));
-            packet.Send();
         }
 
         public bool firstTick = true;
 
         public override bool PreAI(NPC npc)
         {
-            if (firstTick && Main.rand.Next(100) <= EnemyModifiersConfig.Instance.ChanceForModifier)
+            if (firstTick)
             {
-                if (!(npc.boss && !EnemyModifiersConfig.Instance.BossModifiers || npc.townNPC || npc.friendly ||
-                      npc.dontTakeDamage || npc.realLife != -1 || npc.SpawnedFromStatue ||
-                      npc.type == NPCID.TargetDummy ||
-                      EnemyModifiersConfig.Instance.NPCBlacklist.Contains(new NPCDefinition(npc.type))))
+                if (Main.netMode == NetmodeID.MultiplayerClient) //client sends modifier request to server
                 {
-                    int randomType = Main.rand.Next(EnemyModifiers.Modifiers.Count);
-                    ApplyModifier(npc, randomType);
+                    ModPacket packet = mod.GetPacket();
+                    packet.Write((byte) 1);
+                    packet.Write((byte) npc.whoAmI);
+                    packet.Write((byte) Main.myPlayer);
+                    packet.Send();
+                }
+                else if (Main.rand.Next(100) <= EnemyModifiersConfig.Instance.ChanceForModifier)
+                {
+                    if (!(npc.boss && !EnemyModifiersConfig.Instance.BossModifiers || npc.townNPC || npc.friendly
+                        || npc.dontTakeDamage || npc.realLife != -1 || npc.SpawnedFromStatue || npc.type == NPCID.TargetDummy
+                        || EnemyModifiersConfig.Instance.NPCBlacklist.Contains(new NPCDefinition(npc.type))))
+                    {
+                        int randomType = Main.rand.Next(EnemyModifiers.Modifiers.Count);
+                        if (EnemyModifiersConfig.Instance.SetModifier)
+                            randomType = EnemyModifiersConfig.Instance.ModifierToForce;
+                        ApplyModifier(npc, randomType);
+                    }
                 }
             }
 

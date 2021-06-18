@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.Serialization;
 using Terraria.ID;
 using Terraria.ModLoader.Config;
 
@@ -23,14 +24,26 @@ namespace FargoEnemyModifiers
         [Label("Modifier Chance (%)")] [Increment(1)] [Range(1, 100)] [DefaultValue(25)] [Slider]
         public int ChanceForModifier;
 
-        //[Label("Set Modifier")]
-        //[Tooltip("If true, all enemies will get the chosen modifier if any")]
-        //[DefaultValue(false)]
-        //public bool SetModifier;
+        [Label("Set Modifier")]
+        [Tooltip("If true, all enemies will be forced to use the modifier below")]
+        [DefaultValue(false)]
+        public bool SetModifier;
 
-        // TODO: finish this
-        //[DefaultValue(ModifierID.Unrelenting)] [DrawTicks]
-        //public ModifierID ModifierEnum;
+        private int modifierToForce;
+        [DefaultValue(0)]
+        [Label("Forced Modifier")]
+        public int ModifierToForce
+        {
+            get { return modifierToForce; }
+            set
+            {
+                modifierToForce = value;
+                if (modifierToForce < 0)
+                    modifierToForce = 0;
+                if (EnemyModifiers.Modifiers != null && EnemyModifiers.Modifiers.Count > 0 && modifierToForce > EnemyModifiers.Modifiers.Count - 1)
+                    modifierToForce = EnemyModifiers.Modifiers.Count - 1;
+            }
+        }
 
         [Header("Blacklists")] [Label("NPC Blacklist")] [Tooltip("NPCs here can never receive modifiers")]
         public List<NPCDefinition> NPCBlacklist = new List<NPCDefinition>

@@ -167,7 +167,7 @@ namespace FargoEnemyModifiers.Modifiers
                         ProjectileID.AncientDoomProjectile,
                         ProjectileID.ThornBall
                     });
-                    int max = Main.rand.Next(64);
+                    int max = Main.rand.Next(32);
                     for (int i = 0; i < max; i++)
                     {
                         Projectile.NewProjectile(npc.Center,
