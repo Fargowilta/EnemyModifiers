@@ -24,6 +24,10 @@ namespace FargoEnemyModifiers.Modifiers
         public float originalScale;
         public string originalName = "";
 
+        public virtual void Setup(NPC npc)
+        {
+        }
+
         public virtual void UpdateModifierStats(NPC npc)
         {
             npc.lifeMax = (int)(npc.lifeMax * HealthMultiplier);

@@ -24,13 +24,14 @@ namespace FargoEnemyModifiers
         [Label("Modifier Chance (%)")] [Increment(1)] [Range(1, 100)] [DefaultValue(25)] [Slider]
         public int ChanceForModifier;
 
-        [Label("Set Modifier")]
-        [Tooltip("If true, all enemies will get the chosen modifier if any")]
-        [DefaultValue(false)]
-        public bool SetModifier;
+        //[Label("Set Modifier")]
+        //[Tooltip("If true, all enemies will get the chosen modifier if any")]
+        //[DefaultValue(false)]
+        //public bool SetModifier;
 
-        [DefaultValue(ModifierID.Unrelenting)] [DrawTicks]
-        public ModifierID ModifierEnum;
+        // TODO: finish this
+        //[DefaultValue(ModifierID.Unrelenting)] [DrawTicks]
+        //public ModifierID ModifierEnum;
 
         [Header("Blacklists")] [Label("NPC Blacklist")] [Tooltip("NPCs here can never receive modifiers")]
         public List<NPCDefinition> NPCBlacklist = new List<NPCDefinition>

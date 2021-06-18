@@ -5,15 +5,15 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class Devouring : Modifier
     {
-        protected int baseHeight;
-        protected int baseWidth;
+        protected int baseHeight = 0;
+        protected int baseWidth = 0;
 
         public override string Name => "Devouring";
 
-        public Devouring(Entity npc)
+        public override void Setup(NPC npc)
         {
-            baseHeight = npc.height;
             baseWidth = npc.width;
+            baseHeight = npc.height;
         }
 
         public override void AI(NPC npc)

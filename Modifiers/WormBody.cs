@@ -30,7 +30,7 @@ namespace FargoEnemyModifiers.Modifiers
             // float num4 = 0.2f;
 
             if (npc.target < 0 || npc.target == 255 || Main.player[npc.target].dead ||
-                flag && Main.player[npc.target].position.Y < Main.worldSurface * 16.0)
+                flag /* && Main.player[npc.target].position.Y < Main.worldSurface * 16.0*/)
                 npc.TargetClosest();
 
             if (
@@ -86,8 +86,8 @@ namespace FargoEnemyModifiers.Modifiers
 
             bool flag2 = false;
 
-            if (!flag2)
-            {
+            //if (!flag2)
+            //{
                 for (int num33 = num29; num33 < num30; num33++)
                 {
                     for (int num34 = num31; num34 < num32; num34++)
@@ -113,7 +113,7 @@ namespace FargoEnemyModifiers.Modifiers
                         }
                     }
                 }
-            }
+            //}
 
             const float num37 = 8f;
             const float num38 = 0.07f;
@@ -227,7 +227,7 @@ namespace FargoEnemyModifiers.Modifiers
                     float num58 = num37 / num53;
                     num40 *= num58;
                     num41 *= num58;
-                    const bool flag4 = false;
+                    // const bool flag4 = false;
 
                     // in-accessible
                     /*if (flag4)

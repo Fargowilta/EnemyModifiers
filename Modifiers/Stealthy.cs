@@ -8,7 +8,7 @@ namespace FargoEnemyModifiers.Modifiers
 
         public override void AI(NPC npc)
         {
-            if (npc.alpha < 200) 
+            if (npc.alpha < 200)
                 npc.alpha++;
         }
 
@@ -22,4 +22,4 @@ namespace FargoEnemyModifiers.Modifiers
             npc.alpha = 0;
         }
     }
-}}
+}

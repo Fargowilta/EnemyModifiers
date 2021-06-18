@@ -10,7 +10,7 @@ namespace FargoEnemyModifiers.Modifiers
 
         public override bool PreAI(NPC npc)
         {
-            //let worms spawn their segements first
+            //let worms spawn their segments first
             if (npc.aiStyle == 6 && ++counter <= 2)
                 return true;
 
