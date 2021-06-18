@@ -26,6 +26,8 @@ namespace FargoEnemyModifiers
 
         public virtual bool DropLoot { get; set; } = true;
 
+        public int modifierType = -1;
+
         public override void ResetEffects(NPC npc)
         {
             if (RallyTimer > 0 && --RallyTimer <= 0)
@@ -35,9 +37,9 @@ namespace FargoEnemyModifiers
                 Fortified = false;
         }
 
-        public void ApplyModifier(NPC npc, int randomType)
+        public void ApplyModifier(NPC npc, int type)
         {
-            Modifier = Activator.CreateInstance(EnemyModifiers.Modifiers[randomType].GetType()) as Modifier;
+            Modifier = Activator.CreateInstance(EnemyModifiers.Modifiers[type].GetType()) as Modifier;
             Modifier?.Setup(npc);
             Modifier?.UpdateModifierStats(npc);
         }
@@ -58,14 +60,14 @@ namespace FargoEnemyModifiers
                 }
                 else if (Main.rand.Next(100) <= EnemyModifiersConfig.Instance.ChanceForModifier)
                 {
-                    if (!(npc.boss && !EnemyModifiersConfig.Instance.BossModifiers || npc.townNPC || npc.friendly
+                    if (!((npc.boss && !EnemyModifiersConfig.Instance.BossModifiers) || npc.townNPC || npc.friendly
                         || npc.dontTakeDamage || npc.realLife != -1 || npc.SpawnedFromStatue || npc.type == NPCID.TargetDummy
                         || EnemyModifiersConfig.Instance.NPCBlacklist.Contains(new NPCDefinition(npc.type))))
                     {
-                        int randomType = Main.rand.Next(EnemyModifiers.Modifiers.Count);
+                        modifierType = Main.rand.Next(EnemyModifiers.Modifiers.Count);
                         if (EnemyModifiersConfig.Instance.SetModifier)
-                            randomType = EnemyModifiersConfig.Instance.ModifierToForce;
-                        ApplyModifier(npc, randomType);
+                            modifierType = EnemyModifiersConfig.Instance.ModifierToForce;
+                        ApplyModifier(npc, modifierType);
                     }
                 }
             }

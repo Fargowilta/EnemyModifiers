@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using FargoEnemyModifiers.Modifiers;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace FargoEnemyModifiers
@@ -49,8 +50,8 @@ namespace FargoEnemyModifiers
                     {
                         NPC npc = Main.npc[reader.ReadByte()]; // npc whoAmI
                         EnemyModifiersGlobalNPC globalNPC = npc.GetGlobalNPC<EnemyModifiersGlobalNPC>();
-                        int index = reader.ReadByte();
-                        if (npc.active)
+                        int index = reader.ReadInt32();
+                        if (Main.netMode == NetmodeID.MultiplayerClient && npc.active && index > -1 && index < Modifiers.Count)
                         {
                             globalNPC.Modifier = Modifiers[index]; // modifier index in array, array should be same across clients because all mods should match
                             globalNPC.ApplyModifier(npc, index);
@@ -61,16 +62,21 @@ namespace FargoEnemyModifiers
 
                 case 1: //server receives request from ONE client to sync npc
                     {
+                        //if (Main.netMode == NetmodeID.Server) NetMessage.BroadcastChatMessage(Terraria.Localization.NetworkText.FromLiteral("server got modifier request"), Color.White);
+
                         NPC npc = Main.npc[reader.ReadByte()]; // npc whoAmI
                         EnemyModifiersGlobalNPC globalNPC = npc.GetGlobalNPC<EnemyModifiersGlobalNPC>();
 
                         int playerToSendTo = reader.ReadByte();
 
-                        ModPacket packet = GetPacket();
-                        packet.Write((byte) 0);
-                        packet.Write((byte) npc.whoAmI);
-                        packet.Write((byte) EnemyModifiers.Modifiers.IndexOf(globalNPC.Modifier));
-                        packet.Send(playerToSendTo); //send this info ONLY to player that requested it
+                        if (Main.netMode == NetmodeID.Server)
+                        {
+                            ModPacket packet = GetPacket();
+                            packet.Write((byte) 0);
+                            packet.Write((byte) npc.whoAmI);
+                            packet.Write(globalNPC.modifierType);
+                            packet.Send(playerToSendTo); //send this info ONLY to player that requested it
+                        }
                     }
                     break;
             }
