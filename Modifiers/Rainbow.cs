@@ -5,14 +5,11 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class Rainbow : Modifier
     {
-        public Rainbow()
-        {
-            name = "Rainbow";
-        }
+        public override string Name => "Rainbow";
 
         public override Color? GetAlpha()
         {
-            return new Color(Main.DiscoR, Main.DiscoG, Main.DiscoB);
+            return Main.DiscoColor;
         }
     }
 }

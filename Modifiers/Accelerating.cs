@@ -4,19 +4,17 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class Accelerating : Modifier
     {
-        public Accelerating()
-        {
-            name = "Accelerating";
-        }
+        public override string Name => "Accelerating";
 
-        private int counter;
+        protected int counter;
+
         public override bool PreAI(NPC npc)
         {
-            if (++counter > 30 && SpeedMultiplier < 4f)
-            {
-                SpeedMultiplier *= 1.05f;
-                counter = 0;
-            }
+            if (++counter <= 30 || !(SpeedMultiplier < 4f))
+                return true;
+
+            SpeedMultiplier *= 1.05f;
+            counter = 0;
 
             return true;
         }

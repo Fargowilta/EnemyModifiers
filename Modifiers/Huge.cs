@@ -2,12 +2,12 @@
 {
     public class Huge : Modifier
     {
-        public Huge()
-        {
-            name = "Huge";
-            HealthMultiplier = 1.25f;
-            SizeMultiplier = 1.5f;
-            SpeedMultiplier = 0.85f;
-        }
+        public override string Name => "Huge";
+
+        public override float HealthMultiplier => 1.25f;
+
+        public override float SizeMultiplier => 1.5f;
+
+        public override float SpeedMultiplier => 0.85f;
     }
 }

@@ -4,10 +4,7 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class Rare : Modifier
     {
-        public Rare()
-        {
-            name = "Rare";
-        }
+        public override string Name => "Rare";
 
         private bool firstLoot = true;
 
@@ -23,9 +20,7 @@ namespace FargoEnemyModifiers.Modifiers
                     npc.value = 0;
 
                     if (NPC.killCount[Item.NPCtoBanner(npc.BannerID())] % 50 != 0)
-                    {
                         NPC.killCount[Item.NPCtoBanner(npc.BannerID())]--;
-                    }
                 }
             }
 

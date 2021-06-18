@@ -2,10 +2,8 @@
 {
     public class Menacing : Modifier
     {
-        public Menacing()
-        {
-            name = "Menacing";
-            DamageMultiplier = 1.5f;
-        }
+        public override string Name => "Menacing";
+
+        public override float DamageMultiplier => 1.5f;
     }
 }

@@ -82,7 +82,7 @@ namespace FargoEnemyModifiers
                     break;
 
                 case (int)ModifierID.Inpenetrable:
-                    Modifier = new Inpenetrable();
+                    Modifier = new Impenetrable();
                     break;
 
                 case (int)ModifierID.Light:
@@ -118,7 +118,7 @@ namespace FargoEnemyModifiers
                     break;
 
                 case (int)ModifierID.Hexproof:
-                    Modifier = new Hexproof();
+                    Modifier = new HexProof();
                     break;
 
                 case (int)ModifierID.Bulletproof:

@@ -62,7 +62,7 @@ namespace FargoEnemyModifiers.Modifiers
             npc.GivenName = Name + " " + originalName;
         }
 
-        public static void Aura(NPC npc, float distance, bool reverse = false, int dustId = DustID.GoldFlame)
+        public static void CreateAura(NPC npc, float distance, bool reverse = false, int dustId = DustID.GoldFlame)
         {
             const int baseDistance = 500;
             const int baseMax = 20;

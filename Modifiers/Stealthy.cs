@@ -4,17 +4,12 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class Stealthy : Modifier
     {
-        public Stealthy()
-        {
-            name = "Stealthy";
-        }
+        public override string Name => "Stealthy";
 
         public override void AI(NPC npc)
         {
-            if (npc.alpha < 200)
-            {
+            if (npc.alpha < 200) 
                 npc.alpha++;
-            }
         }
 
         public override void OnHitByItem(NPC npc, Player player)
@@ -27,4 +22,4 @@ namespace FargoEnemyModifiers.Modifiers
             npc.alpha = 0;
         }
     }
-}
+}}

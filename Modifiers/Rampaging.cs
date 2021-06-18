@@ -5,10 +5,7 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class Rampaging : Modifier
     {
-        public Rampaging()
-        {
-            name = "Rampaging";
-        }
+        public override string Name => "Rampaging";
 
         public override void OnHitPlayer(NPC npc, Player target)
         {

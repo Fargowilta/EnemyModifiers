@@ -4,45 +4,42 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class Worm : Modifier
     {
-        public Worm()
-        {
-            name = "Worm";
-            HealthMultiplier = 2f;
-            KnockBackMultiplier = 0;
-        }
+        public override string Name => "Worm";
 
-        private bool BodySpawned;
+        public override float HealthMultiplier => 2f;
+
+        public override float KnockBackMultiplier => 0f;
+
+        protected bool bodySpawned;
 
         public override bool PreAI(NPC npc)
         {
-            if (!BodySpawned)
+            if (bodySpawned)
+                return true;
+
+            int prevIndex = npc.whoAmI;
+
+            for (int i = 0; i < 7; i++)
             {
-				int prevIndex = npc.whoAmI;
+                int index = NPC.NewNPC((int) (npc.position.X + npc.width / 2f), (int) (npc.position.Y + npc.height),
+                    npc.type, prevIndex);
 
-                for (int i = 0; i < 7; i++)
-                {
-                    int index = NPC.NewNPC((int)(npc.position.X + npc.width / 2), (int)(npc.position.Y + npc.height), npc.type, prevIndex);
+                NPC newNPC = Main.npc[index];
+                newNPC.GetGlobalNPC<EnemyModifiersGlobalNPC>().firstTick = false;
+                newNPC.GetGlobalNPC<EnemyModifiersGlobalNPC>().Modifier = new WormBody();
+                newNPC.realLife = npc.whoAmI;
 
-                    NPC newNPC = Main.npc[index];
-					newNPC.GetGlobalNPC<EnemyModifiersGlobalNPC>().firstTick = false;
-					newNPC.GetGlobalNPC<EnemyModifiersGlobalNPC>().modifier = new WormBody();
-					newNPC.realLife = npc.whoAmI;
+                if (i != 0)
+                    Main.npc[prevIndex].localAI[0] = index;
 
-					if (i != 0)
-					{
-						Main.npc[prevIndex].localAI[0] = index;
-					}
+                newNPC.localAI[1] = prevIndex;
+                npc.netUpdate = true;
 
-                    newNPC.localAI[1] = prevIndex;
-                    npc.netUpdate = true;
+                prevIndex = index;
+            }
 
-					prevIndex = index;
-				}
-
-                BodySpawned = true;
-            }           
-
+            bodySpawned = true;
             return true;
         }
-	}
+    }
 }

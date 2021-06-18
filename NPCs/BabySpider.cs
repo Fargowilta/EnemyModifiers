@@ -38,7 +38,7 @@ namespace FargoEnemyModifiers.NPCs
 			Player target = Main.player[npc.FindClosestPlayer()];
 
 			float num595 = Vector2.Distance(target.Center, npc.Center);
-			if (((Vector2.Distance(npc.Center, value14) > num595 && num595 < num593) || !flag20) && Collision.CanHit(npc.position, npc.width, npc.height, target.position, target.width, target.height))
+			if ((Vector2.Distance(npc.Center, value14) > num595 && num595 < num593 || !flag20) && Collision.CanHit(npc.position, npc.width, npc.height, target.position, target.width, target.height))
 			{
 				value14 = target.Center;
 				flag20 = true;

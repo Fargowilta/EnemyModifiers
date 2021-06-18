@@ -2,10 +2,8 @@
 {
     public class Armored : Modifier
     {
-        public Armored()
-        {
-            name = "Armored";
-            DefenseMultiplier = 1.5f;
-        }
+        public override string Name => "Armored";
+
+        public override float DefenseMultiplier => 1.5f;
     }
 }

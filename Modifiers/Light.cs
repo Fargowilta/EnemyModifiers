@@ -2,10 +2,8 @@
 {
     public class Light : Modifier
     {
-        public Light()
-        {
-            name = "Light";
-            KnockBackMultiplier = 1.4f;
-        }
+        public override string Name => "Light";
+
+        public override float KnockBackMultiplier => 1.4f;
     }
 }

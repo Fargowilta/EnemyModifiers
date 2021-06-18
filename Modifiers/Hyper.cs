@@ -4,29 +4,26 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class Hyper : Modifier
     {
-        public Hyper()
-        {
-            name = "Hyper";
-            SpeedMultiplier = 1.5f;
-        }
+        public override string Name => "Hyper";
 
-        private bool hyperGo = true;
+        public override float SpeedMultiplier => 1.5f;
+
+        protected bool hyperGo = true;
+
         public override bool PreAI(NPC npc)
         {
-            if (hyperGo)
-            {
-                hyperGo = false;
-                npc.AI();
-            }
+            if (!hyperGo)
+                return true;
+
+            hyperGo = false;
+            npc.AI();
             return true;
         }
 
         public override void PostAI(NPC npc)
         {
             if (!hyperGo)
-            {
                 hyperGo = true;
-            }
         }
     }
 }

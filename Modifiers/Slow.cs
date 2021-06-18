@@ -2,10 +2,8 @@
 {
     public class Slow : Modifier
     {
-        public Slow()
-        {
-            name = "Slow";
-            SpeedMultiplier = 0.5f;
-        }
+        public override string Name => "Slow";
+
+        public override float SpeedMultiplier => 0.5f;
     }
 }

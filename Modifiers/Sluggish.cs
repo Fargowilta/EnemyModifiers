@@ -4,12 +4,10 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class Sluggish : Modifier
     {
-        public Sluggish()
-        {
-            name = "Sluggish";
-        }
+        public override string Name => "Sluggish";
 
         private bool sluggishGo;
+
         public override bool PreAI(NPC npc)
         {
             if (sluggishGo)

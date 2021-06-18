@@ -5,13 +5,13 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class Devouring : Modifier
     {
-        private int baseHeight;
-        private int baseWidth;
+        protected int baseHeight;
+        protected int baseWidth;
 
-        public Devouring(NPC npc)
+        public override string Name => "Devouring";
+
+        public Devouring(Entity npc)
         {
-            name = "Devouring";
-
             baseHeight = npc.height;
             baseWidth = npc.width;
         }
@@ -22,27 +22,29 @@ namespace FargoEnemyModifiers.Modifiers
             {
                 NPC otherNpc = Main.npc[i];
 
-                if (otherNpc.active && npc.whoAmI != otherNpc.whoAmI && otherNpc.realLife != npc.whoAmI && npc.realLife != otherNpc.whoAmI && otherNpc.Hitbox.Intersects(npc.Hitbox) && otherNpc.lifeMax <= npc.lifeMax)
-                {
-                    int lifeGained = otherNpc.lifeMax / 4;
-                    npc.lifeMax += lifeGained;
-                    npc.life += lifeGained;
-                    npc.HealEffect(lifeGained);
+                if (!otherNpc.active || npc.whoAmI == otherNpc.whoAmI || otherNpc.realLife == npc.whoAmI ||
+                    npc.realLife == otherNpc.whoAmI || !otherNpc.Hitbox.Intersects(npc.Hitbox) ||
+                    otherNpc.lifeMax > npc.lifeMax)
+                    continue;
 
-                    npc.damage = (int)(npc.damage * 1.05f);
+                int lifeGained = otherNpc.lifeMax / 4;
+                npc.lifeMax += lifeGained;
+                npc.life += lifeGained;
+                npc.HealEffect(lifeGained);
 
-                    npc.position = npc.Center;
-                    npc.scale *= 1.1f;
-                    npc.width = (int)(baseWidth * npc.scale);
-                    npc.height = (int)(baseHeight * npc.scale);
-                    npc.Center = npc.position;
-                    
+                npc.damage = (int) (npc.damage * 1.05f);
 
-                    otherNpc.GetGlobalNPC<EnemyModifiersGlobalNPC>().DropLoot = false;
-                    otherNpc.StrikeNPC(otherNpc.lifeMax, 0, 1, true);
+                npc.position = npc.Center;
+                npc.scale *= 1.1f;
+                npc.width = (int) (baseWidth * npc.scale);
+                npc.height = (int) (baseHeight * npc.scale);
+                npc.Center = npc.position;
 
-                    Main.PlaySound(new LegacySoundStyle(4, 13), npc.Center);
-                }
+
+                otherNpc.GetGlobalNPC<EnemyModifiersGlobalNPC>().DropLoot = false;
+                otherNpc.StrikeNPC(otherNpc.lifeMax, 0, 1, true);
+
+                Main.PlaySound(new LegacySoundStyle(4, 13), npc.Center);
             }
         }
     }

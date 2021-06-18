@@ -2,10 +2,8 @@
 {
     public class Swift : Modifier
     {
-        public Swift()
-        {
-            name = "Swift";
-            SpeedMultiplier = 1.5f;
-        }
+        public override string Name => "Swift";
+
+        public override float SpeedMultiplier => 1.5f;
     }
 }

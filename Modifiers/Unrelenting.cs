@@ -2,10 +2,8 @@
 {
     public class Unrelenting : Modifier
     {
-        public Unrelenting()
-        {
-            name = "Unrelenting";
-            KnockBackMultiplier = 0f;
-        }
+        public override string Name => "Unrelenting";
+
+        public override float KnockBackMultiplier => 0f;
     }
 }

@@ -4,26 +4,19 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class Regenerating : Modifier
     {
-        public Regenerating()
-        {
-            name = "Regenerating";
-        }
+        public override string Name => "Regenerating";
 
         private int counter;
+
         public override void AI(NPC npc)
         {
-            if (npc.life < npc.lifeMax)
-            {
-                counter++;
+            if (npc.life >= npc.lifeMax || ++counter < 300)
+                return;
 
-                if (counter >= 300)
-                {
-                    int amtHealed = npc.lifeMax / 10;
-                    npc.life += amtHealed;
-                    npc.HealEffect(amtHealed);
-                    counter = 0;
-                }
-            }
+            int amountHealed = npc.lifeMax / 10;
+            npc.life += amountHealed;
+            npc.HealEffect(amountHealed);
+            counter = 0;
         }
     }
 }

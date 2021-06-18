@@ -2,9 +2,6 @@
 {
     public class Royal : Modifier
     {
-        public Royal()
-        {
-            name = "Royal";
-        }
+        public override string Name => "Royal";
     }
 }

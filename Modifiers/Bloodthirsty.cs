@@ -4,14 +4,11 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class Bloodthirsty : Modifier
     {
-        public Bloodthirsty()
-        {
-            name = "Bloodthirsty";
-        }
+        public override string Name => "Bloodthirsty";
 
         public override void OnHitPlayer(NPC npc, Player target)
         {
-            npc.damage = (int)(npc.damage * 1.25f);
+            npc.damage = (int) (npc.damage * 1.25f);
         }
     }
 }

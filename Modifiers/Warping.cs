@@ -5,29 +5,26 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class Warping : Modifier
     {
-        public Warping()
-        {
-            name = "Warping";
-        }
+        public override string Name => "Warping";
 
-        private bool Warped;
+        protected bool warped;
 
         public override void ModifyHitByItem(NPC npc, Player player, Item item, ref int damage, ref float knockback)
         {
-            if (!Warped && (npc.life - damage) < npc.lifeMax / 2)
-            {
-                SwitchPlaces(npc, player);
-                knockback = 0;
-            }
+            if (warped || npc.life - damage >= npc.lifeMax / 2)
+                return;
+
+            SwitchPlaces(npc, player);
+            knockback = 0;
         }
 
         public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref int damage, ref float knockback)
         {
-            if (!Warped && (npc.life - damage) < npc.lifeMax / 2)
-            {
-                SwitchPlaces(npc, Main.player[projectile.owner]);
-                knockback = 0;
-            }
+            if (warped || npc.life - damage >= npc.lifeMax / 2)
+                return;
+
+            SwitchPlaces(npc, Main.player[projectile.owner]);
+            knockback = 0;
         }
 
         private void SwitchPlaces(NPC npc, Player player)
@@ -38,10 +35,9 @@ namespace FargoEnemyModifiers.Modifiers
             playerPos.Y -= 10;
 
 
-            if (Vector2.Distance(npcPos, playerPos) > 1000 || !Collision.CanHitLine(npcPos, npc.width, npc.height, playerPos, player.width, player.height))
-            {
+            if (Vector2.Distance(npcPos, playerPos) > 1000 || !Collision.CanHitLine(npcPos, npc.width, npc.height,
+                playerPos, player.width, player.height))
                 return;
-            }
 
             npc.Teleport(playerPos);
             player.Teleport(npcPos);
@@ -49,7 +45,7 @@ namespace FargoEnemyModifiers.Modifiers
             player.immune = true;
             player.immuneTime = 30;
 
-            Warped = true;
+            warped = true;
         }
     }
 }
