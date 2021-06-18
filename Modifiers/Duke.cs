@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -185,7 +186,7 @@ namespace FargoEnemyModifiers.Modifiers
             }
             if ((double)npc.ai[0] == -1.0)
             {
-                npc.velocity = Vector2.op_Multiply(npc.velocity, 0.98f);
+                npc.velocity *= 0.98f;
                 int num20 = Math.Sign((float)(player.Center.X - center1.X));
                 if (num20 != 0)
                 {
@@ -194,7 +195,7 @@ namespace FargoEnemyModifiers.Modifiers
                 }
                 if ((double)npc.ai[2] > 20.0)
                 {
-                    npc.velocity.Y = (__Null) - 2.0;
+                    npc.velocity.Y = -2f;
                     npc.alpha = npc.alpha - 5;
                     if (Collision.SolidCollision(npc.position, npc.width, npc.height))
                         npc.alpha = npc.alpha + 15;
@@ -208,14 +209,14 @@ namespace FargoEnemyModifiers.Modifiers
                     int num23 = 36;
                     for (int index1 = 0; index1 < num23; ++index1)
                     {
-                        Vector2 vector2_1 = Vector2.op_Addition(Vector2.op_Multiply(Vector2.op_Multiply(Vector2.op_Multiply(Vector2.Normalize(npc.velocity), new Vector2((float)npc.width / 2f, (float)npc.height)), 0.75f), 0.5f).RotatedBy((double)(index1 - (num23 / 2 - 1)) * 6.28318548202515 / (double)num23, (Vector2)null), npc.Center);
+                        Vector2 vector2_1 = (Vector2.Normalize(npc.velocity) * new Vector2((float)npc.width / 2f, (float)npc.height) * 0.75f * 0.5f).RotatedBy((double)(index1 - (num23 / 2 - 1)) * 6.28318548202515 / (double)num23) + npc.Center;
                         Vector2 center2 = npc.Center;
-                        Vector2 vector2_2 = Vector2.op_Subtraction(vector2_1, center2);
+                        Vector2 vector2_2 = vector2_1 - center2;
                         Vector2 vector2_3 = vector2_2;
-                        int index2 = Dust.NewDust(Vector2.op_Addition(vector2_1, vector2_3), 0, 0, 172, (float)(vector2_2.X * 2.0), (float)(vector2_2.Y * 2.0), 100, (Color)null, 1.4f);
+                        int index2 = Dust.NewDust(vector2_1 + vector2_3, 0, 0, 172, (float)(vector2_2.X * 2.0), (float)(vector2_2.Y * 2.0), 100, default, 1.4f);
                         Main.dust[index2].noGravity = true;
                         Main.dust[index2].noLight = true;
-                        Main.dust[index2].velocity = Vector2.op_Multiply(Vector2.Normalize(vector2_2), 3f);
+                        Main.dust[index2].velocity = Vector2.Normalize(vector2_2) * 3f;
                     }
                     Main.PlaySound(29, (int)center1.X, (int)center1.Y, 20, 1f, 0.0f);
                 }
@@ -230,8 +231,8 @@ namespace FargoEnemyModifiers.Modifiers
             else if ((double)npc.ai[0] == 0.0 && !player.dead)
             {
                 if ((double)npc.ai[1] == 0.0)
-                    npc.ai[1] = (float)(300 * Math.Sign((float)Vector2.op_Subtraction(center1, player.Center).X));
-                Vector2 vector2 = Vector2.op_Multiply(Vector2.Normalize(Vector2.op_Subtraction(Vector2.op_Subtraction(Vector2.op_Addition(player.Center, new Vector2(npc.ai[1], -200f)), center1), npc.velocity)), num3);
+                    npc.ai[1] = (float)(300 * Math.Sign((center1 - player.Center).X));
+                Vector2 vector2 = Vector2.Normalize(player.Center + new Vector2(npc.ai[1], -200f) - center1 - npc.velocity) * num3;
                 if (npc.velocity.X < vector2.X)
                 {
                     npc.velocity.X += moveSpeed;
@@ -300,7 +301,7 @@ namespace FargoEnemyModifiers.Modifiers
                     npc.ai[0] = 1f;
                     npc.ai[1] = 0.0f;
                     npc.ai[2] = 0.0f;
-                    npc.velocity = Vector2.op_Multiply(Vector2.Normalize(Vector2.op_Subtraction(player.Center, center1)), num5);
+                    npc.velocity = Vector2.Normalize(player.Center - center1) * num5;
                     npc.rotation = (float)Math.Atan2((double)npc.velocity.Y, (double)npc.velocity.X);
                     if (num24 != 0)
                     {
@@ -335,17 +336,17 @@ namespace FargoEnemyModifiers.Modifiers
                 int num20 = 7;
                 for (int index1 = 0; index1 < num20; ++index1)
                 {
-                    Vector2 vector2_1 = Vector2.op_Addition(Vector2.op_Multiply(Vector2.op_Multiply(Vector2.Normalize(npc.velocity), new Vector2((float)(npc.width + 50) / 2f, (float)npc.height)), 0.75f).RotatedBy((double)(index1 - (num20 / 2 - 1)) * Math.PI / (double)num20, (Vector2)null), center1);
-                    Vector2 vector2_2 = Vector2.op_Multiply(((float)(Main.rand.NextDouble() * 3.14159274101257) - 1.570796f).ToRotationVector2(), (float)Main.rand.Next(3, 8));
+                    Vector2 vector2_1 = (Vector2.Normalize(npc.velocity) * new Vector2((float)(npc.width + 50) / 2f, (float)npc.height) * 0.75f).RotatedBy((double)(index1 - (num20 / 2 - 1)) * Math.PI / (double)num20) + center1;
+                    Vector2 vector2_2 = ((float)(Main.rand.NextDouble() * 3.14159274101257) - 1.570796f).ToRotationVector2() * (float)Main.rand.Next(3, 8);
                     Vector2 vector2_3 = vector2_2;
-                    int index2 = Dust.NewDust(Vector2.op_Addition(vector2_1, vector2_3), 0, 0, 172, (float)(vector2_2.X * 2.0), (float)(vector2_2.Y * 2.0), 100, (Color)null, 1.4f);
+                    int index2 = Dust.NewDust(vector2_1 + vector2_3, 0, 0, 172, (float)(vector2_2.X * 2.0), (float)(vector2_2.Y * 2.0), 100, default, 1.4f);
                     Main.dust[index2].noGravity = true;
                     Main.dust[index2].noLight = true;
                     Dust dust1 = Main.dust[index2];
-                    Vector2 vector2_4 = Vector2.op_Division(dust1.velocity, 4f);
+                    Vector2 vector2_4 = dust1.velocity / 4f;
                     dust1.velocity = vector2_4;
                     Dust dust2 = Main.dust[index2];
-                    Vector2 vector2_5 = Vector2.op_Subtraction(dust2.velocity, npc.velocity);
+                    Vector2 vector2_5 = dust2.velocity - npc.velocity;
                     dust2.velocity = vector2_5;
                 }
                 ++npc.ai[2];
@@ -360,8 +361,8 @@ namespace FargoEnemyModifiers.Modifiers
             else if ((double)npc.ai[0] == 2.0)
             {
                 if ((double)npc.ai[1] == 0.0)
-                    npc.ai[1] = (float)(300 * Math.Sign((float)Vector2.op_Subtraction(center1, player.Center).X));
-                Vector2 vector2_1 = Vector2.op_Multiply(Vector2.Normalize(Vector2.op_Subtraction(Vector2.op_Subtraction(Vector2.op_Addition(player.Center, new Vector2(npc.ai[1], -200f)), center1), npc.velocity)), num9);
+                    npc.ai[1] = (float)(300 * Math.Sign((center1 - player.Center).X));
+                Vector2 vector2_1 = Vector2.Normalize(player.Center + new Vector2(npc.ai[1], -200f) - center1 - npc.velocity) * num9;
                 if (npc.velocity.X < vector2_1.X)
                 {
                     npc.velocity.X += num8;
@@ -393,7 +394,7 @@ namespace FargoEnemyModifiers.Modifiers
                     Main.PlaySound(4, (int)npc.Center.X, (int)npc.Center.Y, 19, 1f, 0.0f);
                     if (Main.netMode != 1)
                     {
-                        Vector2 vector2_2 = Vector2.op_Addition(Vector2.op_Division(Vector2.op_Multiply(Vector2.Normalize(Vector2.op_Subtraction(player.Center, center1)), (float)(npc.width + 20)), 2f), center1);
+                        Vector2 vector2_2 = Vector2.Normalize(player.Center - center1) * (float)(npc.width + 20) / 2f + center1;
                         NPC.NewNPC((int)vector2_2.X, (int)vector2_2.Y + 45, 371, 0, 0.0f, 0.0f, 0.0f, 0.0f, (int)byte.MaxValue);
                     }
                 }
@@ -415,13 +416,13 @@ namespace FargoEnemyModifiers.Modifiers
             }
             else if ((double)npc.ai[0] == 3.0)
             {
-                npc.velocity = Vector2.op_Multiply(npc.velocity, 0.98f);
-                npc.velocity.Y = (__Null)(double)MathHelper.Lerp((float)npc.velocity.Y, 0.0f, 0.02f);
+                npc.velocity *= 0.98f;
+                npc.velocity.Y = MathHelper.Lerp((float)npc.velocity.Y, 0.0f, 0.02f);
                 if ((double)npc.ai[2] == (double)(num10 - 30))
                     Main.PlaySound(29, (int)center1.X, (int)center1.Y, 9, 1f, 0.0f);
                 if (Main.netMode != 1 && (double)npc.ai[2] == (double)(num10 - 30))
                 {
-                    Vector2 vector2 = Vector2.op_Addition(Vector2.op_Division(Vector2.op_Multiply(Vector2.op_Multiply(npc.rotation.ToRotationVector2(), Vector2.op_Multiply(Vector2.get_UnitX(), (float)npc.direction)), (float)(npc.width + 20)), 2f), center1);
+                    Vector2 vector2 = npc.rotation.ToRotationVector2() * Vector2.UnitX * (float)npc.direction * (float)(npc.width + 20) / 2f + center1;
                     Projectile.NewProjectile((float)vector2.X, (float)vector2.Y, (float)(npc.direction * 2), 8f, 385, 0, 0.0f, Main.myPlayer, 0.0f, 0.0f);
                     Projectile.NewProjectile((float)vector2.X, (float)vector2.Y, (float)(-npc.direction * 2), 8f, 385, 0, 0.0f, Main.myPlayer, 0.0f, 0.0f);
                 }
@@ -435,8 +436,8 @@ namespace FargoEnemyModifiers.Modifiers
             }
             else if ((double)npc.ai[0] == 4.0)
             {
-                npc.velocity = Vector2.op_Multiply(npc.velocity, 0.98f);
-                npc.velocity.Y = (__Null)(double)MathHelper.Lerp((float)npc.velocity.Y, 0.0f, 0.02f);
+                npc.velocity *= 0.98f;
+                npc.velocity.Y = MathHelper.Lerp((float)npc.velocity.Y, 0.0f, 0.02f);
                 if ((double)npc.ai[2] == (double)(num11 - 60))
                     Main.PlaySound(29, (int)center1.X, (int)center1.Y, 20, 1f, 0.0f);
                 ++npc.ai[2];
@@ -451,8 +452,8 @@ namespace FargoEnemyModifiers.Modifiers
             else if ((double)npc.ai[0] == 5.0 && !player.dead)
             {
                 if ((double)npc.ai[1] == 0.0)
-                    npc.ai[1] = (float)(300 * Math.Sign((float)Vector2.op_Subtraction(center1, player.Center).X));
-                Vector2 vector2 = Vector2.op_Multiply(Vector2.Normalize(Vector2.op_Subtraction(Vector2.op_Subtraction(Vector2.op_Addition(player.Center, new Vector2(npc.ai[1], -200f)), center1), npc.velocity)), num3);
+                    npc.ai[1] = (float)(300 * Math.Sign((center1 - player.Center).X));
+                Vector2 vector2 = Vector2.Normalize(player.Center + new Vector2(npc.ai[1], -200f) - center1 - npc.velocity) * num3;
                 if (npc.velocity.X < vector2.X)
                 {
                     npc.velocity.X += moveSpeed;
@@ -517,7 +518,7 @@ namespace FargoEnemyModifiers.Modifiers
                     npc.ai[0] = 6f;
                     npc.ai[1] = 0.0f;
                     npc.ai[2] = 0.0f;
-                    npc.velocity = Vector2.op_Multiply(Vector2.Normalize(Vector2.op_Subtraction(player.Center, center1)), num5);
+                    npc.velocity = Vector2.Normalize(player.Center - center1) * num5;
                     npc.rotation = (float)Math.Atan2((double)npc.velocity.Y, (double)npc.velocity.X);
                     if (num24 != 0)
                     {
@@ -529,7 +530,7 @@ namespace FargoEnemyModifiers.Modifiers
                 }
                 else if (num25 == 2)
                 {
-                    npc.velocity = Vector2.op_Multiply(Vector2.Normalize(Vector2.op_Subtraction(player.Center, center1)), num17);
+                    npc.velocity = Vector2.Normalize(player.Center - center1) * num17;
                     npc.rotation = (float)Math.Atan2((double)npc.velocity.Y, (double)npc.velocity.X);
                     if (num24 != 0)
                     {
@@ -561,17 +562,17 @@ namespace FargoEnemyModifiers.Modifiers
                 int num20 = 7;
                 for (int index1 = 0; index1 < num20; ++index1)
                 {
-                    Vector2 vector2_1 = Vector2.op_Addition(Vector2.op_Multiply(Vector2.op_Multiply(Vector2.Normalize(npc.velocity), new Vector2((float)(npc.width + 50) / 2f, (float)npc.height)), 0.75f).RotatedBy((double)(index1 - (num20 / 2 - 1)) * Math.PI / (double)num20, (Vector2)null), center1);
-                    Vector2 vector2_2 = Vector2.op_Multiply(((float)(Main.rand.NextDouble() * 3.14159274101257) - 1.570796f).ToRotationVector2(), (float)Main.rand.Next(3, 8));
+                    Vector2 vector2_1 = (Vector2.Normalize(npc.velocity) * new Vector2((float)(npc.width + 50) / 2f, (float)npc.height) * 0.75f).RotatedBy((double)(index1 - (num20 / 2 - 1)) * Math.PI / (double)num20) + center1;
+                    Vector2 vector2_2 = ((float)(Main.rand.NextDouble() * 3.14159274101257) - 1.570796f).ToRotationVector2() * (float)Main.rand.Next(3, 8);
                     Vector2 vector2_3 = vector2_2;
-                    int index2 = Dust.NewDust(Vector2.op_Addition(vector2_1, vector2_3), 0, 0, 172, (float)(vector2_2.X * 2.0), (float)(vector2_2.Y * 2.0), 100, (Color)null, 1.4f);
+                    int index2 = Dust.NewDust(vector2_1 + vector2_3, 0, 0, 172, (float)(vector2_2.X * 2.0), (float)(vector2_2.Y * 2.0), 100, default, 1.4f);
                     Main.dust[index2].noGravity = true;
                     Main.dust[index2].noLight = true;
                     Dust dust1 = Main.dust[index2];
-                    Vector2 vector2_4 = Vector2.op_Division(dust1.velocity, 4f);
+                    Vector2 vector2_4 = dust1.velocity / 4f;
                     dust1.velocity = vector2_4;
                     Dust dust2 = Main.dust[index2];
-                    Vector2 vector2_5 = Vector2.op_Subtraction(dust2.velocity, npc.velocity);
+                    Vector2 vector2_5 = dust2.velocity - npc.velocity;
                     dust2.velocity = vector2_5;
                 }
                 ++npc.ai[2];
@@ -592,15 +593,15 @@ namespace FargoEnemyModifiers.Modifiers
                     Main.PlaySound(4, (int)npc.Center.X, (int)npc.Center.Y, 19, 1f, 0.0f);
                     if (Main.netMode != 1)
                     {
-                        Vector2 vector2 = Vector2.op_Addition(Vector2.op_Division(Vector2.op_Multiply(Vector2.Normalize(npc.velocity), (float)(npc.width + 20)), 2f), center1);
+                        Vector2 vector2 = Vector2.Normalize(npc.velocity) * (float)(npc.width + 20) / 2f + center1;
                         int index = NPC.NewNPC((int)vector2.X, (int)vector2.Y + 45, 371, 0, 0.0f, 0.0f, 0.0f, 0.0f, (int)byte.MaxValue);
                         Main.npc[index].target = npc.target;
-                        Main.npc[index].velocity = Vector2.op_Multiply(Vector2.Normalize(npc.velocity).RotatedBy(1.57079637050629 * (double)npc.direction, (Vector2)null), num16);
+                        Main.npc[index].velocity = Vector2.Normalize(npc.velocity).RotatedBy(1.57079637050629 * (double)npc.direction) * num16;
                         Main.npc[index].netUpdate = true;
                         Main.npc[index].ai[3] = (float)Main.rand.Next(80, 121) / 100f;
                     }
                 }
-                npc.velocity = npc.velocity.RotatedBy(-(double)num18 * (double)npc.direction, (Vector2)null);
+                npc.velocity = npc.velocity.RotatedBy(-(double)num18 * (double)npc.direction);
                 npc.rotation = npc.rotation - num18 * (float)npc.direction;
                 ++npc.ai[2];
                 if ((double)npc.ai[2] < (double)num14)
@@ -612,8 +613,8 @@ namespace FargoEnemyModifiers.Modifiers
             }
             else if ((double)npc.ai[0] == 8.0)
             {
-                npc.velocity = Vector2.op_Multiply(npc.velocity, 0.98f);
-                npc.velocity.Y = (__Null)(double)MathHelper.Lerp((float)npc.velocity.Y, 0.0f, 0.02f);
+                npc.velocity *= 0.98f;
+                npc.velocity.Y = MathHelper.Lerp((float)npc.velocity.Y, 0.0f, 0.02f);
                 if ((double)npc.ai[2] == (double)(num10 - 30))
                     Main.PlaySound(29, (int)center1.X, (int)center1.Y, 20, 1f, 0.0f);
                 if (Main.netMode != 1 && (double)npc.ai[2] == (double)(num10 - 30))
@@ -642,8 +643,8 @@ namespace FargoEnemyModifiers.Modifiers
                     if (npc.alpha > (int)byte.MaxValue)
                         npc.alpha = (int)byte.MaxValue;
                 }
-                npc.velocity = Vector2.op_Multiply(npc.velocity, 0.98f);
-                npc.velocity.Y = (__Null)(double)MathHelper.Lerp((float)npc.velocity.Y, 0.0f, 0.02f);
+                npc.velocity *= 0.98f;
+                npc.velocity.Y = MathHelper.Lerp((float)npc.velocity.Y, 0.0f, 0.02f);
                 if ((double)npc.ai[2] == (double)(num12 - 60))
                     Main.PlaySound(29, (int)center1.X, (int)center1.Y, 20, 1f, 0.0f);
                 ++npc.ai[2];
@@ -666,8 +667,8 @@ namespace FargoEnemyModifiers.Modifiers
                         npc.alpha = (int)byte.MaxValue;
                 }
                 if ((double)npc.ai[1] == 0.0)
-                    npc.ai[1] = (float)(360 * Math.Sign((float)Vector2.op_Subtraction(center1, player.Center).X));
-                npc.SimpleFlyMovement(Vector2.op_Multiply(Vector2.Normalize(Vector2.op_Subtraction(Vector2.op_Subtraction(Vector2.op_Addition(player.Center, new Vector2(npc.ai[1], -200f)), center1), npc.velocity)), num3), moveSpeed);
+                    npc.ai[1] = (float)(360 * Math.Sign((center1 - player.Center).X));
+                npc.SimpleFlyMovement(Vector2.Normalize(player.Center + new Vector2(npc.ai[1], -200f) - center1 - npc.velocity) * num3, moveSpeed);
                 int num20 = Math.Sign((float)(player.Center.X - center1.X));
                 if (num20 != 0)
                 {
@@ -675,7 +676,7 @@ namespace FargoEnemyModifiers.Modifiers
                     {
                         npc.rotation = npc.rotation + 3.141593f;
                         for (int index = 0; index < npc.oldPos.Length; ++index)
-                            npc.oldPos[index] = Vector2.get_Zero();
+                            npc.oldPos[index] = Vector2.Zero;
                     }
                     npc.direction = num20;
                     if (npc.spriteDirection != -npc.direction)
@@ -707,7 +708,7 @@ namespace FargoEnemyModifiers.Modifiers
                     npc.ai[0] = 11f;
                     npc.ai[1] = 0.0f;
                     npc.ai[2] = 0.0f;
-                    npc.velocity = Vector2.op_Multiply(Vector2.Normalize(Vector2.op_Subtraction(player.Center, center1)), num5);
+                    npc.velocity = Vector2.Normalize(player.Center - center1) * num5;
                     npc.rotation = (float)Math.Atan2((double)npc.velocity.Y, (double)npc.velocity.X);
                     if (num20 != 0)
                     {
@@ -741,17 +742,17 @@ namespace FargoEnemyModifiers.Modifiers
                 int num20 = 7;
                 for (int index1 = 0; index1 < num20; ++index1)
                 {
-                    Vector2 vector2_1 = Vector2.op_Addition(Vector2.op_Multiply(Vector2.op_Multiply(Vector2.Normalize(npc.velocity), new Vector2((float)(npc.width + 50) / 2f, (float)npc.height)), 0.75f).RotatedBy((double)(index1 - (num20 / 2 - 1)) * Math.PI / (double)num20, (Vector2)null), center1);
-                    Vector2 vector2_2 = Vector2.op_Multiply(((float)(Main.rand.NextDouble() * 3.14159274101257) - 1.570796f).ToRotationVector2(), (float)Main.rand.Next(3, 8));
+                    Vector2 vector2_1 = (Vector2.Normalize(npc.velocity) * new Vector2((float)(npc.width + 50) / 2f, (float)npc.height) * 0.75f).RotatedBy((double)(index1 - (num20 / 2 - 1)) * Math.PI / (double)num20) + center1;
+                    Vector2 vector2_2 = ((float)(Main.rand.NextDouble() * 3.14159274101257) - 1.570796f).ToRotationVector2() * (float)Main.rand.Next(3, 8);
                     Vector2 vector2_3 = vector2_2;
-                    int index2 = Dust.NewDust(Vector2.op_Addition(vector2_1, vector2_3), 0, 0, 172, (float)(vector2_2.X * 2.0), (float)(vector2_2.Y * 2.0), 100, (Color)null, 1.4f);
+                    int index2 = Dust.NewDust(vector2_1 + vector2_3, 0, 0, 172, (float)(vector2_2.X * 2.0), (float)(vector2_2.Y * 2.0), 100, default, 1.4f);
                     Main.dust[index2].noGravity = true;
                     Main.dust[index2].noLight = true;
                     Dust dust1 = Main.dust[index2];
-                    Vector2 vector2_4 = Vector2.op_Division(dust1.velocity, 4f);
+                    Vector2 vector2_4 = dust1.velocity / 4f;
                     dust1.velocity = vector2_4;
                     Dust dust2 = Main.dust[index2];
-                    Vector2 vector2_5 = Vector2.op_Subtraction(dust2.velocity, npc.velocity);
+                    Vector2 vector2_5 = dust2.velocity - npc.velocity;
                     dust2.velocity = vector2_5;
                 }
                 ++npc.ai[2];
@@ -773,15 +774,15 @@ namespace FargoEnemyModifiers.Modifiers
                     if (npc.alpha > (int)byte.MaxValue)
                         npc.alpha = (int)byte.MaxValue;
                 }
-                npc.velocity = Vector2.op_Multiply(npc.velocity, 0.98f);
-                npc.velocity.Y = (__Null)(double)MathHelper.Lerp((float)npc.velocity.Y, 0.0f, 0.02f);
+                npc.velocity *= 0.98f;
+                npc.velocity.Y = MathHelper.Lerp((float)npc.velocity.Y, 0.0f, 0.02f);
                 if ((double)npc.ai[2] == (double)(num13 / 2))
                     Main.PlaySound(29, (int)center1.X, (int)center1.Y, 20, 1f, 0.0f);
                 if (Main.netMode != 1 && (double)npc.ai[2] == (double)(num13 / 2))
                 {
                     if ((double)npc.ai[1] == 0.0)
-                        npc.ai[1] = (float)(300 * Math.Sign((float)Vector2.op_Subtraction(center1, player.Center).X));
-                    Vector2 vector2 = npc.Center = Vector2.op_Addition(player.Center, new Vector2(-npc.ai[1], -200f));
+                        npc.ai[1] = (float)(300 * Math.Sign((center1 - player.Center).X));
+                    Vector2 vector2 = npc.Center = player.Center + new Vector2(-npc.ai[1], -200f);
                     int num20 = Math.Sign((float)(player.Center.X - vector2.X));
                     if (num20 != 0)
                     {
@@ -789,7 +790,7 @@ namespace FargoEnemyModifiers.Modifiers
                         {
                             npc.rotation = npc.rotation + 3.141593f;
                             for (int index = 0; index < npc.oldPos.Length; ++index)
-                                npc.oldPos[index] = Vector2.get_Zero();
+                                npc.oldPos[index] = Vector2.Zero;
                         }
                         npc.direction = num20;
                         if (npc.spriteDirection != -npc.direction)
@@ -814,7 +815,7 @@ namespace FargoEnemyModifiers.Modifiers
                     return;
                 if ((double)npc.ai[2] == 0.0)
                     Main.PlaySound(29, (int)center1.X, (int)center1.Y, 20, 1f, 0.0f);
-                npc.velocity = npc.velocity.RotatedBy(-(double)num18 * (double)npc.direction, (Vector2)null);
+                npc.velocity = npc.velocity.RotatedBy(-(double)num18 * (double)npc.direction);
                 npc.rotation = npc.rotation - num18 * (float)npc.direction;
                 ++npc.ai[2];
                 if ((double)npc.ai[2] < (double)num14)

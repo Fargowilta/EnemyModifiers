@@ -247,7 +247,7 @@ namespace FargoEnemyModifiers
                     //    break;
 
                     case (int)ModifierID.Duke:
-                        name = "Duke";
+                        modifier = new Duke();
                         break;
                     //case (int)ModifierID.Multiplying:
                     //    //name = "Multiplying";

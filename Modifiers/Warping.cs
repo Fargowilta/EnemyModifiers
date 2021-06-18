@@ -58,10 +58,10 @@ namespace FargoEnemyModifiers.Modifiers
             player.immune = true;
             if (player.immuneTime < 30)
                 player.immuneTime = 30;
-            if (player.hurtCooldown[0] < 30)
-                player.hurtCooldown[0] = 30;
-            if (player.hurtCooldown[1] < 30)
-                player.hurtCooldown[1] = 30;
+            if (player.hurtCooldowns[0] < 30)
+                player.hurtCooldowns[0] = 30;
+            if (player.hurtCooldowns[1] < 30)
+                player.hurtCooldowns[1] = 30;
 
             Warped = true;
         }
