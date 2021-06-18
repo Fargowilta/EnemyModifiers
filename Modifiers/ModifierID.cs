@@ -37,6 +37,7 @@
         //Devouring,
         //Juggernaut
 
+<<<<<<< HEAD
         ////Healer, //Healer - heals nearby enemy
         ////Flammable, //Flammable - takes increased dot damage
         ////Puppet, //Puppet - hit box is somewhere else controlled by a thing
@@ -57,6 +58,67 @@
         ////Assassinating, //assassin - increased amage if you are low on hp
         ////Vaccinated, //vaccinated - immune to all debuffs
         ////Shadow, //shadowy, inflicts blackout 
+=======
+namespace FargoEnemyModifiers.Modifiers
+{
+    public enum ModifierID
+    {
+        Unrelenting,
+        Regenerating,
+        Menacing,
+        Armored,
+        Huge,
+        Miniature,
+        Swift,
+        Slow,
+        Hyper,
+        Sluggish,
+        Inpenetrable,
+        Light,
+        Rampaging,
+        Stealthy,
+        Splitting,
+        Wealthy,
+        Rare,
+        Infested,
+        Accelerating,
+        Hexproof,
+        Bulletproof,
+        Veiled,
+        Shielded,
+        Possessed,
+        Bloodthirsty,
+        Warping, 
+        Rallying,
+        Fortifying,
+        Chained,
+        Merchant,
+        Worm,
+        Rainbow,
+        Devouring,
+        Juggernaut,
+
+        //Healer, //Healer - heals nearby enemy
+        //Flammable, //Flammable - takes increased dot damage
+        //Puppet, //Puppet - hit box is somewhere else controlled by a thing
+        //ManaSapper, //Mana Sapper , deals more damage the higher your mana
+        //Hydrophobic, //Hydrophobic - takes damage when in water or wet
+        //Nocturnal, //Nocturnal-takes more damage the more light there is around, and less damage the darker it is
+        //Mutated, //Mutated - mutant AI 
+        //Abominable, //Abinable Abom AI
+        //Deviating, //Deviated Devi AI
+        //Shapeshifting, //shapeshifting - randomly becomes a different npc type with the same stats and this modifier
+        //Royal, //king - more health, maybe slower, can spawn more of its npc type when hurt (reference to king slime)
+        //Burning, //Burning - perma on fire and lights you on fire
+        Delerious, //Delerious -  uses radom aistyle every so often, shoots a ring of projectiles eveeyt ime it changes - isaac ref
+        //Laggy, //laggy - occasionally rubberbands back to where it was up to 10 seconds ago, or moves by up to 30x its velocity in one tick, or (hyper mode) up to 60 times in one tick
+        //Unstable, //unstable - teleports on hit or randomly
+        //Vampiric, //vampiric - life steal on hit
+        //Contagious, //contagious-any debuffs it has will also be applied to you if it hits you. gains a random debuff every 5 seconds
+        //Assassinating, //assassin - increased amage if you are low on hp
+        //Vaccinated, //vaccinated - immune to all debuffs
+        //Shadow, //shadowy, inflicts blackout 
+>>>>>>> 9e94e3e16eca90b12f41c32c4a5c9fe4b429a9fd
        
 
 
@@ -73,9 +135,15 @@
         ////public const int Draining = 62; //draining - life steal aura (derpling) OR drains other enemies
         ////public const int Explosive = 63; //explosive - starts ticking when near, kill it fast or it explodes (no tile damage)
 
+<<<<<<< HEAD
         ////public const int Duke = 65; //Duke - DukeAI
         ////public const int Multiplying = 66; //cloning - emode illum bats
         ////public const int Pyro = 67; //pyro - immune to lava, heals from fire debuffs
+=======
+        Duke, //Duke - DukeAI
+        //public const int Multiplying = 66; //cloning - emode illum bats
+        //public const int Pyro = 67; //pyro - immune to lava, heals from fire debuffs
+>>>>>>> 9e94e3e16eca90b12f41c32c4a5c9fe4b429a9fd
 
 
         ///* 

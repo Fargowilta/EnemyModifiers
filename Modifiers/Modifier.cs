@@ -34,8 +34,15 @@ namespace FargoEnemyModifiers.Modifiers
         {
             npc.lifeMax = (int)(npc.lifeMax * HealthMultiplier);
             npc.life = npc.lifeMax;
+<<<<<<< HEAD
             npc.damage = (int)(npc.damage * DamageMultiplier);
             npc.defense = (int)(npc.defense * DefenseMultiplier);
+=======
+            npc.defDamage = npc.defDamage * damageMultiplier;
+            npc.damage = npc.damage * damageMultiplier;
+            npc.defDefense = npc.defDefense * defenseMultiplier;
+            npc.defense = npc.defense * defenseMultiplier;
+>>>>>>> 9e94e3e16eca90b12f41c32c4a5c9fe4b429a9fd
 
             //things that already have no kb only get it for kb adding modifiers
             if (npc.knockBackResist == 0 && KnockBackMultiplier > 1)
