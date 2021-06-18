@@ -24,6 +24,8 @@ namespace FargoEnemyModifiers.Modifiers
         public float originalScale;
         public string originalName = "";
 
+        public virtual bool AutoLoad() => true;
+
         public virtual void Setup(NPC npc)
         {
         }

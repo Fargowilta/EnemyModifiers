@@ -12,6 +12,8 @@ namespace FargoEnemyModifiers.Modifiers
 
         protected bool firstTick = true;
 
+        public override bool AutoLoad() => false;
+
         public override bool PreAI(NPC npc)
         {
             if (firstTick)

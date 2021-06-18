@@ -30,8 +30,8 @@ namespace FargoEnemyModifiers
                 foreach (Type type in mod.Code.GetTypes().Where(x =>
                     !x.IsAbstract && x.IsSubclassOf(typeof(Modifier)) && x.GetConstructor(new Type[0]) != null))
                 {
-                    Modifier modifier = Activator.CreateInstance(type) as Modifier;
-                    Modifiers.Add(modifier);
+                    if (Activator.CreateInstance(type) is Modifier modifier && modifier.AutoLoad()) 
+                        Modifiers.Add(modifier);
                 }
             }
         }
