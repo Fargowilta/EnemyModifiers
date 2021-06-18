@@ -43,18 +43,15 @@ namespace FargoEnemyModifiers
             Modifier = Activator.CreateInstance(EnemyModifiers.Modifiers[randomType].GetType()) as Modifier;
             Modifier?.Setup(npc);
             Modifier?.UpdateModifierStats(npc);
-        }
 
-        public void NetUpdateModifier(int npc, int modifierType)
-        {
-            if (Main.netMode == NetmodeID.SinglePlayer)
+            if (Main.netMode != NetmodeID.Server)
                 return;
 
-            ModPacket netMessage = mod.GetPacket();
-            netMessage.Write((byte) 1);
-            netMessage.Write((byte) npc);
-            netMessage.Write(modifierType); //these are the variables of the instance THAT CALLS THIS METHOD
-            netMessage.Send();
+            ModPacket packet = mod.GetPacket();
+            packet.Write((byte) 0);
+            packet.Write((byte) npc.whoAmI);
+            packet.Write((byte) EnemyModifiers.Modifiers.IndexOf(Modifier));
+            packet.Send();
         }
 
         public bool firstTick = true;
@@ -69,8 +66,6 @@ namespace FargoEnemyModifiers
                       EnemyModifiersConfig.Instance.NPCBlacklist.Contains(new NPCDefinition(npc.type))))
                 {
                     int randomType = Main.rand.Next(EnemyModifiers.Modifiers.Count);
-
-                    NetUpdateModifier(npc.whoAmI, randomType);
                     ApplyModifier(npc, randomType);
                 }
             }

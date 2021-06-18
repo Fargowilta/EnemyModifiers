@@ -45,13 +45,13 @@ namespace FargoEnemyModifiers
         {
             switch (reader.ReadByte())
             {
-                case 1:
-                    NPC npc = Main.npc[reader.ReadByte()];
-                    int modifierType = reader.ReadByte();
-
-                    EnemyModifiersGlobalNPC enemyGlobalNPC = npc.GetGlobalNPC<EnemyModifiersGlobalNPC>();
-                    enemyGlobalNPC.firstTick = false;
-                    enemyGlobalNPC.ApplyModifier(npc, modifierType);
+                case 0:
+                    NPC npc = Main.npc[reader.ReadByte()]; // npc whoAmI
+                    EnemyModifiersGlobalNPC globalNPC = npc.GetGlobalNPC<EnemyModifiersGlobalNPC>();
+                    int index = reader.ReadByte();
+                    globalNPC.Modifier = Modifiers[index]; // modifier index in array, array should be same across clients because all mods should match
+                    globalNPC.firstTick = false;
+                    globalNPC.ApplyModifier(npc, index);
                     break;
             }
         }
