@@ -141,7 +141,7 @@ namespace FargoEnemyModifiers.NPCs
         {
             for (int num512 = 0; num512 < 5; num512++)
             {
-                Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.Venom, 0f, 0f, 100);
+                Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, 171, 0f, 0f, 100);
                 dust.scale = Main.rand.Next(1, 10) * 0.1f;
                 dust.noGravity = true;
                 dust.fadeIn = 1.5f;

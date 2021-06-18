@@ -6,6 +6,7 @@
 /.vs/FargoEnemyModifiers/v15/.suo
 /.vs/ProjectSettings.json
 /.vs/VSWorkspaceState.json
+/.vs/slnx.sqlite
 /obj/Release/net45/FargoEnemyModifiers.csproj.CoreCompileInputs.cache
 /obj/Release/net45/FargoEnemyModifiers.AssemblyInfoInputs.cache
 /obj/Release/net45/FargoEnemyModifiers.AssemblyInfo.cs
