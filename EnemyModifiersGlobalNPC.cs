@@ -198,7 +198,7 @@ namespace FargoEnemyModifiers
 
         public override bool PreDraw(NPC npc, SpriteBatch spriteBatch, Color drawColor)
         {
-            return Modifier?.PreDraw(npc, spriteBatch, drawColor) ?? false;
+            return Modifier?.PreDraw(npc, spriteBatch, drawColor) ?? base.PreDraw(npc, spriteBatch, drawColor);
         }
     }
 }
