@@ -1,18 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria;
+﻿using Terraria;
 
 namespace FargoEnemyModifiers.Modifiers
 {
     public class Wealthy : Modifier
     {
-        public Wealthy()
-        {
-            name = "Wealthy";
-        }
+        public override string Name => "Wealthy";
 
         public override bool PreNPCLoot(NPC npc)
         {

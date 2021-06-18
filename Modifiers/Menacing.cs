@@ -1,17 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FargoEnemyModifiers.Modifiers
+﻿namespace FargoEnemyModifiers.Modifiers
 {
     public class Menacing : Modifier
     {
-        public Menacing()
-        {
-            name = "Menacing";
-            damageMultiplier = 1.5f;
-        }
+        public override string Name => "Menacing";
+
+        public override float DamageMultiplier => 1.5f;
     }
 }
