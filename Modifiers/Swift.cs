@@ -1,17 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FargoEnemyModifiers.Modifiers
+﻿namespace FargoEnemyModifiers.Modifiers
 {
     public class Swift : Modifier
     {
-        public Swift()
-        {
-            name = "Swift";
-            speedMultiplier = 1.5f;
-        }
+        public override string Name => "Swift";
+
+        public override float SpeedMultiplier => 1.5f;
     }
 }

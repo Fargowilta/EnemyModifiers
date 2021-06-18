@@ -1,26 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria;
+﻿using Terraria;
 
 namespace FargoEnemyModifiers.Modifiers
 {
-    public class Inpenetrable : Modifier
+    public class Impenetrable : Modifier
     {
-        public Inpenetrable()
-        {
-            name = "Inpenetrable";
-        }
+        public override string Name => "Impenetrable";
 
         public override void OnHitByProjectile(NPC npc, Projectile projectile)
         {
             if (!projectile.minion)
-            {
                 projectile.Kill();
-            }
-            
         }
     }
 }

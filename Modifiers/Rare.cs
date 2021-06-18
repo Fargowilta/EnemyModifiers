@@ -1,18 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria;
+﻿using Terraria;
 
 namespace FargoEnemyModifiers.Modifiers
 {
     public class Rare : Modifier
     {
-        public Rare()
-        {
-            name = "Rare";
-        }
+        public override string Name => "Rare";
 
         private bool firstLoot = true;
 
@@ -28,9 +20,7 @@ namespace FargoEnemyModifiers.Modifiers
                     npc.value = 0;
 
                     if (NPC.killCount[Item.NPCtoBanner(npc.BannerID())] % 50 != 0)
-                    {
                         NPC.killCount[Item.NPCtoBanner(npc.BannerID())]--;
-                    }
                 }
             }
 
