@@ -95,6 +95,10 @@ namespace FargoEnemyModifiers.Modifiers
 
             for (int num308 = num284; num308 < num284 + num285; num308++)
             {
+                if (num283 < 0 || num283 >= Main.maxTilesX
+                    || num308 < 0 || num308 >= Main.maxTilesY)
+                    continue;
+
                 if (Main.tile[num283, num308] == null)
                 {
                     Main.tile[num283, num308] = new Tile();
@@ -117,6 +121,10 @@ namespace FargoEnemyModifiers.Modifiers
                 bool flag25 = false;
                 for (int num309 = num284; num309 < num284 + num285 - 2; num309++)
                 {
+                    if (num283 < 0 || num283 >= Main.maxTilesX
+                        || num309 < 0 || num309 >= Main.maxTilesY)
+                        continue;
+
                     if (Main.tile[num283, num309] == null)
                     {
                         Main.tile[num283, num309] = new Tile();

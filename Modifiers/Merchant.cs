@@ -8,17 +8,32 @@ namespace FargoEnemyModifiers.Modifiers
         public override string Name =>
             ""; // needs name? idk. normally would be "Merchant" but there was no name specified
 
-        private int counter;
+        private bool firstTick = true;
+        private bool hasInteracted;
+        private int aiStyle;
 
         public override bool PreAI(NPC npc)
         {
-            npc.aiStyle = 7;
-            npc.friendly = true;
-            npc.homeless = true;
+            if (firstTick)
+            {
+                firstTick = false;
+                aiStyle = npc.aiStyle;
+            }
 
-            if (counter == 0)
+            if (hasInteracted)
+            {
+                npc.aiStyle = aiStyle;
+                npc.friendly = false;
+                npc.homeless = false;
+                npc.townNPC = false;
+            }
+            else
+            {
+                npc.aiStyle = 7;
+                npc.friendly = true;
+                npc.homeless = true;
                 npc.townNPC = true;
-
+            }
             return false;
         }
 
@@ -35,9 +50,8 @@ namespace FargoEnemyModifiers.Modifiers
             } while (item == 0);
 
             Item.NewItem(npc.Hitbox, item);
-
-            npc.townNPC = false;
-            counter = 1;
+            
+            hasInteracted = true;
 
             chat = "Don't tell anyone, but take this. Pretend you never saw me..";
         }

@@ -69,9 +69,9 @@ namespace FargoEnemyModifiers
                           npc.type == NPCID.TargetDummy
                           || EnemyModifiersConfig.Instance.NPCBlacklist.Contains(new NPCDefinition(npc.type))))
                     {
-                        modifierTypes = new List<int> { Main.rand.Next(EnemyModifiers.Modifiers.Count) };
+                        modifierTypes = new List<int> { EnemyModifiersConfig.Instance.ForceModifier ? EnemyModifiersConfig.Instance.ModifierToForce : Main.rand.Next(EnemyModifiers.Modifiers.Count) };
 
-                        while (Main.rand.NextBool(EnemyModifiersConfig.Instance.ChanceForExtraModifier) && modifierTypes.Count <= EnemyModifiersConfig.Instance.ModifierAmount)
+                        while (Main.rand.NextBool(EnemyModifiersConfig.Instance.ChanceForExtraModifier) && modifierTypes.Count < EnemyModifiersConfig.Instance.ModifierAmount)
                             modifierTypes.Add(Main.rand.Next(EnemyModifiers.Modifiers.Count));
 
                         foreach (int modifier in modifierTypes)
@@ -110,7 +110,7 @@ namespace FargoEnemyModifiers
 
             if (Modifiers != null)
             {
-                speedMulti += Modifiers.Sum(modifier => modifier.SpeedMultiplier);
+                speedMulti *= Modifiers.Sum(modifier => modifier.SpeedMultiplier);
                 Modifiers.ForEach(x => x.AI(npc));
             }
 

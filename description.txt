@@ -49,5 +49,12 @@ Chained - npc is chained to you and cannot leave a radius around you
 -Regenerating only regens 5% for bosses and doesn't work on worm segments or similar enemies
 -Warped should only happen client-side, may fix some multiplayer issues, won't work on dead players, gives iframes on alternative timers too
 
-
 modifier list of toggles blacklist thing
+
+-New Chained design
+-Fixed Chained chaining when dead
+-Fixed Merchant enemies remaining friendly after you talk to them
+-Fixed array OOB issues with Possessed
+-Fixed Devouring killing all town NPCs when you spawn
+-Fixed Devouring minValue maxValue bug(?)
+-Fixed Baby Spider OOB collision issues(?)

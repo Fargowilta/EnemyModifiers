@@ -10,7 +10,7 @@ namespace FargoEnemyModifiers.Modifiers
     {
         public override string Name => "Chained";
 
-        public virtual int MaxDistance => 500;
+        public virtual int MaxDistance => 2000;
 
         public virtual Texture2D ChainTexture => ModContent.GetTexture("Terraria/Chain40");
 
@@ -27,8 +27,17 @@ namespace FargoEnemyModifiers.Modifiers
 
                 firstTick = false;
             }
+            
+            target = npc.HasValidTarget ? npc.target : npc.FindClosestPlayer();
 
-            Player player = Main.player[target];
+            if (target != -1 && Main.player[target].active && !Main.player[target].dead && !Main.player[target].ghost && npc.Distance(Main.player[target].Center) < MaxDistance)
+            {
+                const float lerp = 0.00025f;
+                Main.player[target].velocity += Vector2.Lerp(Main.player[target].Center, npc.Center, lerp) - Main.player[target].Center;
+                npc.velocity += Vector2.Lerp(npc.Center, Main.player[target].Center, lerp) - npc.Center;
+            }
+
+            /*Player player = Main.player[target];
             int distance = (int) Vector2.Distance(npc.Center, player.Center);
 
             if (distance > MaxDistance)
@@ -40,7 +49,7 @@ namespace FargoEnemyModifiers.Modifiers
                 npc.noTileCollide = true;
             }
             else
-                npc.noTileCollide = tileCollide;
+                npc.noTileCollide = tileCollide;*/
 
             return true;
         }

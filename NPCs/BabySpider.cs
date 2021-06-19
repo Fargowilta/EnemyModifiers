@@ -81,14 +81,18 @@ namespace FargoEnemyModifiers.NPCs
                 }
             }
             float num598 = 0f;
-            try
+            if (!(npc.Center.X < 50 || npc.Center.Y < 50 //oob checks
+                || npc.Center.X > Main.maxTilesX * 16 - 50 || npc.Center.Y > Main.maxTilesY * 16 - 50))
             {
-                Collision.StepUp(ref npc.position, ref npc.velocity, npc.width, npc.height, ref num598, ref npc.gfxOffY,
-                    1, false, 0);
-            }
-            catch
-            {
-                // ignore
+                try
+                {
+                    Collision.StepUp(ref npc.position, ref npc.velocity, npc.width, npc.height, ref num598, ref npc.gfxOffY,
+                        1, false, 0);
+                }
+                catch
+                {
+                    // ignore
+                }
             }
 
             if (npc.velocity.X != 0f)

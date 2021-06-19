@@ -29,6 +29,24 @@ namespace FargoEnemyModifiers
         [Label("Amount of Possible Modifiers")] [Range(1, 20)] [DefaultValue(10)] [Slider]
         public int ModifierAmount;
 
+        [Label("Force A Modifier")] [DefaultValue(false)]
+        public bool ForceModifier;
+
+        private int modifierToForce;
+        [Label("Modifier to Force")] [DefaultValue(0)]
+        public int ModifierToForce
+        {
+            get { return modifierToForce; }
+            set
+            {
+                modifierToForce = value;
+                if (modifierToForce < 0)
+                    modifierToForce = 0;
+                if (EnemyModifiers.Modifiers != null && EnemyModifiers.Modifiers.Count > 0 && modifierToForce > EnemyModifiers.Modifiers.Count - 1)
+                    modifierToForce = EnemyModifiers.Modifiers.Count - 1;
+            }
+        }
+
         [Header("Blacklists")] [Label("NPC Blacklist")] [Tooltip("NPCs here can never receive modifiers")]
         public List<NPCDefinition> NPCBlacklist = new List<NPCDefinition>
         {
