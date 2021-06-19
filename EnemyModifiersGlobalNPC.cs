@@ -110,7 +110,7 @@ namespace FargoEnemyModifiers
 
             if (Modifiers != null)
             {
-                speedMulti *= Modifiers.Sum(modifier => modifier.SpeedMultiplier);
+                Modifiers.ForEach(x => speedMulti *= x.SpeedMultiplier);
                 Modifiers.ForEach(x => x.AI(npc));
             }
 
