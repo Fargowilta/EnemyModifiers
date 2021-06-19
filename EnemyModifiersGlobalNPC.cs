@@ -71,7 +71,7 @@ namespace FargoEnemyModifiers
                     {
                         modifierTypes = new List<int> { Main.rand.Next(EnemyModifiers.Modifiers.Count) };
 
-                        while (Main.rand.NextBool() && modifierTypes.Count <= EnemyModifiersConfig.Instance.ModifierAmount)
+                        while (Main.rand.NextBool(EnemyModifiersConfig.Instance.ChanceForExtraModifier) && modifierTypes.Count <= EnemyModifiersConfig.Instance.ModifierAmount)
                             modifierTypes.Add(Main.rand.Next(EnemyModifiers.Modifiers.Count));
 
                         foreach (int modifier in modifierTypes)

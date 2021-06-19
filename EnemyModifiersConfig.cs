@@ -23,8 +23,10 @@ namespace FargoEnemyModifiers
         [Label("Modifier Chance (%)")] [Increment(1)] [Range(1, 100)] [DefaultValue(25)] [Slider]
         public int ChanceForModifier;
 
-        [Label("Amount of Possible Modifiers")]
-        [Range(1, 20)]
+        [Label("Extra Modifier Chance (1/x)")] [Increment(1)] [Range(1, 100)] [DefaultValue(2)] [Slider]
+        public int ChanceForExtraModifier;
+
+        [Label("Amount of Possible Modifiers")] [Range(1, 20)] [DefaultValue(10)] [Slider]
         public int ModifierAmount;
 
         [Header("Blacklists")] [Label("NPC Blacklist")] [Tooltip("NPCs here can never receive modifiers")]
