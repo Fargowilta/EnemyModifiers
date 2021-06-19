@@ -33,8 +33,19 @@ namespace FargoEnemyModifiers.Modifiers
             if (target != -1 && Main.player[target].active && !Main.player[target].dead && !Main.player[target].ghost && npc.Distance(Main.player[target].Center) < MaxDistance)
             {
                 const float lerp = 0.00025f;
-                Main.player[target].velocity += Vector2.Lerp(Main.player[target].Center, npc.Center, lerp) - Main.player[target].Center;
-                npc.velocity += Vector2.Lerp(npc.Center, Main.player[target].Center, lerp) - npc.Center;
+                Vector2 playerVelocity = Vector2.Lerp(Main.player[target].Center, npc.Center, lerp) - Main.player[target].Center;
+                playerVelocity.Y *= 2f; //compensation, x drag is generally a lot stronger than y drag
+
+                //i.e. don't y velocity when it's weak, this avoids an interaction where player can't jump despite being grounded
+                if (Main.player[target].velocity.Y == 0 && Math.Abs(playerVelocity.Y) < Math.Abs(Main.player[target].gravity))
+                    playerVelocity.Y = 0;
+
+                Main.player[target].velocity += playerVelocity;
+
+                Vector2 npcVelocity = Vector2.Lerp(npc.Center, Main.player[target].Center, lerp) - npc.Center;
+                if (!npc.noGravity)
+                    npcVelocity.Y *= 2f;
+                npc.velocity += npcVelocity;
             }
 
             /*Player player = Main.player[target];

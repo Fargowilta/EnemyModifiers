@@ -62,7 +62,7 @@ namespace FargoEnemyModifiers
                     packet.Write((byte) Main.myPlayer);
                     packet.Send();
                 }
-                else if (Main.rand.Next(100) <= EnemyModifiersConfig.Instance.ChanceForModifier)
+                else if (Main.rand.Next(100) < EnemyModifiersConfig.Instance.ChanceForModifier)
                 {
                     if (!(npc.boss && !EnemyModifiersConfig.Instance.BossModifiers || npc.townNPC || npc.friendly
                           || npc.dontTakeDamage || npc.realLife != -1 || npc.SpawnedFromStatue ||
@@ -71,7 +71,7 @@ namespace FargoEnemyModifiers
                     {
                         modifierTypes = new List<int> { EnemyModifiersConfig.Instance.ForceModifier ? EnemyModifiersConfig.Instance.ModifierToForce : Main.rand.Next(EnemyModifiers.Modifiers.Count) };
 
-                        while (Main.rand.NextBool(EnemyModifiersConfig.Instance.ChanceForExtraModifier) && modifierTypes.Count < EnemyModifiersConfig.Instance.ModifierAmount)
+                        while (Main.rand.Next(100) < EnemyModifiersConfig.Instance.ChanceForExtraModifier && modifierTypes.Count < EnemyModifiersConfig.Instance.ModifierAmount)
                             modifierTypes.Add(Main.rand.Next(EnemyModifiers.Modifiers.Count));
 
                         foreach (int modifier in modifierTypes)

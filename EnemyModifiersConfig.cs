@@ -20,13 +20,13 @@ namespace FargoEnemyModifiers
         [Header("Modifier Configuration")] [Label("Bosses can get Modifiers")] [DefaultValue(false)]
         public bool BossModifiers;
 
-        [Label("Modifier Chance (%)")] [Increment(1)] [Range(1, 100)] [DefaultValue(25)] [Slider]
+        [Label("Modifier Chance (%)")] [Increment(1)] [Range(0, 100)] [DefaultValue(25)] [Slider]
         public int ChanceForModifier;
 
-        [Label("Extra Modifier Chance (1/x)")] [Increment(1)] [Range(1, 100)] [DefaultValue(2)] [Slider]
+        [Label("Extra Modifier Chance (%)")] [Increment(1)] [Range(0, 100)] [DefaultValue(25)] [Slider]
         public int ChanceForExtraModifier;
 
-        [Label("Amount of Possible Modifiers")] [Range(1, 20)] [DefaultValue(10)] [Slider]
+        [Label("Amount of Possible Modifiers")] [Range(1, 20)] [DefaultValue(1)] [Slider]
         public int ModifierAmount;
 
         [Label("Force A Modifier")] [DefaultValue(false)]
