@@ -29,7 +29,7 @@ namespace FargoEnemyModifiers.Modifiers
                     int lifeGained = otherNpc.lifeMax / 4;
                     npc.lifeMax += lifeGained;
                     npc.life += lifeGained;
-                    npc.HealEffect(lifeGained);
+                    npc.HealEffect(lifeGained, false);
 
                     npc.defDamage = (int)(npc.defDamage * 1.05f);
                     npc.damage = (int)(npc.damage * 1.05f);

@@ -34,13 +34,13 @@ namespace FargoEnemyModifiers.Modifiers
             float num4 = 0.2f;
 
             if (npc.target < 0 || npc.target == 255 || Main.player[npc.target].dead ||
-                (flag && Main.player[npc.target].position.Y < Main.worldSurface * 16.0))
+                flag && Main.player[npc.target].position.Y < Main.worldSurface * 16.0)
             {
                 npc.TargetClosest();
             }
 
             if (Main.player[npc.target].dead ||
-                (flag && Main.player[npc.target].position.Y < Main.worldSurface * 16.0))
+                flag && Main.player[npc.target].position.Y < Main.worldSurface * 16.0)
             {
                 if (npc.timeLeft > 300)
                 {
@@ -103,11 +103,11 @@ namespace FargoEnemyModifiers.Modifiers
                 {
                     for (int num34 = num31; num34 < num32; num34++)
                     {
-                        if (Main.tile[num33, num34] != null && ((Main.tile[num33, num34].nactive() &&
-                                                                 (Main.tileSolid[Main.tile[num33, num34].type] ||
-                                                                  (Main.tileSolidTop
-                                                                       [Main.tile[num33, num34].type] &&
-                                                                   Main.tile[num33, num34].frameY == 0))) ||
+                        if (Main.tile[num33, num34] != null && (Main.tile[num33, num34].nactive() &&
+                                                                (Main.tileSolid[Main.tile[num33, num34].type] ||
+                                                                 Main.tileSolidTop
+                                                                     [Main.tile[num33, num34].type] &&
+                                                                 Main.tile[num33, num34].frameY == 0) ||
                                                                 Main.tile[num33, num34].liquid > 64))
                         {
                             Vector2 vector;
@@ -291,8 +291,8 @@ namespace FargoEnemyModifiers.Modifiers
 
                     if (!flag6)
                     {
-                        if ((npc.velocity.X > 0f && num40 > 0f) || (npc.velocity.X < 0f && num40 < 0f) ||
-                            (npc.velocity.Y > 0f && num41 > 0f) || (npc.velocity.Y < 0f && num41 < 0f))
+                        if (npc.velocity.X > 0f && num40 > 0f || npc.velocity.X < 0f && num40 < 0f ||
+                            npc.velocity.Y > 0f && num41 > 0f || npc.velocity.Y < 0f && num41 < 0f)
                         {
                             if (npc.velocity.X < num40)
                             {
@@ -313,7 +313,7 @@ namespace FargoEnemyModifiers.Modifiers
                             }
 
                             if (Math.Abs(num41) < num37 * 0.2 &&
-                                ((npc.velocity.X > 0f && num40 < 0f) || (npc.velocity.X < 0f && num40 > 0f)))
+                                (npc.velocity.X > 0f && num40 < 0f || npc.velocity.X < 0f && num40 > 0f))
                             {
                                 if (npc.velocity.Y > 0f)
                                 {
@@ -326,7 +326,7 @@ namespace FargoEnemyModifiers.Modifiers
                             }
 
                             if (Math.Abs(num40) < num37 * 0.2 &&
-                                ((npc.velocity.Y > 0f && num41 < 0f) || (npc.velocity.Y < 0f && num41 > 0f)))
+                                (npc.velocity.Y > 0f && num41 < 0f || npc.velocity.Y < 0f && num41 > 0f))
                             {
                                 if (npc.velocity.X > 0f)
                                 {
