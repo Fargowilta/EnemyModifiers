@@ -8,7 +8,7 @@ namespace FargoEnemyModifiers.Modifiers
         protected int baseHeight;
         protected int baseWidth;
 
-        protected int startup = 30;
+        protected int startup = 6;
 
         public override string Name => "Devouring";
 
