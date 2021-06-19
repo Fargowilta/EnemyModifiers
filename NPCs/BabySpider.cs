@@ -34,14 +34,12 @@ namespace FargoEnemyModifiers.NPCs
         {
             Vector2 value14 = npc.position;
             bool flag20 = false;
-            const float num593 = 500f;
+            float num593 = 500f;
 
             Player target = Main.player[npc.FindClosestPlayer()];
 
             float num595 = Vector2.Distance(target.Center, npc.Center);
-            if ( /*(Vector2.Distance(npc.Center, value14) > num595 && num595 < num593 || !flag20) && */
-                /* always true */ Collision.CanHit(npc.position, npc.width, npc.height, target.position, target.width,
-                    target.height))
+            if (((Vector2.Distance(npc.Center, value14) > num595 && num595 < num593) || !flag20) && Collision.CanHit(npc.position, npc.width, npc.height, target.position, target.width, target.height))
             {
                 value14 = target.Center;
                 flag20 = true;
@@ -49,7 +47,7 @@ namespace FargoEnemyModifiers.NPCs
 
             if (!flag20)
             {
-                npc.velocity.X *= 0.95f;
+                npc.velocity.X = npc.velocity.X * 0.95f;
             }
             else
             {
@@ -57,41 +55,52 @@ namespace FargoEnemyModifiers.NPCs
                 float num597 = 0.08f;
                 if (npc.velocity.Y == 0f)
                 {
-                    bool flag21 = npc.Center.Y - 50f > value14.Y;
+                    bool flag21 = false;
+                    if (npc.Center.Y - 50f > value14.Y)
+                    {
+                        flag21 = true;
+                    }
                     if (flag21)
+                    {
                         npc.velocity.Y = -6f;
+                    }
                 }
                 else
                 {
                     num596 = 8f;
                     num597 = 0.12f;
                 }
-
-                npc.velocity.X += Math.Sign(value14.X - npc.Center.X) * num597;
+                npc.velocity.X = npc.velocity.X + (float)Math.Sign(value14.X - npc.Center.X) * num597;
                 if (npc.velocity.X < -num596)
                 {
                     npc.velocity.X = -num596;
                 }
-
                 if (npc.velocity.X > num596)
                 {
                     npc.velocity.X = num596;
                 }
             }
-
             float num598 = 0f;
-            Collision.StepUp(ref npc.position, ref npc.velocity, npc.width, npc.height, ref num598, ref npc.gfxOffY);
+            try
+            {
+                Collision.StepUp(ref npc.position, ref npc.velocity, npc.width, npc.height, ref num598, ref npc.gfxOffY,
+                    1, false, 0);
+            }
+            catch
+            {
+                // ignore
+            }
 
             if (npc.velocity.X != 0f)
             {
                 npc.direction = Math.Sign(npc.velocity.X);
             }
-
             npc.spriteDirection = npc.direction;
-            npc.velocity.Y += 0.2f;
+            npc.velocity.Y = npc.velocity.Y + 0.2f;
             if (npc.velocity.Y > 16f)
             {
                 npc.velocity.Y = 16f;
+                return;
             }
 
             //if (this.velocity.X != velocity.X)
@@ -116,12 +125,10 @@ namespace FargoEnemyModifiers.NPCs
                 {
                     npc.frameCounter++;
                 }
-
                 if (npc.frameCounter >= 9)
                 {
                     npc.frameCounter = 0;
                 }
-
                 if (npc.frameCounter >= 6)
                 {
                     npc.frame.Y = 2 * frameHeight;

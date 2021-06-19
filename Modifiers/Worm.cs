@@ -26,7 +26,8 @@ namespace FargoEnemyModifiers.Modifiers
 
                 NPC newNPC = Main.npc[index];
                 newNPC.GetGlobalNPC<EnemyModifiersGlobalNPC>().firstTick = false;
-                newNPC.GetGlobalNPC<EnemyModifiersGlobalNPC>().Modifier = new WormBody();
+                newNPC.GetGlobalNPC<EnemyModifiersGlobalNPC>().Modifiers.RemoveAll(x => x.GetType() == typeof(Worm));
+                newNPC.GetGlobalNPC<EnemyModifiersGlobalNPC>().Modifiers.Add(new WormBody());
                 newNPC.realLife = npc.whoAmI;
 
                 if (i != 0)

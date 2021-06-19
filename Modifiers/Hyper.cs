@@ -9,6 +9,7 @@ namespace FargoEnemyModifiers.Modifiers
         public override float SpeedMultiplier => 1.5f;
 
         protected bool hyperGo = true;
+        protected bool boolToPreventStackOverflow = false;
 
         public override bool PreAI(NPC npc)
         {
@@ -16,12 +17,17 @@ namespace FargoEnemyModifiers.Modifiers
                 return true;
 
             hyperGo = false;
-            npc.AI();
+
+            if (!boolToPreventStackOverflow) 
+                npc.AI();
+            boolToPreventStackOverflow = true;
+
             return true;
         }
 
         public override void PostAI(NPC npc)
         {
+            boolToPreventStackOverflow = false;
             if (!hyperGo)
                 hyperGo = true;
         }

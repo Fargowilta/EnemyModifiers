@@ -97,7 +97,7 @@ namespace FargoEnemyModifiers.Modifiers
             int num19 = 75;
             Vector2 center1 = npc.Center;
             Player player = Main.player[npc.target];
-            if (npc.target < 0 || npc.target == byte.MaxValue || (player.dead || !player.active))
+            if (npc.target < 0 || npc.target == byte.MaxValue || player.dead || !player.active)
             {
                 npc.TargetClosest();
                 player = Main.player[npc.target];
@@ -111,7 +111,7 @@ namespace FargoEnemyModifiers.Modifiers
                 npc.ai[0] = npc.ai[0] <= 4.0 ? 0.0f : 5f;
                 npc.ai[2] = 0.0f;
             }
-            if ((player.position.Y < 800.0 || player.position.Y > Main.worldSurface * 16.0 ? 1 : (player.position.X <= 6400.0 ? 0 : (player.position.X < (double)(Main.maxTilesX * 16 - 6400) ? 1 : 0))) != 0)
+            if ((player.position.Y < 800.0 || player.position.Y > Main.worldSurface * 16.0 ? 1 : player.position.X <= 6400.0 ? 0 : player.position.X < (double)(Main.maxTilesX * 16 - 6400) ? 1 : 0) != 0)
             {
                 num2 = 20;
                 npc.damage = npc.defDamage * 2;

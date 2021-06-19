@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using FargoEnemyModifiers.Modifiers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -13,8 +15,7 @@ namespace FargoEnemyModifiers
     {
         public override bool InstancePerEntity => true;
 
-        // TODO: modifier list?
-        public virtual Modifier Modifier { get; set; }
+        public virtual List<Modifier> Modifiers { get; set; } = new List<Modifier>();
 
         public virtual bool Rallied { get; set; }
 
@@ -26,7 +27,7 @@ namespace FargoEnemyModifiers
 
         public virtual bool DropLoot { get; set; } = true;
 
-        public int modifierType = -1;
+        public List<int> modifierTypes = new List<int>();
 
         public override void ResetEffects(NPC npc)
         {
@@ -39,9 +40,12 @@ namespace FargoEnemyModifiers
 
         public void ApplyModifier(NPC npc, int type)
         {
-            Modifier = Activator.CreateInstance(EnemyModifiers.Modifiers[type].GetType()) as Modifier;
-            Modifier?.Setup(npc);
-            Modifier?.UpdateModifierStats(npc);
+            if (type <= 0 || type >= EnemyModifiers.Modifiers.Count)
+                return;
+
+            Modifiers.Add(Activator.CreateInstance(EnemyModifiers.Modifiers[type].GetType()) as Modifier);
+            Modifiers?.ForEach(x => x.Setup(npc));
+            Modifiers?.ForEach(x => x.UpdateModifierStats(npc));
         }
 
         public bool firstTick = true;
@@ -60,41 +64,54 @@ namespace FargoEnemyModifiers
                 }
                 else if (Main.rand.Next(100) <= EnemyModifiersConfig.Instance.ChanceForModifier)
                 {
-                    if (!((npc.boss && !EnemyModifiersConfig.Instance.BossModifiers) || npc.townNPC || npc.friendly
-                        || npc.dontTakeDamage || npc.realLife != -1 || npc.SpawnedFromStatue || npc.type == NPCID.TargetDummy
-                        || EnemyModifiersConfig.Instance.NPCBlacklist.Contains(new NPCDefinition(npc.type))))
+                    if (!(npc.boss && !EnemyModifiersConfig.Instance.BossModifiers || npc.townNPC || npc.friendly
+                          || npc.dontTakeDamage || npc.realLife != -1 || npc.SpawnedFromStatue ||
+                          npc.type == NPCID.TargetDummy
+                          || EnemyModifiersConfig.Instance.NPCBlacklist.Contains(new NPCDefinition(npc.type))))
                     {
-                        modifierType = Main.rand.Next(EnemyModifiers.Modifiers.Count);
-                        if (EnemyModifiersConfig.Instance.SetModifier)
-                            modifierType = EnemyModifiersConfig.Instance.ModifierToForce;
-                        ApplyModifier(npc, modifierType);
+                        modifierTypes = new List<int> { Main.rand.Next(EnemyModifiers.Modifiers.Count) };
+
+                        while (Main.rand.NextBool() && modifierTypes.Count <= EnemyModifiersConfig.Instance.ModifierAmount)
+                            modifierTypes.Add(Main.rand.Next(EnemyModifiers.Modifiers.Count));
+
+                        foreach (int modifier in modifierTypes)
+                            ApplyModifier(npc, modifier);
                     }
                 }
             }
 
             firstTick = false;
-            return Modifier == null || Modifier.PreAI(npc);
+
+            if (Modifiers is null)
+                return base.PreAI(npc);
+
+            bool retVal = base.PreAI(npc);
+
+            foreach (Modifier modifier in Modifiers)
+                retVal = modifier.PreAI(npc);
+
+            return retVal;
         }
 
         public override void AI(NPC npc)
         {
-            if (npc.realLife != -1 && Modifier == null)
+            if (npc.realLife != -1 && Modifiers == null)
             {
                 NPC head = Main.npc[npc.realLife];
 
-                if (head.GetGlobalNPC<EnemyModifiersGlobalNPC>().Modifier != null)
+                if (head.GetGlobalNPC<EnemyModifiersGlobalNPC>().Modifiers != null)
                 {
-                    Modifier = head.GetGlobalNPC<EnemyModifiersGlobalNPC>().Modifier;
-                    Modifier.UpdateModifierStats(npc);
+                    Modifiers = head.GetGlobalNPC<EnemyModifiersGlobalNPC>().Modifiers;
+                    Modifiers.ForEach(x => x.UpdateModifierStats(npc));
                 }
             }
 
             float speedMulti = 1f;
 
-            if (Modifier != null)
+            if (Modifiers != null)
             {
-                speedMulti = Modifier.SpeedMultiplier;
-                Modifier.AI(npc);
+                speedMulti += Modifiers.Sum(modifier => modifier.SpeedMultiplier);
+                Modifiers.ForEach(x => x.AI(npc));
             }
 
             if (Rallied)
@@ -105,7 +122,7 @@ namespace FargoEnemyModifiers
 
         public override void PostAI(NPC npc)
         {
-            Modifier?.PostAI(npc);
+            Modifiers?.ForEach(x => x.PostAI(npc));
         }
 
         public void UpdateSpeed(NPC npc, float speedMultiplier)
@@ -128,39 +145,43 @@ namespace FargoEnemyModifiers
 
         public override void GetChat(NPC npc, ref string chat)
         {
-            Modifier?.GetChat(npc, ref chat);
+            foreach (Modifier modifier in Modifiers)
+                modifier.GetChat(npc, ref chat);
         }
 
         public override void UpdateLifeRegen(NPC npc, ref int damage)
         {
-            Modifier?.UpdateLifeRegen(npc, ref damage);
+            foreach (Modifier modifier in Modifiers)
+                modifier.UpdateLifeRegen(npc, ref damage);
         }
 
         public override void OnHitByItem(NPC npc, Player player, Item item, int damage, float knockback, bool crit)
         {
-            Modifier?.OnHitByItem(npc, player);
+            Modifiers?.ForEach(x => x.OnHitByItem(npc, player));
         }
 
         public override void OnHitByProjectile(NPC npc, Projectile projectile, int damage, float knockback, bool crit)
         {
-            Modifier?.OnHitByProjectile(npc, projectile);
+            Modifiers?.ForEach(x => x.OnHitByProjectile(npc, projectile));
         }
 
         public override void OnHitPlayer(NPC npc, Player target, int damage, bool crit)
         {
-            Modifier?.OnHitPlayer(npc, target);
+            Modifiers?.ForEach(x => x.OnHitPlayer(npc, target));
         }
 
         public override void ModifyHitByItem(NPC npc, Player player, Item item, ref int damage, ref float knockback,
             ref bool crit)
         {
-            Modifier?.ModifyHitByItem(npc, player, item, ref damage, ref knockback);
+            foreach (Modifier modifier in Modifiers)
+                modifier.ModifyHitByItem(npc, player, item, ref damage, ref knockback);
         }
 
         public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref int damage, ref float knockback,
             ref bool crit, ref int hitDirection)
         {
-            Modifier?.ModifyHitByProjectile(npc, projectile, ref damage, ref knockback);
+            foreach (Modifier modifier in Modifiers)
+                modifier.ModifyHitByProjectile(npc, projectile, ref damage, ref knockback);
         }
 
         public override void ModifyHitPlayer(NPC npc, Player target, ref int damage, ref bool crit)
@@ -180,22 +201,37 @@ namespace FargoEnemyModifiers
 
         public override bool PreNPCLoot(NPC npc)
         {
-            return (Modifier?.PreNPCLoot(npc) ?? false) && DropLoot;
+            bool retVal = base.PreNPCLoot(npc);
+
+            foreach (Modifier modifier in Modifiers)
+                retVal = modifier.PreNPCLoot(npc);
+
+            return retVal && DropLoot;
         }
 
         public override void NPCLoot(NPC npc)
         {
-            Modifier?.NPCLoot(npc);
+            Modifiers?.ForEach(x => x.NPCLoot(npc));
         }
 
         public override Color? GetAlpha(NPC npc, Color drawColor)
         {
-            return Modifier?.GetAlpha();
+            Color? retVal = base.GetAlpha(npc, drawColor);
+
+            foreach (Modifier modifier in Modifiers)
+                retVal = modifier.GetAlpha();
+
+            return retVal;
         }
 
         public override bool PreDraw(NPC npc, SpriteBatch spriteBatch, Color drawColor)
         {
-            return Modifier?.PreDraw(npc, spriteBatch, drawColor) ?? base.PreDraw(npc, spriteBatch, drawColor);
+            bool retVal = base.PreDraw(npc, spriteBatch, drawColor);
+
+            foreach (Modifier modifier in Modifiers)
+                retVal = modifier.PreDraw(npc, spriteBatch, drawColor);
+
+            return retVal;
         }
     }
 }
