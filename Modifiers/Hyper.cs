@@ -1,37 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria;
+﻿using Terraria;
 
 namespace FargoEnemyModifiers.Modifiers
 {
     public class Hyper : Modifier
     {
-        public Hyper()
-        {
-            name = "Hyper";
-            speedMultiplier = 1.5f;
-        }
+        public override string Name => "Hyper";
 
-        private bool hyperGo = true;
+        public override float SpeedMultiplier => 1.5f;
+
+        protected bool hyperGo = true;
+        protected bool boolToPreventStackOverflow = false;
+
         public override bool PreAI(NPC npc)
         {
-            if (hyperGo)
-            {
-                hyperGo = false;
+            if (!hyperGo)
+                return true;
+
+            hyperGo = false;
+
+            if (!boolToPreventStackOverflow) 
                 npc.AI();
-            }
+            boolToPreventStackOverflow = true;
+
             return true;
         }
 
         public override void PostAI(NPC npc)
         {
+            boolToPreventStackOverflow = false;
             if (!hyperGo)
-            {
                 hyperGo = true;
-            }
         }
     }
 }

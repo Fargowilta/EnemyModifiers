@@ -1,10 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -12,15 +8,15 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class Chained : Modifier
     {
-        public Chained()
-        {
-            name = "Chained";
-        }
+        public override string Name => "Chained";
 
-        const int maxDistance = 500;
-        private bool firstTick = true;
-        private int target;
-        private bool tileCollide;
+        public virtual int MaxDistance => 2000;
+
+        public virtual Texture2D ChainTexture => ModContent.GetTexture("Terraria/Chain40");
+
+        protected bool firstTick = true;
+        protected int target;
+        protected bool tileCollide;
 
         public override bool PreAI(NPC npc)
         {
@@ -31,11 +27,31 @@ namespace FargoEnemyModifiers.Modifiers
 
                 firstTick = false;
             }
+            
+            target = npc.HasValidTarget ? npc.target : npc.FindClosestPlayer();
 
-            Player player = Main.player[target];
-            int distance = (int)Vector2.Distance(npc.Center, player.Center);
+            if (target != -1 && Main.player[target].active && !Main.player[target].dead && !Main.player[target].ghost && npc.Distance(Main.player[target].Center) < MaxDistance)
+            {
+                const float lerp = 0.00025f;
+                Vector2 playerVelocity = Vector2.Lerp(Main.player[target].Center, npc.Center, lerp) - Main.player[target].Center;
+                playerVelocity.Y *= 2f; //compensation, x drag is generally a lot stronger than y drag
 
-            if (distance > maxDistance)
+                //i.e. don't y velocity when it's weak, this avoids an interaction where player can't jump despite being grounded
+                if (Main.player[target].velocity.Y == 0 && Math.Abs(playerVelocity.Y) < Math.Abs(Main.player[target].gravity))
+                    playerVelocity.Y = 0;
+
+                Main.player[target].velocity += playerVelocity;
+
+                Vector2 npcVelocity = Vector2.Lerp(npc.Center, Main.player[target].Center, lerp) - npc.Center;
+                if (!npc.noGravity)
+                    npcVelocity.Y *= 2f;
+                npc.velocity += npcVelocity;
+            }
+
+            /*Player player = Main.player[target];
+            int distance = (int) Vector2.Distance(npc.Center, player.Center);
+
+            if (distance > MaxDistance)
             {
                 //npc.velocity = player.velocity;
                 Vector2 velocity = Vector2.Normalize(player.Center - npc.Center) * (2 + player.velocity.Length());
@@ -44,9 +60,7 @@ namespace FargoEnemyModifiers.Modifiers
                 npc.noTileCollide = true;
             }
             else
-            {
-                npc.noTileCollide = tileCollide;
-            }
+                npc.noTileCollide = tileCollide;*/
 
             return true;
         }
@@ -54,34 +68,29 @@ namespace FargoEnemyModifiers.Modifiers
         // chain voodoo
         public override bool PreDraw(NPC npc, SpriteBatch spriteBatch, Color drawColor)
         {
-            Texture2D texture =  ModContent.GetTexture("Terraria/Chain40");
-
             Vector2 position = npc.Center;
             Vector2 mountedCenter = Main.player[target].MountedCenter;
-            Rectangle? sourceRectangle = new Rectangle?();
-            Vector2 origin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-            float num1 = texture.Height;
-            Vector2 vector24 = mountedCenter - position;
-            float rotation = (float)Math.Atan2(vector24.Y, vector24.X) - 1.57f;
-            bool flag = true;
-            if (float.IsNaN(position.X) && float.IsNaN(position.Y))
-                flag = false;
-            if (float.IsNaN(vector24.X) && float.IsNaN(vector24.Y))
-                flag = false;
-            while (flag)
-                if (vector24.Length() < num1 + 1.0)
-                {
-                    flag = false;
-                }
+            Vector2 origin = new Vector2(ChainTexture.Width * 0.5f, ChainTexture.Height * 0.5f);
+            float textureHeight = ChainTexture.Height;
+            Vector2 mountedPosition = mountedCenter - position;
+            float rotation = (float) Math.Atan2(mountedPosition.Y, mountedPosition.X) - 1.57f;
+            bool invalidPosition = !(float.IsNaN(position.X) && float.IsNaN(position.Y) ||
+                                     float.IsNaN(mountedPosition.X) && float.IsNaN(mountedPosition.Y));
+
+            while (invalidPosition)
+                if (mountedPosition.Length() < textureHeight + 1.0)
+                    invalidPosition = false;
                 else
                 {
-                    Vector2 vector21 = vector24;
-                    vector21.Normalize();
-                    position += vector21 * num1;
-                    vector24 = mountedCenter - position;
-                    Color color2 = Lighting.GetColor((int)position.X / 16, (int)(position.Y / 16.0));
+                    Vector2 mountedClone = mountedPosition;
+                    mountedClone.Normalize();
+                    position += mountedClone * textureHeight;
+                    mountedPosition = mountedCenter - position;
+                    Color color2 = Lighting.GetColor((int) position.X / 16, (int) (position.Y / 16.0));
                     color2 = npc.GetAlpha(color2);
-                    Main.spriteBatch.Draw(texture, position - Main.screenPosition, sourceRectangle, color2, rotation, origin, 1f, SpriteEffects.None, 0.0f);
+
+                    Main.spriteBatch.Draw(ChainTexture, position - Main.screenPosition, null, color2, rotation, origin,
+                        1f, SpriteEffects.None, 0.0f);
                 }
 
             return true;

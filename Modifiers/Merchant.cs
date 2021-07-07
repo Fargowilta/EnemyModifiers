@@ -1,31 +1,47 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 
 namespace FargoEnemyModifiers.Modifiers
 {
     public class Merchant : Modifier
     {
-        private int counter = 0;
+        public override string Name =>
+            ""; // needs name? idk. normally would be "Merchant" but there was no name specified
+
+        private bool firstTick = true;
+        private bool hasInteracted;
+        private int aiStyle;
+
         public override bool PreAI(NPC npc)
         {
-            npc.aiStyle = 7;
-            npc.friendly = true;
-            npc.homeless = true;
-
-            if (counter == 0)
+            if (firstTick)
             {
-                npc.townNPC = true;
+                firstTick = false;
+                aiStyle = npc.aiStyle;
             }
 
+            if (hasInteracted)
+            {
+                npc.aiStyle = aiStyle;
+                npc.friendly = false;
+                npc.homeless = false;
+                npc.townNPC = false;
+            }
+            else
+            {
+                npc.aiStyle = 7;
+                npc.friendly = true;
+                npc.homeless = true;
+                npc.townNPC = true;
+            }
             return false;
         }
 
         public override void GetChat(NPC npc, ref string chat)
         {
+            if (chat == null)
+                throw new ArgumentNullException(nameof(chat));
+
             int item;
 
             do
@@ -34,9 +50,8 @@ namespace FargoEnemyModifiers.Modifiers
             } while (item == 0);
 
             Item.NewItem(npc.Hitbox, item);
-
-            npc.townNPC = false;
-            counter = 1;
+            
+            hasInteracted = true;
 
             chat = "Don't tell anyone, but take this. Pretend you never saw me..";
         }

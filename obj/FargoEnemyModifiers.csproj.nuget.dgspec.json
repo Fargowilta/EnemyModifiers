@@ -8,7 +8,7 @@
       "version": "1.0.0",
       "restore": {
         "projectUniqueName": "C:\\Users\\leele\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\FargoEnemyModifiers\\FargoEnemyModifiers.csproj",
-        "projectName": "EnemyModifiers",
+        "projectName": "FargoEnemyModifiers",
         "projectPath": "C:\\Users\\leele\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\FargoEnemyModifiers\\FargoEnemyModifiers.csproj",
         "packagesPath": "C:\\Users\\leele\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\leele\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\FargoEnemyModifiers\\obj\\",

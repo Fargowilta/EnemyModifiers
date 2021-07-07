@@ -1,52 +1,58 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria;
+﻿using Terraria;
 using Terraria.Audio;
 
 namespace FargoEnemyModifiers.Modifiers
 {
     public class Devouring : Modifier
     {
-        private int baseHeight;
-        private int baseWidth;
+        protected int baseHeight;
+        protected int baseWidth;
 
-        public Devouring(NPC npc)
+        protected int startup = 6;
+
+        public override string Name => "Devouring";
+
+        public override void Setup(NPC npc)
         {
-            name = "Devouring";
-
-            baseHeight = npc.height;
             baseWidth = npc.width;
+            baseHeight = npc.height;
         }
 
         public override void AI(NPC npc)
         {
-            for (int i = 0; i < Main.maxNPCs; i++)
+            if (startup > 0)
             {
-                NPC otherNpc = Main.npc[i];
-
-                if (otherNpc.active && npc.whoAmI != otherNpc.whoAmI && otherNpc.realLife != npc.whoAmI && npc.realLife != otherNpc.whoAmI && otherNpc.Hitbox.Intersects(npc.Hitbox) && otherNpc.lifeMax <= npc.lifeMax)
+                startup--;
+            }
+            else
+            {
+                for (int i = 0; i < Main.maxNPCs; i++)
                 {
-                    int lifeGained = otherNpc.lifeMax / 4;
-                    npc.lifeMax += lifeGained;
-                    npc.life += lifeGained;
-                    npc.HealEffect(lifeGained);
+                    NPC otherNpc = Main.npc[i];
+                
+                    if (otherNpc.active && npc.whoAmI != otherNpc.whoAmI && otherNpc.realLife != npc.whoAmI && npc.realLife != otherNpc.whoAmI
+                        && otherNpc.Hitbox.Intersects(npc.Hitbox) && otherNpc.lifeMax <= npc.lifeMax
+                        && !otherNpc.dontTakeDamage && !otherNpc.immortal)
+                    {
+                        int lifeGained = otherNpc.lifeMax / 4;
+                        if (lifeGained > 0)
+                        {
+                            npc.lifeMax += lifeGained;
+                            npc.life += lifeGained;
+                            npc.HealEffect(lifeGained, false);
+                        }
 
-                    npc.damage = (int)(npc.damage * 1.05f);
+                        npc.defDamage = (int)(npc.defDamage * 1.05f);
+                        npc.damage = (int)(npc.damage * 1.05f);
 
-                    npc.position = npc.Center;
-                    npc.scale = npc.scale * 1.1f;
-                    npc.width = (int)(baseWidth * npc.scale);
-                    npc.height = (int)(baseHeight * npc.scale);
-                    npc.Center = npc.position;
-                    
+                        otherNpc.GetGlobalNPC<EnemyModifiersGlobalNPC>().DropLoot = false;
+                        otherNpc.life = 0;
+                        otherNpc.HitEffect();
+                        otherNpc.checkDead();
+                        //otherNpc.StrikeNPC(otherNpc.lifeMax < 9999999 ? 9999999 : otherNpc.lifeMax, 0, 1, true);
 
-                    otherNpc.GetGlobalNPC<EnemyModifiersGlobalNPC>().DropLoot = false;
-                    otherNpc.StrikeNPC(otherNpc.lifeMax, 0, 1, true);
-
-                    Main.PlaySound(new LegacySoundStyle(4, 13), npc.Center);
+                        Main.PlaySound(new LegacySoundStyle(4, 13), npc.Center);
+                    }
                 }
             }
         }

@@ -1,20 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria;
+﻿using Terraria;
 
 namespace FargoEnemyModifiers.Modifiers
 {
     public class Sluggish : Modifier
     {
-        public Sluggish()
-        {
-            name = "Sluggish";
-        }
+        public override string Name => "Sluggish";
 
-        private bool sluggishGo = false;
+        private bool sluggishGo;
+
         public override bool PreAI(NPC npc)
         {
             if (sluggishGo)
@@ -22,11 +15,9 @@ namespace FargoEnemyModifiers.Modifiers
                 sluggishGo = false;
                 return true;
             }
-            else
-            {
-                sluggishGo = true;
-                return false;
-            }
+
+            sluggishGo = true;
+            return false;
         }
     }
 }

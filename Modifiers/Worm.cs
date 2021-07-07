@@ -1,54 +1,49 @@
-﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria;
+﻿using Terraria;
 
 namespace FargoEnemyModifiers.Modifiers
 {
     public class Worm : Modifier
     {
-        public Worm()
-        {
-            name = "Worm";
-            healthMultiplier = 2f;
-            kbMultiplier = 0;
-        }
+        public override string Name => "Worm";
 
-        private bool BodySpawned = false;
+        public override float HealthMultiplier => 2f;
+
+        public override float KnockBackMultiplier => 0f;
+
+        protected bool bodySpawned;
 
         public override bool PreAI(NPC npc)
         {
-            if (!BodySpawned)
+            if (bodySpawned)
+                return true;
+
+            int prevIndex = npc.whoAmI;
+
+            for (int i = 0; i < 7; i++)
             {
-				int prevIndex = npc.whoAmI;
+                int index = NPC.NewNPC((int) (npc.position.X + npc.width / 2f),
+                    (int) (npc.position.Y + npc.height), npc.type, prevIndex);
 
-                for (int i = 0; i < 7; i++)
+                NPC newNPC = Main.npc[index];
+                newNPC.GetGlobalNPC<EnemyModifiersGlobalNPC>().firstTick = false;
+                newNPC.GetGlobalNPC<EnemyModifiersGlobalNPC>().Modifiers.RemoveAll(x => x.GetType() == typeof(Worm));
+                newNPC.GetGlobalNPC<EnemyModifiersGlobalNPC>().Modifiers.Add(new WormBody());
+                newNPC.realLife = npc.whoAmI;
+
+                if (i != 0)
                 {
-                    int index = NPC.NewNPC((int)(npc.position.X + (float)(npc.width / 2)), (int)(npc.position.Y + (float)npc.height), npc.type, prevIndex, 0f, 0f, 0f, 0f, 255);
+                    Main.npc[prevIndex].localAI[0] = index;
+                }
 
-                    NPC newNPC = Main.npc[index];
-					newNPC.GetGlobalNPC<EnemyModifiersGlobalNPC>().firstTick = false;
-					newNPC.GetGlobalNPC<EnemyModifiersGlobalNPC>().modifier = new WormBody();
-					newNPC.realLife = npc.whoAmI;
+                newNPC.localAI[1] = prevIndex;
+                npc.netUpdate = true;
 
-					if (i != 0)
-					{
-						Main.npc[prevIndex].localAI[0] = index;
-					}
+                prevIndex = index;
+            }
 
-                    newNPC.localAI[1] = prevIndex;
-                    npc.netUpdate = true;
-
-					prevIndex = index;
-				}
-
-                BodySpawned = true;
-            }           
+            bodySpawned = true;
 
             return true;
         }
-	}
+    }
 }

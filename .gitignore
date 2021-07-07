@@ -1,0 +1,19 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/EnemyModifiers/v15/.suo
+/.vs/FargoEnemyModifiers/v15/.suo
+/.vs/ProjectSettings.json
+/.vs/VSWorkspaceState.json
+/.vs/slnx.sqlite
+.vs/slnx.sqlite
+/obj/Release/net45/FargoEnemyModifiers.csproj.CoreCompileInputs.cache
+/obj/Release/net45/FargoEnemyModifiers.AssemblyInfoInputs.cache
+/obj/Release/net45/FargoEnemyModifiers.AssemblyInfo.cs
+/obj/Release/net45
+/obj/Debug/net45/FargoEnemyModifiers.csprojAssemblyReference.cache
+/obj/Debug/net45/FargoEnemyModifiers.csproj.CoreCompileInputs.cache
+/obj/Debug/net45/FargoEnemyModifiers.AssemblyInfoInputs.cache
+/obj/Debug/net45/FargoEnemyModifiers.AssemblyInfo.cs
+/obj/Debug/net45

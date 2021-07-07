@@ -1,29 +1,53 @@
-﻿using FargoEnemyModifiers.Modifiers;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using Terraria.ID;
 using Terraria.ModLoader.Config;
 
 namespace FargoEnemyModifiers
 {
-    class EnemyModifiersConfig : ModConfig
+    [Label("Enemy Modifiers Config")]
+    public class EnemyModifiersConfig : ModConfig
     {
         public override ConfigScope Mode => ConfigScope.ServerSide;
-        public static EnemyModifiersConfig Instance;
 
-        [Label("Bosses can get Modifiers")]
-        [DefaultValue(false)]
+        public static EnemyModifiersConfig Instance { get; private set; }
+
+        public override void OnLoaded()
+        {
+            Instance = this;
+        }
+
+        [Header("Modifier Configuration")] [Label("Bosses can get Modifiers")] [DefaultValue(false)]
         public bool BossModifiers;
 
-        [Label("Modifier %Chance")]
-        [Increment(1)]
-        [Range(1, 100)]
-        [DefaultValue(25)]
-        [Slider]
+        [Label("Modifier Chance (%)")] [Increment(1)] [Range(0, 100)] [DefaultValue(25)] [Slider]
         public int ChanceForModifier;
 
-        [Label("NPC Blacklist")]
-        [Tooltip("NPCs here can never receive modifiers")]
+        [Label("Extra Modifier Chance (%)")] [Increment(1)] [Range(0, 100)] [DefaultValue(25)] [Slider]
+        public int ChanceForExtraModifier;
+
+        [Label("Amount of Possible Modifiers")] [Range(1, 20)] [DefaultValue(1)] [Slider]
+        public int ModifierAmount;
+
+        [Label("Force A Modifier")] [DefaultValue(false)]
+        public bool ForceModifier;
+
+        private int modifierToForce;
+        [Label("Modifier to Force")] [DefaultValue(0)]
+        public int ModifierToForce
+        {
+            get { return modifierToForce; }
+            set
+            {
+                modifierToForce = value;
+                if (modifierToForce < 0)
+                    modifierToForce = 0;
+                if (EnemyModifiers.Modifiers != null && EnemyModifiers.Modifiers.Count > 0 && modifierToForce > EnemyModifiers.Modifiers.Count - 1)
+                    modifierToForce = EnemyModifiers.Modifiers.Count - 1;
+            }
+        }
+
+        [Header("Blacklists")] [Label("NPC Blacklist")] [Tooltip("NPCs here can never receive modifiers")]
         public List<NPCDefinition> NPCBlacklist = new List<NPCDefinition>
         {
             new NPCDefinition(NPCID.WallCreeper),
@@ -36,7 +60,7 @@ namespace FargoEnemyModifiers
             new NPCDefinition(NPCID.BloodCrawlerWall),
             new NPCDefinition(NPCID.DesertScorpionWall),
             new NPCDefinition(NPCID.DesertScorpionWall),
-            
+
             new NPCDefinition(NPCID.BurningSphere),
             new NPCDefinition(NPCID.ChaosBall),
             new NPCDefinition(NPCID.WaterSphere),
@@ -56,16 +80,5 @@ namespace FargoEnemyModifiers
             new NPCDefinition(NPCID.DD2EterniaCrystal),
             new NPCDefinition(NPCID.DD2LanePortal),
         };
-
-        [Label("Set Modifier")]
-        [Tooltip("If true, all enemies will get the chosen modifier if any")]
-        [DefaultValue(false)]
-        public bool SetModifier;
-
-        [DefaultValue(ModifierID.Unrelenting)]
-        [DrawTicks]
-        public ModifierID ModifierEnum;
-
-        
     }
 }
