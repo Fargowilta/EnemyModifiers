@@ -2,12 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using FargoEnemyModifiers.Modifiers;
+using Microsoft.CodeAnalysis;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Mono.Cecil;
 using Terraria;
+using Terraria.Chat;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
+using Terraria.WorldBuilding;
 
 namespace FargoEnemyModifiers
 {
@@ -15,7 +20,9 @@ namespace FargoEnemyModifiers
     {
         public override bool InstancePerEntity => true;
 
-        public virtual List<Modifier> Modifiers { get; set; } = new List<Modifier>();
+        public List<Modifier> Modifiers = new List<Modifier>();
+
+        public List<int> modifierTypes = new List<int>();
 
         public virtual bool Rallied { get; set; }
 
@@ -27,8 +34,6 @@ namespace FargoEnemyModifiers
 
         public virtual bool DropLoot { get; set; } = true;
 
-        public List<int> modifierTypes = new List<int>();
-
         public override void ResetEffects(NPC npc)
         {
             if (RallyTimer > 0 && --RallyTimer <= 0)
@@ -38,80 +43,284 @@ namespace FargoEnemyModifiers
                 Fortified = false;
         }
 
-        public void ApplyModifier(NPC npc, int type)
-        {
-            if (type <= 0 || type >= EnemyModifiers.Modifiers.Count)
-                return;
-
-            Modifiers.Add(Activator.CreateInstance(EnemyModifiers.Modifiers[type].GetType()) as Modifier);
-            Modifiers?.ForEach(x => x.Setup(npc));
-            Modifiers?.ForEach(x => x.UpdateModifierStats(npc));
-        }
-
         public bool firstTick = true;
+
+        public const int ANNOUNCEMENT_DURATION = 300;
+        private int modifierNameLength;
+        public int combatTextIndex = -1;
+        private int nameSpawn = 0;
+        private bool noAnnouncement = false;
+        private string combinedModifierName;
 
         public override bool PreAI(NPC npc)
         {
             if (firstTick)
             {
-                if (Main.netMode == NetmodeID.MultiplayerClient) //client sends modifier request to server
+                if (Main.rand.Next(100) < EnemyModifiersConfig.Instance.ChanceForModifier)
                 {
-                    ModPacket packet = mod.GetPacket();
-                    packet.Write((byte) 1);
-                    packet.Write((byte) npc.whoAmI);
-                    packet.Write((byte) Main.myPlayer);
-                    packet.Send();
-                }
-                else if (Main.rand.Next(100) < EnemyModifiersConfig.Instance.ChanceForModifier)
-                {
-                    if (!(npc.boss && !EnemyModifiersConfig.Instance.BossModifiers || npc.townNPC || npc.friendly
+                    if (!((npc.boss && !EnemyModifiersConfig.Instance.BossModifiers) || npc.townNPC || npc.friendly || NPCID.Sets.CountsAsCritter[npc.type]
                           || npc.dontTakeDamage || npc.realLife != -1 || npc.SpawnedFromStatue ||
                           npc.type == NPCID.TargetDummy
                           || EnemyModifiersConfig.Instance.NPCBlacklist.Contains(new NPCDefinition(npc.type))))
                     {
-                        modifierTypes = new List<int> { EnemyModifiersConfig.Instance.ForceModifier ? EnemyModifiersConfig.Instance.ModifierToForce : Main.rand.Next(EnemyModifiers.Modifiers.Count) };
+                        if (Main.netMode == NetmodeID.MultiplayerClient) //client sends modifier request to server
+                        {
+                            PickModifier(npc);
 
-                        while (Main.rand.Next(100) < EnemyModifiersConfig.Instance.ChanceForExtraModifier && modifierTypes.Count < EnemyModifiersConfig.Instance.ModifierAmount)
-                            modifierTypes.Add(Main.rand.Next(EnemyModifiers.Modifiers.Count));
+                            //ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral("modifier chosen: " + modifierType), new Color(175, 75, 255));
 
-                        foreach (int modifier in modifierTypes)
-                            ApplyModifier(npc, modifier);
+                            ModPacket packet = Mod.GetPacket();
+                            packet.Write((byte)1);
+                            packet.Write((byte)npc.whoAmI);
+                            packet.Write((byte)Main.myPlayer);
+
+                            foreach (int modifierType in modifierTypes)
+                            {
+                                packet.Write((byte)modifierType);
+                            }
+ 
+                            packet.Send();
+                        }
+                        else if(Main.netMode == NetmodeID.SinglePlayer)
+                        {
+                            for (int i = 0; i < EnemyModifiersConfig.Instance.ModifierAmount; i++)
+                            {
+                                int modifierType = PickModifier(npc);
+                                ApplyModifier(npc, modifierType);
+
+                                if (!(Main.rand.Next(100) < EnemyModifiersConfig.Instance.ChanceForExtraModifier))
+                                {
+                                    break;
+                                }
+                            }   
+                        }
+
+                        finalizeModifierName(npc);
                     }
                 }
+                
             }
 
             firstTick = false;
 
-            if (Modifiers is null)
+            if (Modifiers.Count == 0)
                 return base.PreAI(npc);
 
             bool retVal = base.PreAI(npc);
 
             foreach (Modifier modifier in Modifiers)
-                retVal = modifier.PreAI(npc);
+            {
+                retVal &= modifier.PreAI(npc);
+            }
+
+            //spawn when on screen, rarities have their own color
+            if (EnemyModifiersConfig.Instance.ModifierAnnouncements && nameSpawn <= ANNOUNCEMENT_DURATION)
+            {
+                int highestRarity = 0;
+
+                foreach (Modifier modifier in Modifiers)
+                {
+                    if (!modifier.AllowAnnounceModifier())
+                    {
+                        noAnnouncement = true;
+                        break;
+                    }
+
+                    if (npc.realLife == -1)
+                    {
+                        if (Vector2.Distance(npc.Center, Main.player[Main.myPlayer].Center) < 800 && nameSpawn == 0)
+                        {
+                            nameSpawn = 1;
+                        }
+                    }
+                }
+
+                if (!noAnnouncement)
+                {
+                    if (nameSpawn == 1)
+                    {
+                        nameSpawn++;
+                        modifierNameLength = combinedModifierName.Length / 2 * 8;
+
+                        Color color = Color.White;
+
+                        foreach (Modifier modifier in Modifiers)
+                        {
+                            if (modifier.Rarity > highestRarity)
+                            {
+                                highestRarity = modifier.Rarity;
+                            }
+                        }
+
+                        switch (highestRarity)
+                        {
+                            case 1:
+                                color = Color.White;
+                                break;
+
+                            case 2:
+                                color = Color.Yellow;
+                                break;
+
+                            case 3:
+                                color = Color.Red;
+                                break;
+
+                            case 4:
+                                color = Main.DiscoColor;
+                                break;
+                        }
+
+                        combatTextIndex = CombatText.NewText(npc.Hitbox, color, combinedModifierName);
+
+                        Main.combatText[combatTextIndex].lifeTime = 2;
+                    }
+                    else if (nameSpawn != 0 && ((EnemyModifiersConfig.Instance.AnnouncementsForever) || (++nameSpawn <= ANNOUNCEMENT_DURATION)))
+                    {
+                        Main.combatText[combatTextIndex].lifeTime++;
+                        Main.combatText[combatTextIndex].position = new Vector2(npc.Center.X - (modifierNameLength), npc.Center.Y - 50);
+                        Main.combatText[combatTextIndex].alpha -= 0.0075f;
+                    }
+                }
+            }
+
+            return retVal;
+        }
+
+        public void finalizeModifierName(NPC npc)
+        {
+            getCombinedModifierName();
+            npc.GivenName = combinedModifierName + npc.FullName;
+        }
+
+        private void getCombinedModifierName()
+        {
+            combinedModifierName = "";
+
+            foreach (Modifier modifier in Modifiers)
+            {
+                combinedModifierName = combinedModifierName + " " + modifier.Name;
+            }
+
+            combinedModifierName += " ";
+        }
+
+        public int PickModifier(NPC npc)
+        {
+            int modifierType;
+            Modifier modifier;
+
+            if (EnemyModifiersConfig.Instance.ForceModifier && !modifierTypes.Contains((int)EnemyModifiersConfig.Instance.ModifierEnum))
+            {
+                modifierType = (int)EnemyModifiersConfig.Instance.ModifierEnum;
+            }
+            else
+            {
+                do
+                {
+                    modifierType = Main.rand.Next(EnemyModifiers.Modifiers.Count);
+                    modifier = EnemyModifiers.Modifiers[modifierType];
+
+                } while (IsBlacklistedModifier(modifierType)
+                || !modifier.ExtraCondition(npc) || !RarityCheck(modifier) || !AddColorChanger(modifier) || modifierTypes.Contains(modifierType));
+            }
+
+            modifierTypes.Add(modifierType);
+            return modifierType;
+        }
+
+        public void ApplyModifier(NPC npc, int type)
+        {
+            if (type < 0 || type >= EnemyModifiers.Modifiers.Count)
+                return;
+
+            //Main.NewText("Applying " + type + " modifiers list: " + Modifiers.Count);
+
+            Modifier modifier = Activator.CreateInstance(EnemyModifiers.Modifiers[type].GetType()) as Modifier;
+            modifier.Setup(npc);
+            modifier.UpdateModifierStats(npc);
+
+            Modifiers.Add(modifier);
+        }
+
+        private bool IsBlacklistedModifier(int type)
+        {
+            if (EnemyModifiersConfig.Instance.ModifierBlacklist == null)
+            {
+                return false;
+            }
+
+            foreach (EnemyModifiersConfig.ModifierPicker picker in EnemyModifiersConfig.Instance.ModifierBlacklist)
+            {
+                int blacklistedModifier = (int)picker.ModifierEnum;
+
+                if (type == blacklistedModifier)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private bool RarityCheck(Modifier type)
+        {
+            int rarity = type.Rarity;
+
+            if (rarity == 1 || (rarity == 2 && Main.rand.NextBool(2)) || ( rarity == 3 && Main.rand.NextBool(3)) || ( rarity == 4 && Main.rand.NextBool(4)))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        //colors show up 5x less when they already have one
+        private bool AddColorChanger(Modifier type)
+        {
+            if (!type.ColorChanger)
+            {
+                return true;
+            }
+
+            //only gets her if new modifier is color changer
+            bool retVal = true;
+
+            foreach (Modifier modifier in Modifiers)
+            {
+                if (modifier.ColorChanger && Main.rand.NextBool(5))
+                {
+                    retVal = false;
+                    break;
+                }
+            }
 
             return retVal;
         }
 
         public override void AI(NPC npc)
         {
-            if (npc.realLife != -1 && Modifiers == null)
+            if (npc.realLife != -1 && Modifiers.Count == 0)
             {
                 NPC head = Main.npc[npc.realLife];
 
-                if (head.GetGlobalNPC<EnemyModifiersGlobalNPC>().Modifiers != null)
+                if (head.GetGlobalNPC<EnemyModifiersGlobalNPC>().Modifiers.Count != 0)
                 {
-                    Modifiers = head.GetGlobalNPC<EnemyModifiersGlobalNPC>().Modifiers;
+                    Modifiers = new List<Modifier>(head.GetGlobalNPC<EnemyModifiersGlobalNPC>().Modifiers);
                     Modifiers.ForEach(x => x.UpdateModifierStats(npc));
+                    //modifier.UpdateModifierStats(npc);
                 }
             }
 
             float speedMulti = 1f;
 
-            if (Modifiers != null)
+            if (Modifiers.Count != 0)
             {
                 Modifiers.ForEach(x => speedMulti *= x.SpeedMultiplier);
                 Modifiers.ForEach(x => x.AI(npc));
+                //modifier.AI(npc);
+
+                //speedMulti *= modifier.SpeedMultiplier;
             }
 
             if (Rallied)
@@ -146,72 +355,142 @@ namespace FargoEnemyModifiers
         public override void GetChat(NPC npc, ref string chat)
         {
             foreach (Modifier modifier in Modifiers)
+            {
                 modifier.GetChat(npc, ref chat);
+            }
         }
 
         public override void UpdateLifeRegen(NPC npc, ref int damage)
         {
             foreach (Modifier modifier in Modifiers)
+            {
                 modifier.UpdateLifeRegen(npc, ref damage);
+            }            
         }
 
-        public override void OnHitByItem(NPC npc, Player player, Item item, int damage, float knockback, bool crit)
+        public override void OnHitByItem(NPC npc, Player player, Item item, NPC.HitInfo hit, int damageDone)
         {
-            Modifiers?.ForEach(x => x.OnHitByItem(npc, player));
+            foreach (Modifier modifier in Modifiers)
+            {
+                modifier.OnHitByItem(npc, player);
+            }
         }
 
-        public override void OnHitByProjectile(NPC npc, Projectile projectile, int damage, float knockback, bool crit)
+        public override void OnHitByProjectile(NPC npc, Projectile projectile, NPC.HitInfo hit, int damageDone)
         {
             Modifiers?.ForEach(x => x.OnHitByProjectile(npc, projectile));
         }
 
-        public override void OnHitPlayer(NPC npc, Player target, int damage, bool crit)
+        public override void OnHitPlayer(NPC npc, Player target, Player.HurtInfo hurtInfo)
         {
             Modifiers?.ForEach(x => x.OnHitPlayer(npc, target));
         }
 
-        public override void ModifyHitByItem(NPC npc, Player player, Item item, ref int damage, ref float knockback,
-            ref bool crit)
+        public override void ModifyHitByItem(NPC npc, Player player, Item item, ref NPC.HitModifiers modifiers)
         {
             foreach (Modifier modifier in Modifiers)
-                modifier.ModifyHitByItem(npc, player, item, ref damage, ref knockback);
+            {
+                modifier.ModifyHitByItem(npc, player, item, ref modifiers);
+            }
         }
 
-        public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref int damage, ref float knockback,
-            ref bool crit, ref int hitDirection)
+        public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref NPC.HitModifiers modifiers)
         {
             foreach (Modifier modifier in Modifiers)
-                modifier.ModifyHitByProjectile(npc, projectile, ref damage, ref knockback);
+            {
+                modifier.ModifyHitByProjectile(npc, projectile, ref modifiers);
+            }
         }
 
-        public override void ModifyHitPlayer(NPC npc, Player target, ref int damage, ref bool crit)
+        public override void ModifyHitPlayer(NPC npc, Player target, ref Player.HurtModifiers modifiers)
         {
             if (Rallied)
-                damage = (int) (damage * 1.25f);
+            {
+                modifiers.SourceDamage *= 1.25f;
+            }
         }
 
-        public override bool StrikeNPC(NPC npc, ref double damage, int defense, ref float knockback, int hitDirection,
-            ref bool crit)
+        public override void ModifyIncomingHit(NPC npc, ref NPC.HitModifiers modifiers)
         {
             if (Fortified)
-                damage /= 2;
-
-            return true;
-        }
-
-        public override bool PreNPCLoot(NPC npc)
-        {
-            bool retVal = base.PreNPCLoot(npc);
+                modifiers.FinalDamage *= 0.5f;
 
             foreach (Modifier modifier in Modifiers)
-                retVal = modifier.PreNPCLoot(npc);
+            {
+                modifier.ModifyIncomingHit(npc, ref modifiers);
+            }
+        }
+
+        public override bool PreKill(NPC npc)
+        {
+            bool retVal = base.PreKill(npc);
+
+            foreach (Modifier modifier in Modifiers)
+            {
+                retVal &= modifier.PreNPCLoot(npc);
+            }
 
             return retVal && DropLoot;
         }
 
-        public override void NPCLoot(NPC npc)
+        public override bool CheckDead(NPC npc)
         {
-            Modifiers?.ForEach(x => x.NPCLoot(npc));
+            //if (nameSpawn > 0 && nameSpawn < 300)
+            //{
+            //    Main.combatText[combatTextIndex].lifeTime = 0;
+            //}
+
+            bool retVal = base.CheckDead(npc);
+
+            foreach (Modifier modifier in Modifiers)
+            {
+                retVal &= modifier.CheckDead(npc);
+            }
+
+            return retVal;
+        }
+
+        public override bool SpecialOnKill(NPC npc)
+        {
+            bool retVal = base.SpecialOnKill(npc);
+
+            foreach (Modifier modifier in Modifiers)
+            {
+                retVal &= modifier.SpecialOnKill(npc);
+            }
+
+            return retVal;
+        }
+
+        private bool firstLoot = true;
+
+        public override void OnKill(NPC npc)
+        {
+            int lootMulti = 1;
+
+            foreach (Modifier modifier in Modifiers)
+            {
+                modifier.OnKill(npc);
+                lootMulti += modifier.LootMultiplier;
+            }
+
+            if (firstLoot)
+            {
+                firstLoot = false;
+
+                for (int i = 1; i < lootMulti; i++)
+                {
+                    npc.NPCLoot();
+                    //npc.value = 0;
+
+                    if (NPC.killCount[Item.NPCtoBanner(npc.BannerID())] % 50 != 0)
+                        NPC.killCount[Item.NPCtoBanner(npc.BannerID())]--;
+                }
+            }
+
+            firstLoot = false;
+
+
         }
 
         public override Color? GetAlpha(NPC npc, Color drawColor)
@@ -219,18 +498,62 @@ namespace FargoEnemyModifiers
             Color? retVal = base.GetAlpha(npc, drawColor);
 
             foreach (Modifier modifier in Modifiers)
-                retVal = modifier.GetAlpha();
+            {
+                if (modifier.GetAlpha() != null)
+                {
+                    if (retVal == null)
+                    {
+                        retVal = modifier.GetAlpha();
+                    }
+                    else
+                    {
+                        Color newColor = modifier.GetAlpha().Value;
+                        retVal = MultiplyColors(retVal.Value, newColor);
+                    }
+                }
+            }
 
             return retVal;
         }
 
-        public override bool PreDraw(NPC npc, SpriteBatch spriteBatch, Color drawColor)
+        private Color MultiplyColors(Color firstColor, Color secondColor)
         {
-            bool retVal = base.PreDraw(npc, spriteBatch, drawColor);
+            int r = multiplyColor(firstColor.R, secondColor.R);
+            int g = multiplyColor(firstColor.G, secondColor.G);
+            int b = multiplyColor(firstColor.B, secondColor.B);
+            int a = firstColor.A;
+
+            if (secondColor.A < a)
+            {
+                a = secondColor.A;
+            }
+
+            return new Color(r, g, b, a);
+        }
+
+        private int multiplyColor(byte color1, byte color2)
+        {
+            if (color1 == 0 && color2 != 0)
+            {
+                return color2;
+            }
+            if (color2 == 0 && color1 != 0)
+            {
+                return color1;
+            }
+
+            return (int)((float)(color1 * color2) / 255f);
+        }
+
+        public override bool PreDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            bool retVal = base.PreDraw(npc, spriteBatch, screenPos, drawColor);
 
             foreach (Modifier modifier in Modifiers)
-                retVal = modifier.PreDraw(npc, spriteBatch, drawColor);
-
+            {
+                retVal &= modifier.PreDraw(npc, spriteBatch, drawColor);
+            }
+            
             return retVal;
         }
     }

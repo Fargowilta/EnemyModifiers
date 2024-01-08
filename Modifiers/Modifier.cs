@@ -9,6 +9,29 @@ namespace FargoEnemyModifiers.Modifiers
     {
         public abstract string Name { get; }
 
+        public abstract string Description
+        {
+            get;
+        }
+
+        public abstract int Rarity
+        {
+            get;
+        }
+
+        public virtual bool ExtraCondition(NPC npc)
+        {
+            return true;
+        }
+
+        public virtual bool AllowAnnounceModifier()
+        {
+            return true;
+        }
+
+        public virtual bool ColorChanger { get; set; } = false;
+
+
         public virtual float HealthMultiplier { get; set; } = 1f;
 
         public virtual float DamageMultiplier { get; set; } = 1f;
@@ -21,8 +44,9 @@ namespace FargoEnemyModifiers.Modifiers
 
         public virtual float KnockBackMultiplier { get; set; } = 1f;
 
+        public virtual int LootMultiplier { get; set; } = 0;
+
         public float originalScale;
-        public string originalName = "";
 
         public virtual bool AutoLoad() => true;
 
@@ -63,14 +87,9 @@ namespace FargoEnemyModifiers.Modifiers
 
             npc.position.X -= npc.width / 2f;
             npc.position.Y -= npc.height;
-
-            if (originalName == "") 
-                originalName = npc.FullName;
-
-            npc.GivenName = Name + " " + originalName;
         }
 
-        public static void CreateAura(NPC npc, float distance, bool reverse = false, int dustId = DustID.GoldFlame)
+        public static void CreateAura(NPC npc, float distance, int dustId, Color color)
         {
             const int baseDistance = 500;
             const int baseMax = 20;
@@ -81,12 +100,12 @@ namespace FargoEnemyModifiers.Modifiers
             for (int i = 0; i < dustMax; i++)
             {
                 Vector2 spawnPos = npc.Center + Main.rand.NextVector2CircularEdge(distance, distance);
-                Dust dust = Dust.NewDustDirect(spawnPos, 0, 0, dustId, 0, 0, 100, Color.White, dustScale);
+                Dust dust = Dust.NewDustDirect(spawnPos, 0, 0, dustId, 0, 0, 100, color, dustScale);
                 dust.velocity = npc.velocity;
 
                 if (Main.rand.NextBool(3))
                 {
-                    dust.velocity += Vector2.Normalize(npc.Center - dust.position) * Main.rand.NextFloat(5f) * (reverse ? -1f : 1f);
+                    dust.velocity += Vector2.Normalize(npc.Center - dust.position) * Main.rand.NextFloat(5f) * (1f);
                     dust.position += dust.velocity * 5f;
                 }
 
@@ -124,11 +143,15 @@ namespace FargoEnemyModifiers.Modifiers
         {
         }
 
-        public virtual void ModifyHitByItem(NPC npc, Player player, Item item, ref int damage, ref float knockback)
+        public virtual void ModifyHitByItem(NPC npc, Player player, Item item, ref NPC.HitModifiers modifiers)
         {
         }
 
-        public virtual void ModifyHitByProjectile(NPC npc, Projectile projectile, ref int damage, ref float knockback)
+        public virtual void ModifyHitByProjectile(NPC npc, Projectile projectile, ref NPC.HitModifiers modifiers)
+        {
+        }
+
+        public virtual void ModifyIncomingHit(NPC npc, ref NPC.HitModifiers modifiers)
         {
         }
 
@@ -137,7 +160,17 @@ namespace FargoEnemyModifiers.Modifiers
             return true;
         }
 
-        public virtual void NPCLoot(NPC npc)
+        public virtual bool CheckDead(NPC npc)
+        {
+            return true;
+        }
+
+        public virtual bool SpecialOnKill(NPC npc)
+        {
+            return false;
+        }
+
+        public virtual void OnKill(NPC npc)
         {
         }
 

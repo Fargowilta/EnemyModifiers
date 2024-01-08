@@ -1,0 +1,81 @@
+Adds a variety of Modifiers for Enemies. Currently 48 of them 
+They can do anything from increasing their base stats to buffing other enemies to dropping more loot
+
+Highly customizable:
+[img]https://i.imgur.com/WnOjQwn.png[/img]
+
+Current List of Modifiers:
+
+**COMMON**
+Blue, Green, Orange, Purple, Red, Yellow - colors the enemy
+Armored - Defense is increased by 50%
+Healthy - Increases HP by 50%
+Impenetrable - Piercing projectiles are destroyed on hit
+Light - Takes increased knockback
+Menacing - Damage is increased by 50%
+Rampaging - Deals extremely high knockback to you
+Regenerating - Regenerates 10% HP every 5 seconds
+Slow - Speed is decreased by 50%
+Sluggish - Performs all actions half as fast
+Splitting - Spawns 2-3 smaller versions of itself with reduced stats on death
+Swift - Speed is increased by 50%
+Unrelenting - Gains knockback immunity
+Wealthy - Drops 5x more coins
+
+**UNCOMMON**
+Accelerating - Constantly gains speed up to 4x normal speed. If they hit you or you hit them with a melee attack, their speed resets
+Bloodthirsty - Gains 25% damage every time they hit you
+Bulletproof - Gains 80% resistance to ranged damage
+Flaming - Spawns with a permanent On Fire debuff, leaves a trail of damaging flames, 50% increased speed
+Fortifying - Defense decreased by 50%. Gains an aura that gives other enemies 50% damage resistance
+Hexproof - Damage over time does not work on them
+Huge - Size increased by 50%, HP increased by 25%, speed decreased by 15%
+Infested - Periodically spawns Baby Spiders
+Metallic - Has increased defense, takes less knockback, and drops ore
+Miniature - Size decreased by 50%, HP reduced by 25%, speed increased by 20%
+Possessed - Replaces its normal AI with Ghost AI
+Rallying - Gains an aura that buffs other enemies: +25% damage and +25% speed
+Shielded - Gains 80% resistance to melee damage
+Stealthy - Slowly turns nearly invsible, becomes fully visible when hit
+Vaccinated - Immune to all debuffs
+Vampiric - Heals some HP when they deal damage
+Veiled - Gains 80% resistance to magic and summon damage
+
+**RARE**
+Chained - They spawn chained to you and cannot leave a radius around you
+Devouring - Devours any enemy it comes across with lesser or equal HP. When it does so, it heals itself and gains max HP and damage
+Hyper - Performs all actions twice as fast
+Imaginary - Transparent. Ceases to exist when contact is made in any way
+Juggernaut - HP increased by 150%, damage, defense, and size increased by 25%. But has Sluggish built in (performs actions half as fast)
+Merchant - Replaces its usual AI with Town NPC AI. It will give you one random free item from the Travelling Merchant's current shop then vanish
+Rainbow - It's rainbow and Drops 5x more drops not including coins
+Showman - On death explodes into smoke and birds
+Solidified - Can no longer pass through tiles (only affects enemies that normally do)
+Undying - Hangs on with 5 HP for 5 seconds before dying
+Worm - Spawns with several body segments that lag behind it. Gains knockback immunity and 2x HP
+
+**MYTHIC** (Only appears in Hard Mode)
+Royal - 200% HP, 200% size, 60% move speed, immune to knockback, spawns mini versions of itself every so often when hurt
+
+NEW UPDATE - V 0.6.1
+-Fixed town NPCs getting extremely long names
+-Added Red, Blue, Yellow, Green, Orange, and Purple modifiers. They just color the enemy.
+-Colored modifiers will now combine with each other instead of overriding
+-Adjusted the Possessed modifier to not cancel out its usual AI, but add ghost AI in addition
+-Worm body segments and Splitting spawns now inherit all other modifiers from the parent
+-Added Eater of Worlds segments to the blacklist by default
+-Fixed announcements staying even after the enemy died or despawned
+-Fixed announcement colors not always being the highest modifier's rarity color
+-Fixed Stealthy having a modifier announcement when paired with others
+-Fixed Stealthy and Possessed not being transparent when paired with others
+-Fixed enemies that do not take damage from getting modifiers
+
+NEW UPDATE - V 0.6
+-Enemies can now have multiple modifiers at once (default setting is up to 3). 
+	-This is toggleable and each additional modifier has its own %chance
+	-There are now over 1 billion possible modifier combinations. Let me know if anything needs fixing 
+
+-Added config for announcements to last forever
+-Added extra loot/coins to a few of the harder modifiers
+-Rainbow now also multiplies coins
+-Fixed Possessed never announcing its modifier name

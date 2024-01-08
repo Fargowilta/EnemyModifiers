@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -8,38 +9,47 @@ namespace FargoEnemyModifiers.NPCs
 {
     public class BabySpider : ModNPC
     {
-        public override string Texture => "Terraria/Projectile_379";
+        public override string Texture => "Terraria/Images/Projectile_379";
 
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Baby Spider");
-            Main.npcFrameCount[npc.type] = 4;
+            // DisplayName.SetDefault("Baby Spider");
+            Main.npcFrameCount[NPC.type] = 4;
         }
 
         public override void SetDefaults()
         {
-            npc.width = 14;
-            npc.height = 10;
-            npc.damage = 10;
-            npc.defense = 5;
-            npc.lifeMax = 20;
-            npc.HitSound = SoundID.NPCHit29;
-            npc.DeathSound = SoundID.NPCDeath31;
-            npc.value = 0f;
-            npc.knockBackResist = 0.5f;
-            npc.aiStyle = -1;
+            NPC.width = 14;
+            NPC.height = 10;
+            NPC.damage = 10;
+            NPC.defense = 5;
+            NPC.lifeMax = 20;
+            NPC.HitSound = SoundID.NPCHit29;
+            NPC.DeathSound = SoundID.NPCDeath31;
+            NPC.value = 0f;
+            NPC.knockBackResist = 0.5f;
+            NPC.aiStyle = -1;
         }
+
+        //public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        //{
+        //    bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+        //        BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.SpiderNest,
+        //        new FlavorTextBestiaryInfoElement("Mods.FargoEnemyModifiers.Bestiary.BabySpider")
+        //    });
+
+        //}
 
         public override void AI()
         {
-            Vector2 value14 = npc.position;
+            Vector2 value14 = NPC.position;
             bool flag20 = false;
             float num593 = 500f;
 
-            Player target = Main.player[npc.FindClosestPlayer()];
+            Player target = Main.player[NPC.FindClosestPlayer()];
 
-            float num595 = Vector2.Distance(target.Center, npc.Center);
-            if (((Vector2.Distance(npc.Center, value14) > num595 && num595 < num593) || !flag20) && Collision.CanHit(npc.position, npc.width, npc.height, target.position, target.width, target.height))
+            float num595 = Vector2.Distance(target.Center, NPC.Center);
+            if (((Vector2.Distance(NPC.Center, value14) > num595 && num595 < num593) || !flag20) && Collision.CanHit(NPC.position, NPC.width, NPC.height, target.position, target.width, target.height))
             {
                 value14 = target.Center;
                 flag20 = true;
@@ -47,22 +57,22 @@ namespace FargoEnemyModifiers.NPCs
 
             if (!flag20)
             {
-                npc.velocity.X = npc.velocity.X * 0.95f;
+                NPC.velocity.X = NPC.velocity.X * 0.95f;
             }
             else
             {
                 float num596 = 5f;
                 float num597 = 0.08f;
-                if (npc.velocity.Y == 0f)
+                if (NPC.velocity.Y == 0f)
                 {
                     bool flag21 = false;
-                    if (npc.Center.Y - 50f > value14.Y)
+                    if (NPC.Center.Y - 50f > value14.Y)
                     {
                         flag21 = true;
                     }
                     if (flag21)
                     {
-                        npc.velocity.Y = -6f;
+                        NPC.velocity.Y = -6f;
                     }
                 }
                 else
@@ -70,23 +80,23 @@ namespace FargoEnemyModifiers.NPCs
                     num596 = 8f;
                     num597 = 0.12f;
                 }
-                npc.velocity.X = npc.velocity.X + (float)Math.Sign(value14.X - npc.Center.X) * num597;
-                if (npc.velocity.X < -num596)
+                NPC.velocity.X = NPC.velocity.X + (float)Math.Sign(value14.X - NPC.Center.X) * num597;
+                if (NPC.velocity.X < -num596)
                 {
-                    npc.velocity.X = -num596;
+                    NPC.velocity.X = -num596;
                 }
-                if (npc.velocity.X > num596)
+                if (NPC.velocity.X > num596)
                 {
-                    npc.velocity.X = num596;
+                    NPC.velocity.X = num596;
                 }
             }
             float num598 = 0f;
-            if (!(npc.Center.X < 50 || npc.Center.Y < 50 //oob checks
-                || npc.Center.X > Main.maxTilesX * 16 - 50 || npc.Center.Y > Main.maxTilesY * 16 - 50))
+            if (!(NPC.Center.X < 50 || NPC.Center.Y < 50 //oob checks
+                || NPC.Center.X > Main.maxTilesX * 16 - 50 || NPC.Center.Y > Main.maxTilesY * 16 - 50))
             {
                 try
                 {
-                    Collision.StepUp(ref npc.position, ref npc.velocity, npc.width, npc.height, ref num598, ref npc.gfxOffY,
+                    Collision.StepUp(ref NPC.position, ref NPC.velocity, NPC.width, NPC.height, ref num598, ref NPC.gfxOffY,
                         1, false, 0);
                 }
                 catch
@@ -95,15 +105,15 @@ namespace FargoEnemyModifiers.NPCs
                 }
             }
 
-            if (npc.velocity.X != 0f)
+            if (NPC.velocity.X != 0f)
             {
-                npc.direction = Math.Sign(npc.velocity.X);
+                NPC.direction = Math.Sign(NPC.velocity.X);
             }
-            npc.spriteDirection = npc.direction;
-            npc.velocity.Y = npc.velocity.Y + 0.2f;
-            if (npc.velocity.Y > 16f)
+            NPC.spriteDirection = NPC.direction;
+            NPC.velocity.Y = NPC.velocity.Y + 0.2f;
+            if (NPC.velocity.Y > 16f)
             {
-                npc.velocity.Y = 16f;
+                NPC.velocity.Y = 16f;
                 return;
             }
 
@@ -119,44 +129,47 @@ namespace FargoEnemyModifiers.NPCs
 
         public override void FindFrame(int frameHeight)
         {
-            if (npc.velocity.Y != 0f)
+            if (NPC.velocity.Y != 0f)
             {
-                npc.frame.Y = 3 * frameHeight;
+                NPC.frame.Y = 3 * frameHeight;
             }
             else
             {
-                if (Math.Abs(npc.velocity.X) > 0.2f)
+                if (Math.Abs(NPC.velocity.X) > 0.2f)
                 {
-                    npc.frameCounter++;
+                    NPC.frameCounter++;
                 }
-                if (npc.frameCounter >= 9)
+                if (NPC.frameCounter >= 9)
                 {
-                    npc.frameCounter = 0;
+                    NPC.frameCounter = 0;
                 }
-                if (npc.frameCounter >= 6)
+                if (NPC.frameCounter >= 6)
                 {
-                    npc.frame.Y = 2 * frameHeight;
+                    NPC.frame.Y = 2 * frameHeight;
                 }
-                else if (npc.frameCounter >= 3)
+                else if (NPC.frameCounter >= 3)
                 {
-                    npc.frame.Y = 1 * frameHeight;
+                    NPC.frame.Y = 1 * frameHeight;
                 }
                 else
                 {
-                    npc.frame.Y = 0 * frameHeight;
+                    NPC.frame.Y = 0 * frameHeight;
                 }
             }
         }
 
-        public override void NPCLoot()
+        public override void HitEffect(NPC.HitInfo hit)
         {
-            for (int num512 = 0; num512 < 5; num512++)
+            if (NPC.life == 0)
             {
-                Dust dust = Dust.NewDustDirect(npc.position, npc.width, npc.height, 171, 0f, 0f, 100);
-                dust.scale = Main.rand.Next(1, 10) * 0.1f;
-                dust.noGravity = true;
-                dust.fadeIn = 1.5f;
-                dust.velocity *= 0.75f;
+                for (int num512 = 0; num512 < 5; num512++)
+                {
+                    Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, 171, 0f, 0f, 100);
+                    dust.scale = Main.rand.Next(1, 10) * 0.1f;
+                    dust.noGravity = true;
+                    dust.fadeIn = 1.5f;
+                    dust.velocity *= 0.75f;
+                }
             }
         }
     }

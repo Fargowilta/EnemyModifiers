@@ -3,14 +3,21 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using FargoEnemyModifiers.Modifiers;
+using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Chat;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.ModLoader.Config;
 
 namespace FargoEnemyModifiers
 {
     public class EnemyModifiers : Mod
     {
+        
+
+        //alphabetical list for forcing specific one
         public static List<Modifier> Modifiers;
 
         public static TModifier GetModifier<TModifier>() where TModifier : Modifier =>
@@ -23,19 +30,13 @@ namespace FargoEnemyModifiers
         {
             Modifiers = new List<Modifier>();
 
-            foreach (Mod mod in ModLoader.Mods)
+            //these are added alphabetically
+            foreach (Type type in this.Code.GetTypes().Where(x =>
+                !x.IsAbstract && x.IsSubclassOf(typeof(Modifier)) && x.GetConstructor(new Type[0]) != null))
             {
-                if (mod.Code is null)
+                if (Activator.CreateInstance(type) is Modifier modifier && modifier.AutoLoad())
                 {
-                    Logger.Warn($"Mod assembly was null: {mod.Name}");
-                    continue;
-                }
-
-                foreach (Type type in mod.Code.GetTypes().Where(x =>
-                    !x.IsAbstract && x.IsSubclassOf(typeof(Modifier)) && x.GetConstructor(new Type[0]) != null))
-                {
-                    if (Activator.CreateInstance(type) is Modifier modifier && modifier.AutoLoad())
-                        Modifiers.Add(modifier);
+                    Modifiers.Add(modifier);
                 }
             }
         }
@@ -67,12 +68,14 @@ namespace FargoEnemyModifiers
                         if (Main.netMode == NetmodeID.MultiplayerClient && npc.active && modifier > -1 &&
                             modifier < Modifiers.Count)
                         {
-                            globalNPC.Modifiers.Add(
-                                Modifiers[
-                                    modifier]); // modifier index in array, array should be same across clients because all mods should match
-                            globalNPC.ApplyModifier(npc, modifier);
-                            //globalNPC.firstTick = false;
-                        }
+                            // modifier index in array, array should be same across clients because all mods should match
+                                globalNPC.modifierTypes.Add(modifier);
+                                globalNPC.Modifiers.Add(Modifiers[modifier]);
+                                globalNPC.ApplyModifier(npc, modifier);
+
+                                //ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral("modifier applied: " + modifier), new Color(175, 75, 255));
+                                //globalNPC.firstTick = false;
+                            }
                 }
                     break;
 
@@ -81,19 +84,27 @@ namespace FargoEnemyModifiers
                     //if (Main.netMode == NetmodeID.Server) NetMessage.BroadcastChatMessage(Terraria.Localization.NetworkText.FromLiteral("server got modifier request"), Color.White);
 
                     NPC npc = Main.npc[reader.ReadByte()]; // npc whoAmI
-                    EnemyModifiersGlobalNPC globalNPC = npc.GetGlobalNPC<EnemyModifiersGlobalNPC>();
+                    //EnemyModifiersGlobalNPC globalNPC = npc.GetGlobalNPC<EnemyModifiersGlobalNPC>();
 
                     int playerToSendTo = reader.ReadByte();
 
-                    if (Main.netMode == NetmodeID.Server)
+                    int modifiertoSend = reader.ReadByte();
+
+                        if (Main.netMode == NetmodeID.Server)
                     {
                         ModPacket packet = GetPacket();
                         packet.Write((byte) 0);
                         packet.Write((byte) npc.whoAmI);
-                        packet.Write(globalNPC.modifierTypes.Count);
-                        foreach (int modifier in globalNPC.modifierTypes)
-                            packet.Write(globalNPC.modifierTypes[modifier]);
-                        packet.Send(playerToSendTo); //send this info ONLY to player that requested it
+                            //packet.Write(globalNPC.modifierTypes.Count);
+                            //foreach (int modifier in globalNPC.modifierTypes)
+                            //    packet.Write(globalNPC.modifierTypes[modifier]);
+
+                        packet.Write(1);
+                        packet.Write(modifiertoSend);
+
+                            //ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral("modifier to apply: " + modifiertoSend), new Color(175, 75, 255));
+
+                            packet.Send(playerToSendTo); //send this info ONLY to player that requested it
                     }
                 }
                     break;
