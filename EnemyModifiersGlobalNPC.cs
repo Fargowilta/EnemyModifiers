@@ -58,10 +58,17 @@ namespace FargoEnemyModifiers
             {
                 if (Main.rand.Next(100) < EnemyModifiersConfig.Instance.ChanceForModifier)
                 {
-                    if (!((npc.boss && !EnemyModifiersConfig.Instance.BossModifiers) || npc.townNPC || npc.friendly || NPCID.Sets.CountsAsCritter[npc.type]
-                          || npc.dontTakeDamage || npc.realLife != -1 || npc.SpawnedFromStatue ||
-                          npc.type == NPCID.TargetDummy
-                          || EnemyModifiersConfig.Instance.NPCBlacklist.Contains(new NPCDefinition(npc.type))))
+                    if ((npc.boss && !EnemyModifiersConfig.Instance.BossModifiers) ||
+                        npc.townNPC || npc.friendly || npc.type == NPCID.TargetDummy ||
+                        npc.CountsAsACritter || npc.SpawnedFromStatue ||
+                        npc.immortal || npc.dontTakeDamage || npc.realLife != -1 ||
+                        EnemyModifiersConfig.Instance.NPCBlacklist.Contains(new NPCDefinition(npc.type)) ||
+                        npc.aiStyle == NPCAIStyleID.Worm) // Added a global worm blacklist. Those tend to kill the fps and cause massive desyncs.
+                        
+//                    if (!((npc.boss && !EnemyModifiersConfig.Instance.BossModifiers) || npc.townNPC || npc.friendly || NPCID.Sets.CountsAsCritter[npc.type]
+//                          || npc.dontTakeDamage || npc.realLife != -1 || npc.SpawnedFromStatue ||
+//                          npc.type == NPCID.TargetDummy
+//                          || EnemyModifiersConfig.Instance.NPCBlacklist.Contains(new NPCDefinition(npc.type))))
                     {
 //                        if (Main.netMode == NetmodeID.MultiplayerClient) //client sends modifier request to server
 //                        {
