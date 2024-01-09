@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using FargoEnemyModifiers.Modifiers;
@@ -58,30 +58,12 @@ namespace FargoEnemyModifiers
             {
                 if (Main.rand.Next(100) < EnemyModifiersConfig.Instance.ChanceForModifier)
                 {
-                    if (!((npc.boss && !EnemyModifiersConfig.Instance.BossModifiers) || npc.townNPC || npc.friendly || NPCID.Sets.CountsAsCritter[npc.type]
-                          || npc.dontTakeDamage || npc.realLife != -1 || npc.SpawnedFromStatue ||
-                          npc.type == NPCID.TargetDummy
-                          || EnemyModifiersConfig.Instance.NPCBlacklist.Contains(new NPCDefinition(npc.type))))
+                    if (!((npc.boss && !EnemyModifiersConfig.Instance.BossModifiers) || 
+                          npc.townNPC || npc.friendly || NPCID.Sets.CountsAsCritter[npc.type] || 
+                          npc.dontTakeDamage || npc.realLife != -1 || npc.SpawnedFromStatue ||
+                          npc.type == NPCID.TargetDummy || 
+                          EnemyModifiersConfig.Instance.NPCBlacklist.Contains(new NPCDefinition(npc.type))))
                     {
-//                        if (Main.netMode == NetmodeID.MultiplayerClient) //client sends modifier request to server
-//                        {
-//                            PickModifier(npc);
-//
-//                            //ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral("modifier chosen: " + modifierType), new Color(175, 75, 255));
-//
-//                            ModPacket packet = Mod.GetPacket();
-//                            packet.Write((byte)1);
-//                            packet.Write((byte)npc.whoAmI);
-//                            packet.Write((byte)Main.myPlayer);
-//
-//                            foreach (int modifierType in modifierTypes)
-//                            {
-//                                packet.Write((byte)modifierType);
-//                            }
-// 
-//                            packet.Send();
-//                        }
-
                         if (Main.netMode == NetmodeID.SinglePlayer || Main.netMode == NetmodeID.Server)
                         {
                             for (int i = 0; i < EnemyModifiersConfig.Instance.ModifierAmount; i++)
@@ -256,7 +238,7 @@ namespace FargoEnemyModifiers
             if (type < 0 || type >= EnemyModifiers.Modifiers.Count)
                 return;
 
-            Main.NewText("Applying " + type + " modifiers list: " + Modifiers.Count);
+            // Main.NewText("Applying " + type + " modifiers list: " + Modifiers.Count);
 
             Modifier modifier = Activator.CreateInstance(EnemyModifiers.Modifiers[type].GetType()) as Modifier;
             modifier.Setup(npc);
