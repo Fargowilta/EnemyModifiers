@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using FargoEnemyModifiers.Modifiers;
+using FargoEnemyModifiers.NetCode;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Chat;
@@ -15,7 +16,7 @@ namespace FargoEnemyModifiers
 {
     public class EnemyModifiers : Mod
     {
-        
+        public static Mod Instance;
 
         //alphabetical list for forcing specific one
         public static List<Modifier> Modifiers;
@@ -28,6 +29,8 @@ namespace FargoEnemyModifiers
 
         public override void PostSetupContent()
         {
+            Instance = this;
+            
             Modifiers = new List<Modifier>();
 
             //these are added alphabetically
@@ -48,7 +51,7 @@ namespace FargoEnemyModifiers
 
         public override void HandlePacket(BinaryReader reader, int whoAmI)
         {
-            byte id = reader.ReadByte();
+            PacketID id = (PacketID) reader.ReadByte();
 
             switch (id)
             {
@@ -57,7 +60,7 @@ namespace FargoEnemyModifiers
                 // byte: npc whoAmI
                 // byte: modifier amount
                 // byte[]: modifiers
-                case 0: // Server is sending modifier data to clients
+                case PacketID.MobSpawn: // Server is sending modifier data to clients
                     if (Main.netMode != NetmodeID.MultiplayerClient) return;
                     
                     int npcIndex = reader.ReadByte();
@@ -83,6 +86,14 @@ namespace FargoEnemyModifiers
                 
                     modNpc.finalizeModifierName(npc);
                     
+                    break;
+                case PacketID.ImaginaryDeath:
+                    if (Main.netMode != NetmodeID.Server) return;
+                    
+                    npcIndex = reader.ReadByte();
+                    npc = Main.npc[npcIndex];
+                    
+                    npc.active = false;
                     break;
             }
         }
