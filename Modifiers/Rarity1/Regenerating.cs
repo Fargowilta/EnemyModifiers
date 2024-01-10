@@ -1,4 +1,5 @@
-﻿using Terraria;
+using Terraria;
+using Terraria.ID;
 
 namespace FargoEnemyModifiers.Modifiers
 {
@@ -22,7 +23,10 @@ namespace FargoEnemyModifiers.Modifiers
                     if (npc.boss)
                         amtHealed /= 4;
                     npc.life += amtHealed;
-                    npc.HealEffect(amtHealed);
+                    if (Main.netMode != NetmodeID.Server)
+                    {
+                        npc.HealEffect(amtHealed);
+                    }
                     if (npc.life > npc.lifeMax)
                         npc.life = npc.lifeMax;
                     counter = 0;
