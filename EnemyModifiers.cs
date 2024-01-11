@@ -87,7 +87,7 @@ namespace FargoEnemyModifiers
                     modNpc.finalizeModifierName(npc);
                     
                     break;
-                case PacketID.ImaginaryDeath:
+                case PacketID.ClientCausedDespawn:
                     if (Main.netMode != NetmodeID.Server) return;
                     
                     npcIndex = reader.ReadByte();

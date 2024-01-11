@@ -3,6 +3,6 @@
     public enum PacketID
     {
         MobSpawn = 0,
-        ImaginaryDeath = 1,
+        ClientCausedDespawn = 1
     }
 }

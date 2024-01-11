@@ -1,5 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using System;
+using FargoEnemyModifiers.NetCode;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -28,25 +29,35 @@ namespace FargoEnemyModifiers.Modifiers
                 firstTick = false;
             }
 
-            if (hasInteracted)
-            {
-                if (--counter <= 0)
-                {
-                    npc.active = false;
-                    GrossVanillaDodgeDust(npc);
-                }
-            }
-            else
-            {
-                npc.aiStyle = NPCAIStyleID.Passive;
-                npc.friendly = true;
-                npc.homeless = true;
-            }
+            npc.aiStyle = NPCAIStyleID.Passive;
+            npc.friendly = true;
+            npc.homeless = true;
 
             NPCID.Sets.NoTownNPCHappiness[npc.type] = true;
             NPCID.Sets.ActsLikeTownNPC[npc.type] = true;
 
-            return false;
+            if (hasInteracted)
+            {
+                if (--counter <= 0)
+                {
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
+                    {
+                        ModPacket packet = EnemyModifiers.Instance.GetPacket();
+                        packet.Write((byte) PacketID.ClientCausedDespawn);
+                        packet.Write((byte) npc.whoAmI);
+                        packet.Send();
+                    }
+
+                    npc.active = false;
+
+                    if (Main.netMode != NetmodeID.Server)
+                    {
+                        GrossVanillaDodgeDust(npc);
+                    }
+                }
+            }
+
+            return true;
         }
 
         public override bool? CanChat(NPC npc)
@@ -73,8 +84,6 @@ namespace FargoEnemyModifiers.Modifiers
             }
             else
             {
-                EnemyModifiers.Instance.Logger.Debug($"Selected item id: {item} to player");
-
                 int playerIndex = npc.FindClosestPlayer();
                 Player player = Main.player[playerIndex];
                 if (!player.active) return;

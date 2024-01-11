@@ -48,7 +48,7 @@ namespace FargoEnemyModifiers.Modifiers
             if (Main.netMode == NetmodeID.MultiplayerClient)
             {
                 ModPacket packet = EnemyModifiers.Instance.GetPacket();
-                packet.Write((byte) PacketID.ImaginaryDeath);
+                packet.Write((byte) PacketID.ClientCausedDespawn);
                 packet.Write((byte) npc.whoAmI);
                 packet.Send();
             }
