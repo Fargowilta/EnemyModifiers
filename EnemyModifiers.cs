@@ -4,13 +4,9 @@ using System.IO;
 using System.Linq;
 using FargoEnemyModifiers.Modifiers;
 using FargoEnemyModifiers.NetCode;
-using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.Chat;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Config;
 
 namespace FargoEnemyModifiers
 {

@@ -1,10 +1,7 @@
 using FargoEnemyModifiers.NetCode;
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.Chat;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace FargoEnemyModifiers.Modifiers

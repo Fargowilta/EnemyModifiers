@@ -1,9 +1,5 @@
 ﻿using FargoEnemyModifiers.NetCode;
-using Microsoft.Xna.Framework;
-using Newtonsoft.Json.Serialization;
 using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace FargoEnemyModifiers.Modifiers
 {

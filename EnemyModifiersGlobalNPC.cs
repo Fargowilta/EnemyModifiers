@@ -1,19 +1,13 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using FargoEnemyModifiers.Modifiers;
 using FargoEnemyModifiers.NetCode;
-using Microsoft.CodeAnalysis;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Mono.Cecil;
 using Terraria;
-using Terraria.Chat;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
-using Terraria.WorldBuilding;
 
 namespace FargoEnemyModifiers
 {
