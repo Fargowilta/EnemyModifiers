@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using FargoEnemyModifiers.NetCode;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
@@ -18,6 +19,8 @@ namespace FargoEnemyModifiers.Modifiers
         {
             get;
         }
+
+        public virtual AiOverrideStyle AiOverride { get; } = AiOverrideStyle.None;
 
         public virtual bool ExtraCondition(NPC npc)
         {

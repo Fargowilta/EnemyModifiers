@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using FargoEnemyModifiers.Modifiers;
+using FargoEnemyModifiers.NetCode;
 using Microsoft.CodeAnalysis;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -321,10 +322,28 @@ namespace FargoEnemyModifiers
             if (Modifiers.Count != 0)
             {
                 Modifiers.ForEach(x => speedMulti *= x.SpeedMultiplier);
-                Modifiers.ForEach(x => x.AI(npc));
-                //modifier.AI(npc);
-
-                //speedMulti *= modifier.SpeedMultiplier;
+                foreach (Modifier modifier in Modifiers)
+                {
+                    switch (modifier.AiOverride)
+                    {
+                        case AiOverrideStyle.None:
+                            base.AI(npc);
+                            break;
+                        case AiOverrideStyle.Override:
+                            modifier.AI(npc);
+                            break;
+                        case AiOverrideStyle.PreVanilla:
+                            modifier.AI(npc);
+                            base.AI(npc);
+                            break;
+                        case AiOverrideStyle.PostVanilla:
+                            base.AI(npc);
+                            modifier.AI(npc);
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(modifier.AiOverride), modifier.AiOverride, "Invalid AiOverrideStyle");
+                    }
+                }
             }
 
             if (Rallied)
