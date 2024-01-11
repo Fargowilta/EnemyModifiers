@@ -2,6 +2,7 @@
 using System;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace FargoEnemyModifiers.Modifiers
 {
@@ -33,13 +34,11 @@ namespace FargoEnemyModifiers.Modifiers
                 {
                     npc.active = false;
                     GrossVanillaDodgeDust(npc);
-
-
                 }
             }
             else
             {
-                npc.aiStyle = 7;
+                npc.aiStyle = NPCAIStyleID.Passive;
                 npc.friendly = true;
                 npc.homeless = true;
                 npc.townNPC = true;
@@ -67,7 +66,14 @@ namespace FargoEnemyModifiers.Modifiers
             }
             else
             {
-                Item.NewItem(npc.GetSource_Loot(), npc.Hitbox, item);
+                EnemyModifiers.Instance.Logger.Debug($"Selected item id: {item} to player");
+
+                int playerIndex = npc.FindClosestPlayer();
+                Player player = Main.player[playerIndex];
+                if (!player.active) return;
+                
+                // Player.QuickSpawnItem(Direct) has a built-in multiplayer sync
+                player.QuickSpawnItemDirect(npc.GetSource_Loot(), item);
                 chat = "Don't tell anyone, but take this. Pretend you never saw me..";
 
                 hasInteracted = true;
