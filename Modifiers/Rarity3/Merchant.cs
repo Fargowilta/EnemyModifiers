@@ -44,6 +44,8 @@ namespace FargoEnemyModifiers.Modifiers
                 npc.townNPC = true;
             }
 
+            NPCID.Sets.NoTownNPCHappiness[npc.type] = true;
+
             return false;
         }
 
