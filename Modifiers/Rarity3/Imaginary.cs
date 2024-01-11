@@ -1,4 +1,4 @@
-﻿using FargoEnemyModifiers.NetCode;
+using FargoEnemyModifiers.NetCode;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Chat;
@@ -18,6 +18,7 @@ namespace FargoEnemyModifiers.Modifiers
         public override bool PreAI(NPC npc)
         {
             npc.alpha = 150;
+            npc.immortal = true;
             return true;
         }
 
