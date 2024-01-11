@@ -356,6 +356,28 @@ namespace FargoEnemyModifiers
             }
         }
 
+        public override bool? CanChat(NPC npc)
+        {
+            bool? retVal = base.CanChat(npc);
+
+            foreach (Modifier modifier in Modifiers)
+            {
+                if (modifier.CanChat(npc) != null)
+                {
+                    if (retVal == null)
+                    {
+                        retVal = modifier.CanChat(npc);
+                    }
+                    else
+                    {
+                        retVal &= modifier.CanChat(npc);
+                    }
+                }
+            }
+
+            return retVal;
+        }
+
         public override void GetChat(NPC npc, ref string chat)
         {
             foreach (Modifier modifier in Modifiers)

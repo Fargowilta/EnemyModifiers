@@ -41,12 +41,17 @@ namespace FargoEnemyModifiers.Modifiers
                 npc.aiStyle = NPCAIStyleID.Passive;
                 npc.friendly = true;
                 npc.homeless = true;
-                npc.townNPC = true;
             }
 
             NPCID.Sets.NoTownNPCHappiness[npc.type] = true;
+            NPCID.Sets.ActsLikeTownNPC[npc.type] = true;
 
             return false;
+        }
+
+        public override bool? CanChat(NPC npc)
+        {
+            return true;
         }
 
         public override void GetChat(NPC npc, ref string chat)

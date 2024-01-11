@@ -174,6 +174,11 @@ namespace FargoEnemyModifiers.Modifiers
         {
         }
 
+        public virtual bool? CanChat(NPC npc)
+        {
+            return null;
+        }
+
         public virtual void GetChat(NPC npc, ref string chat)
         {
         }
