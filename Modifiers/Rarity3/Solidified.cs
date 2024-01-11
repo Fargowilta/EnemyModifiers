@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using FargoEnemyModifiers.NetCode;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -10,6 +11,7 @@ namespace FargoEnemyModifiers.Modifiers
         public override string Name => "Solidified";
         public override string Description => "Can no longer pass through tiles";
         public override int Rarity => 3;
+        public override AiOverrideStyle AiOverride => AiOverrideStyle.PreVanilla;
 
         private bool firstTick = true;
 

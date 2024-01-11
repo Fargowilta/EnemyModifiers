@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using FargoEnemyModifiers.NetCode;
+using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 
@@ -14,6 +15,7 @@ namespace FargoEnemyModifiers.Modifiers
         public override string Name => "Devouring";
         public override string Description => "Devours any enemy it comes across with lesser or equal HP. When it does so, it heals itself and gains max HP and damage";
         public override int Rarity => 3;
+        public override AiOverrideStyle AiOverride => AiOverrideStyle.PreVanilla;
 
         public override void Setup(NPC npc)
         {

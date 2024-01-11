@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using FargoEnemyModifiers.NetCode;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 
@@ -9,6 +10,7 @@ namespace FargoEnemyModifiers.Modifiers
         public override string Name => "Flaming";
         public override string Description => "Spawns with a permanent On Fire debuff, leaves a trail of damaging flames, 50% increased speed";
         public override int Rarity => 2;
+        public override AiOverrideStyle AiOverride => AiOverrideStyle.PreVanilla;
 
         public override float SpeedMultiplier => 1.5f;
 

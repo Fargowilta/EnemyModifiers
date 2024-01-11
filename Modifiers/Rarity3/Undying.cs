@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using FargoEnemyModifiers.NetCode;
+using Microsoft.Xna.Framework;
 using Newtonsoft.Json.Serialization;
 using Terraria;
 using Terraria.ID;
@@ -11,6 +12,7 @@ namespace FargoEnemyModifiers.Modifiers
         public override string Name => "Undying";
         public override string Description => "Hangs on with 5 HP for 5 seconds before dying";
         public override int Rarity => 3;
+        public override AiOverrideStyle AiOverride => AiOverrideStyle.PreVanilla;
 
         bool undyingActivated = false;
         int counter = 300;

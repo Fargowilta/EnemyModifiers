@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using FargoEnemyModifiers.NetCode;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 
@@ -9,6 +10,7 @@ namespace FargoEnemyModifiers.Modifiers
         public override string Name => "Rallying";
         public override string Description => "Gains an aura that buffs other enemies: +25% damage and +25% speed";
         public override int Rarity => 2;
+        public override AiOverrideStyle AiOverride => AiOverrideStyle.PreVanilla;
 
         public override void AI(NPC npc)
         {

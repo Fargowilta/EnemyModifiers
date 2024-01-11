@@ -1,3 +1,4 @@
+using FargoEnemyModifiers.NetCode;
 using Terraria;
 using Terraria.ID;
 
@@ -8,6 +9,7 @@ namespace FargoEnemyModifiers.Modifiers
         public override string Name => "Regenerating";
         public override string Description => "Regenerates 2% HP every second";
         public override int Rarity => 1;
+        public override AiOverrideStyle AiOverride => AiOverrideStyle.PreVanilla;
 
         private int counter;
 

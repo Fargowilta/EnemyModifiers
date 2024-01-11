@@ -1,4 +1,5 @@
-﻿using FargoEnemyModifiers.NPCs;
+﻿using FargoEnemyModifiers.NetCode;
+using FargoEnemyModifiers.NPCs;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -11,6 +12,7 @@ namespace FargoEnemyModifiers.Modifiers
         public override string Name => "Infested";
         public override string Description => "Periodically spawns Baby Spiders";
         public override int Rarity => 2;
+        public override AiOverrideStyle AiOverride => AiOverrideStyle.PostVanilla;
 
         private int counter;
 

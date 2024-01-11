@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using FargoEnemyModifiers.NetCode;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 
@@ -9,6 +10,7 @@ namespace FargoEnemyModifiers.Modifiers
         public override string Name => "Fortifying";
         public override string Description => "Defense decreased by 50%. Gains an aura that gives other enemies 50% damage resistance";
         public override int Rarity => 2;
+        public override AiOverrideStyle AiOverride => AiOverrideStyle.PreVanilla;
 
         public override float DefenseMultiplier => 0.5f;
 

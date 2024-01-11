@@ -15,9 +15,10 @@ namespace FargoEnemyModifiers.Modifiers
         public override string Description => "Transparent. Ceases to exist when contact is made in any way";
         public override int Rarity => 3;
 
-        public override void AI(NPC npc)
+        public override bool PreAI(NPC npc)
         {
             npc.alpha = 150;
+            return true;
         }
 
         public override void OnHitPlayer(NPC npc, Player target)
