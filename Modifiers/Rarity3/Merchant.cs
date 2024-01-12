@@ -22,6 +22,7 @@ namespace FargoEnemyModifiers.Modifiers
         private bool firstTick = true;
         private bool hasInteracted;
         private int counter;
+        private Player _interactingPlayer = null;
 
         public override bool PreAI(NPC npc)
         {
@@ -41,7 +42,7 @@ namespace FargoEnemyModifiers.Modifiers
             {
                 if (--counter <= 0)
                 {
-                    if (Main.netMode == NetmodeID.MultiplayerClient)
+                    if (NetUtils.IsLocalClient(_interactingPlayer))
                     {
                         ModPacket packet = EnemyModifiers.Instance.GetPacket();
                         packet.Write((byte) PacketID.ClientCausedDespawn);
@@ -82,11 +83,11 @@ namespace FargoEnemyModifiers.Modifiers
             else
             {
                 int playerIndex = npc.FindClosestPlayer();
-                Player player = Main.player[playerIndex];
-                if (!player.active) return;
+                _interactingPlayer = Main.player[playerIndex];
+                if (!_interactingPlayer.active) return;
                 
                 // Player.QuickSpawnItem(Direct) has a built-in multiplayer sync
-                player.QuickSpawnItemDirect(npc.GetSource_Loot(), item);
+                _interactingPlayer.QuickSpawnItemDirect(npc.GetSource_Loot(), item);
                 chat = "Don't tell anyone, but take this. Pretend you never saw me..";
 
                 hasInteracted = true;
