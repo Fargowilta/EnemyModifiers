@@ -1,4 +1,4 @@
-﻿using FargoEnemyModifiers.NetCode;
+﻿using FargoEnemyModifiers.Utilities;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;

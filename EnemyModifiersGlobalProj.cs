@@ -37,7 +37,7 @@ namespace FargoEnemyModifiers
         {
             if (imaginary)
             {
-                Imaginary.ceaseToExist(owner);
+                Imaginary.ceaseToExist(owner, target);
             }
         }
     }

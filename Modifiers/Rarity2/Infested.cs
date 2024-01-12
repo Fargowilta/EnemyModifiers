@@ -1,4 +1,4 @@
-﻿using FargoEnemyModifiers.NetCode;
+﻿using FargoEnemyModifiers.Utilities;
 using FargoEnemyModifiers.NPCs;
 using Microsoft.Xna.Framework;
 using Terraria;

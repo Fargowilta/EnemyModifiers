@@ -1,4 +1,4 @@
-﻿using FargoEnemyModifiers.NetCode;
+﻿using FargoEnemyModifiers.Utilities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -170,6 +170,11 @@ namespace FargoEnemyModifiers.Modifiers
         public virtual bool SpecialOnKill(NPC npc)
         {
             return false;
+        }
+
+        public virtual void HitEffect(NPC npc, NPC.HitInfo hit)
+        {
+
         }
 
         public virtual void OnKill(NPC npc)

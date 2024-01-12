@@ -1,4 +1,4 @@
-﻿namespace FargoEnemyModifiers.NetCode
+﻿namespace FargoEnemyModifiers.Utilities
 {
     public enum AiOverrideStyle
     {

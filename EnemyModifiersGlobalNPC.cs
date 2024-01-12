@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using FargoEnemyModifiers.Modifiers;
-using FargoEnemyModifiers.NetCode;
+using FargoEnemyModifiers.Utilities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -506,6 +506,14 @@ namespace FargoEnemyModifiers
         }
 
         private bool firstLoot = true;
+
+        public override void HitEffect(NPC npc, NPC.HitInfo hit)
+        {
+            foreach (Modifier modifier in Modifiers)
+            {
+                modifier.HitEffect(npc, hit);
+            }
+        }
 
         public override void OnKill(NPC npc)
         {

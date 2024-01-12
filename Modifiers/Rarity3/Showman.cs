@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using FargoEnemyModifiers.Utilities;
 using Terraria;
 using Terraria.ID;
 
@@ -10,24 +11,33 @@ namespace FargoEnemyModifiers.Modifiers
         public override string Description => "On death explodes into smoke and birds";
         public override int Rarity => 3;
 
-        public override void OnKill(NPC npc)
-        {
-            List<int> possibleBirds = new List<int>();
-            possibleBirds.Add(NPCID.Bird);
-            possibleBirds.Add(NPCID.BirdBlue);
-            possibleBirds.Add(NPCID.BirdRed);
-            possibleBirds.Add(NPCID.GoldBird);
-            possibleBirds.Add(NPCID.Seagull);
-            possibleBirds.Add(NPCID.Toucan);
-            possibleBirds.Add(NPCID.Owl);
-            possibleBirds.Add(NPCID.Grebe);
+        private readonly List<int> _possibleBirds = new List<int> {
+            NPCID.Bird,
+            NPCID.BirdBlue,
+            NPCID.BirdRed,
+            NPCID.GoldBird,
+            NPCID.Seagull,
+            NPCID.Toucan,
+            NPCID.Owl,
+            NPCID.Grebe
+        };
 
-            for (int i = 0; i < Main.rand.Next(3, 8); i++)
+        public override void HitEffect(NPC npc, NPC.HitInfo hit)
+        {
+            if (npc.life > 0)
             {
-                NPC.NewNPC(npc.GetSource_Death(), (int)npc.Center.X, (int)npc.Center.Y, Main.rand.NextFromCollection(possibleBirds));
+                return;
             }
 
-            Imaginary.puffOfSmoke(npc);
+            Effects.PuffOfSmoke(npc);
+        }
+
+        public override void OnKill(NPC npc)
+        {
+            for (int i = 0; i < Main.rand.Next(3, 8); i++)
+            {
+                NPC.NewNPC(npc.GetSource_Death(), (int)npc.Center.X, (int)npc.Center.Y, Main.rand.NextFromCollection(_possibleBirds));
+            }
         }
     }
 }
