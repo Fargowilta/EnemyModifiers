@@ -51,15 +51,15 @@ namespace FargoEnemyModifiers
         {
             if (firstTick)
             {
-                if (Main.rand.Next(100) < EnemyModifiersConfig.Instance.ChanceForModifier)
+                if (Main.netMode == NetmodeID.SinglePlayer || Main.netMode == NetmodeID.Server)
                 {
-                    if (!((npc.boss && !EnemyModifiersConfig.Instance.BossModifiers) || 
-                          npc.townNPC || npc.friendly || NPCID.Sets.CountsAsCritter[npc.type] || 
+                    if (!((npc.boss && !EnemyModifiersConfig.Instance.BossModifiers) ||
+                          npc.townNPC || npc.friendly || npc.CountsAsACritter ||
                           npc.dontTakeDamage || npc.realLife != -1 || npc.SpawnedFromStatue ||
                           npc.type == NPCID.TargetDummy || 
                           EnemyModifiersConfig.Instance.NPCBlacklist.Contains(new NPCDefinition(npc.type))))
                     {
-                        if (Main.netMode == NetmodeID.SinglePlayer || Main.netMode == NetmodeID.Server)
+                        if (Main.rand.Next(100) < EnemyModifiersConfig.Instance.ChanceForModifier)
                         {
                             for (int i = 0; i < EnemyModifiersConfig.Instance.ModifierAmount; i++)
                             {
@@ -71,25 +71,29 @@ namespace FargoEnemyModifiers
                                     break;
                                 }
                             }
-                            
-                            if (Main.netMode == NetmodeID.SinglePlayer)
-                            {
-                                finalizeModifierName(npc); // Server doesn't want that. MP Client handles it on packet receive.
-                            }
-                            else if (Main.netMode == NetmodeID.Server)
-                            {
-                                EnemyModifiersGlobalNPC globalNPC = npc.GetGlobalNPC<EnemyModifiersGlobalNPC>();
 
-                                ModPacket packet = Mod.GetPacket();
-                                packet.Write((byte)0);
-                                packet.Write((byte)npc.whoAmI);
-                                packet.Write((byte)globalNPC.modifierTypes.Count);
-                                foreach (int modifierType in globalNPC.modifierTypes)
+                            switch (Main.netMode)
+                            {
+                                case NetmodeID.SinglePlayer:
+                                    finalizeModifierName(npc); // Server doesn't want that. MP Client handles it on packet receive.
+                                    break;
+                                case NetmodeID.Server:
                                 {
-                                    packet.Write((byte)modifierType);
-                                }
+                                    EnemyModifiersGlobalNPC globalNPC = npc.GetGlobalNPC<EnemyModifiersGlobalNPC>();
 
-                                packet.Send();
+                                    ModPacket packet = Mod.GetPacket();
+                                    packet.Write((byte)0);
+                                    packet.Write((byte)npc.whoAmI);
+                                    packet.Write((byte)globalNPC.modifierTypes.Count);
+                                    foreach (int modifierType in globalNPC.modifierTypes)
+                                    {
+                                        packet.Write((byte)modifierType);
+                                    }
+
+                                    packet.Send();
+                                    break;
+                                }
+                                // No implementation for NetmodeID.MultiplayerClient
                             }
                         }
                     }
