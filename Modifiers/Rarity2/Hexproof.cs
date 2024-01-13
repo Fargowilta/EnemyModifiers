@@ -5,7 +5,7 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class HexProof : Modifier
     {
-        public override string Key => "Hex-proof";
+        public override string Key => "Hexproof";
         public override RarityID Rarity => RarityID.Uncommon;
 
         public override void UpdateLifeRegen(NPC npc, ref int damage)

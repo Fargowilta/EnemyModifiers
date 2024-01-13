@@ -8,94 +8,56 @@ using Terraria.ModLoader.Config;
 namespace FargoEnemyModifiers
 {
     //[Label("Enemy Modifiers Config")]
-    public class EnemyModifiersConfig : ModConfig
+    public class EnemyModifiersServerConfig : ModConfig
     {
         public override ConfigScope Mode => ConfigScope.ServerSide;
 
-        public static EnemyModifiersConfig Instance { get; private set; }
+        public static EnemyModifiersServerConfig Instance { get; private set; }
 
         public override void OnLoaded()
         {
             Instance = this;
         }
 
-        [Header("$Mods.FargoEnemyModifiers.Configs.EnemyModifiersConfig.Header1")]
-        [Label("Modifier Announcements")]
-        [Tooltip("An enemies modifier will appear above its head for a while")]
-        [DefaultValue(true)]
-        public bool ModifierAnnouncements;
-
-        [Label("Announcements Last Forever")]
-        [Tooltip("The Modifier name will always appear above the enemy")]
-        [DefaultValue(false)]
-        public bool AnnouncementsForever;
-
-        [Label("Bosses can get Modifiers")]
+        [Header("ModifierConfiguration")]
         [DefaultValue(false)]
         public bool BossModifiers;
 
-        [Label("Modifier Chance (%)")]
         [Increment(1)]
         [Range(0, 100)]
         [DefaultValue(50)]
         [Slider]
         public int ChanceForModifier;
 
-        [Label("Maximum Amount of Possible Modifiers")]
         [Range(1, 10)]
         [DefaultValue(3)]
         [Slider]
         public int ModifierAmount;
 
-        [Label("Extra Modifier Chance (%)")]
         [Increment(1)]
         [Range(0, 100)]
         [DefaultValue(50)]
         [Slider]
         public int ChanceForExtraModifier;
 
-        
-
-        [Label("Force A Modifier")]
         [DefaultValue(false)]
         public bool ForceModifier;
 
-        [Label("Modifier to Force")]
         [DefaultValue(0)]
         [DrawTicks]
         public ModifierID ModifierEnum;
 
         //[Header("Blacklists")]
-        [Header("$Mods.FargoEnemyModifiers.Configs.EnemyModifiersConfig.Header2")]
-        [Label("NPC Blacklist")]
-        [Tooltip("NPCs here can never receive modifiers")]
+        [Header("Blacklists")]
         public List<NPCDefinition> NPCBlacklist = getDefaultNPCBlacklist();
 
-
-        [Label("Modifier Blacklist")]
-        [Tooltip("These modifiers will not appear")]
         public List<ModifierPicker> ModifierBlacklist;
 
         [BackgroundColor(0, 255, 255)]
-        [Label("Pair label")]
         public class ModifierPicker
         {
-            [Label("Modifier to Blacklist")]
             [DefaultValue(0)]
-            [DrawTicks]
             public ModifierID ModifierEnum;
-
-            //public string description
-            //{
-            //    get
-            //    {
-            //        return EnemyModifiers.Modifiers[(int)ModifierEnum].Description;
-            //    }
-            //    set
-            //    {
-
-            //    }
-            //}
         }
 
         private static List<NPCDefinition> getDefaultNPCBlacklist()

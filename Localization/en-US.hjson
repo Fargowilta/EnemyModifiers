@@ -3,10 +3,10 @@ Mods: {
 		NPCs.BabySpider.DisplayName: Baby Spider
 
 		Configs: {
-			EnemyModifiersConfig: {
-				DisplayName: Enemy Modifiers Config
-				Header1: Modifier Configuration
-				Header2: Blacklists
+			EnemyModifiersServerConfig: {
+				DisplayName: Server Config
+				ModifierConfiguration: Modifier Configuration
+				Blacklists: Blacklists
 
 				ModifierAnnouncements: {
 					Label: Modifier Announcements
@@ -56,6 +56,11 @@ Mods: {
 				AnnouncementsForever: {
 					Label: Announcements Last Forever
 					Tooltip: The Modifier name will always appear above the enemy
+				}
+
+				Headers: {
+					ModifierConfiguration: Modifier Configuration Header
+					Blacklists: Blacklists Header
 				}
 			}
 
@@ -126,6 +131,26 @@ Mods: {
 				ModifierEnum: {
 					Label: Modifier to Blacklist
 					Tooltip: ""
+				}
+			}
+
+			EnemyModifiersClientConfig: {
+				DisplayName: Client Config
+				Headers.Announcements: Modifier Announcements
+
+				announcementsEnabled: {
+					Label: Announcements enabled
+					Tooltip: Mobs will show what modifiers they have above their head
+				}
+
+				announcementsForever: {
+					Label: Announcements Forever
+					Tooltip: The modifier names will be shown until the mob dies
+				}
+
+				announcementsDuration: {
+					Label: Announcements Duration
+					Tooltip: The modifiers will be shown for this many seconds
 				}
 			}
 		}
@@ -252,7 +277,7 @@ Mods: {
 			}
 
 			Hexproof: {
-				DisplayName: Hexproof
+				DisplayName: Hex-proof
 				Tooltip: Damage over time does not work on them
 			}
 

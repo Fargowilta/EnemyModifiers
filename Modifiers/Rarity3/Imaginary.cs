@@ -48,16 +48,6 @@ namespace FargoEnemyModifiers.Modifiers
                 packet.Write((byte) npc.whoAmI);
                 packet.Send();
             }
-
-            if (EnemyModifiersConfig.Instance.AnnouncementsForever)
-            {
-                int index = npc.GetGlobalNPC<EnemyModifiersGlobalNPC>().combatTextIndex;
-                if (index < 0 || index >= Main.combatText.Length)
-                {
-                    return;
-                }
-                Main.combatText[index].active = false;
-            }
             
             npc.active = false;
         }
