@@ -113,7 +113,7 @@ namespace FargoEnemyModifiers
                 retVal &= modifier.PreAI(npc);
             }
 
-            if (!_noAnnouncement.GetValueOrDefault(false))
+            if (_noAnnouncement == null || !_noAnnouncement.Value)
             {
                 ShowModifierName(npc);
             }
@@ -164,8 +164,10 @@ namespace FargoEnemyModifiers
             {
                 if (_combatTextIndex == -1)
                     return;
+
                 CombatText text = Main.combatText[_combatTextIndex];
-                text.lifeTime = 2; // Reset it to 2 instead of adding; adding causes issues with HYPER and SLUGGISH
+                text.lifeTime =
+                    2; // Reset it to 2 instead of adding; adding causes issues with HYPER and SLUGGISH
                 text.position =
                     new Vector2(npc.Center.X - (_modifierNameLength), npc.Center.Y - 50);
                 text.color = GetColor(_highestRarity);
@@ -185,7 +187,14 @@ namespace FargoEnemyModifiers
                 }
 
                 _modifierNameLength = _combinedModifierName.Length / 2 * 8;
-                _combatTextIndex = CombatText.NewText(npc.Hitbox, GetColor(_highestRarity), _combinedModifierName);
+                _combatTextIndex =
+                    CombatText.NewText(npc.Hitbox, GetColor(_highestRarity), _combinedModifierName);
+                if (_combatTextIndex == 100) // This occurs when too many texts spawn at once
+                {
+                    _combatTextIndex = -1;
+                    return;
+                }
+
                 Main.combatText[_combatTextIndex].lifeTime = 2;
                 _nameSpawned = true;
             }
@@ -345,10 +354,12 @@ namespace FargoEnemyModifiers
                             break;
                         case AiOverrideStyle.PreVanilla:
                             modifier.AI(npc);
+                            if (!npc.active) return;
                             base.AI(npc);
                             break;
                         case AiOverrideStyle.PostVanilla:
                             base.AI(npc);
+                            if (!npc.active) return;
                             modifier.AI(npc);
                             break;
                         default:

@@ -183,7 +183,7 @@ Mods: {
 
 			Light: {
 				DisplayName: Light
-				Tooltip: Takes increased knockback and has redued gravity
+				Tooltip: Takes increased knockback and has reduced gravity
 			}
 
 			Menacing: {
@@ -318,7 +318,7 @@ Mods: {
 
 			Stealthy: {
 				DisplayName: Stealthy
-				Tooltip: Slowly turns nearly invsible, becomes fully visible when hit
+				Tooltip: Slowly turns nearly invisible, becomes fully visible when hit
 			}
 
 			Vaccinated: {
@@ -378,8 +378,8 @@ Mods: {
 				Tooltip: On death explodes into smoke and birds
 			}
 
-			Solidifed: {
-				DisplayName: Solidifed
+			Solidified: {
+				DisplayName: Solidified
 				Tooltip: Can no longer pass through tiles
 			}
 
