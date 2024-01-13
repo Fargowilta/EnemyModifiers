@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Terraria;
 
 namespace FargoEnemyModifiers.Modifiers
@@ -11,6 +11,7 @@ namespace FargoEnemyModifiers.Modifiers
 
         public override void OnHitPlayer(NPC npc, Player target)
         {
+            if (target.noKnockback) return;
             Vector2 velocity = Vector2.Normalize(target.Center - npc.Center) * 20;
             target.velocity = velocity;
         }
