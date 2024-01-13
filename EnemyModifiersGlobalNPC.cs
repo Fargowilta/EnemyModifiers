@@ -149,9 +149,9 @@ namespace FargoEnemyModifiers
 
                         foreach (Modifier modifier in Modifiers)
                         {
-                            if (modifier.Rarity > highestRarity)
+                            if ((int)modifier.Rarity > highestRarity)
                             {
-                                highestRarity = modifier.Rarity;
+                                highestRarity = (int)modifier.Rarity;
                             }
                         }
 
@@ -268,7 +268,7 @@ namespace FargoEnemyModifiers
 
         private bool RarityCheck(Modifier type)
         {
-            int rarity = type.Rarity;
+            int rarity = (int)type.Rarity;
 
             if (rarity == 1 || (rarity == 2 && Main.rand.NextBool(2)) || ( rarity == 3 && Main.rand.NextBool(3)) || ( rarity == 4 && Main.rand.NextBool(4)))
             {

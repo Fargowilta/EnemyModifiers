@@ -1,10 +1,10 @@
-﻿namespace FargoEnemyModifiers.Modifiers
+using FargoEnemyModifiers.Utilities;
+namespace FargoEnemyModifiers.Modifiers
 {
     public class Huge : Modifier
     {
-        public override string Name => "Huge";
-        public override string Description => "Size increased by 50%, HP increased by 25%, speed decreased by 15%";
-        public override int Rarity => 2;
+        public override string Key => "Huge";
+        public override RarityID Rarity => RarityID.Uncommon;
 
         public override float HealthMultiplier => 1.25f;
 

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
+using FargoEnemyModifiers.Utilities;
 using Terraria;
 using Terraria.ID;
 
@@ -7,9 +8,8 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class Splitting : Modifier
     {
-        public override string Name => "Splitting";
-        public override string Description => "Spawns 2-3 smaller versions of itself with reduced stats on death";
-        public override int Rarity => 1;
+        public override string Key => "Splitting";
+        public override RarityID Rarity => RarityID.Common;
 
         public override bool PreNPCLoot(NPC npc)
         {

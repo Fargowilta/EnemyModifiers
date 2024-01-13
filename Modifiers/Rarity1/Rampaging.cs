@@ -1,3 +1,4 @@
+﻿using FargoEnemyModifiers.Utilities;
 using Microsoft.Xna.Framework;
 using Terraria;
 
@@ -5,9 +6,8 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class Rampaging : Modifier
     {
-        public override string Name => "Rampaging";
-        public override string Description => "Deals extremely high knockback to you";
-        public override int Rarity => 1;
+        public override string Key => "Rampaging";
+        public override RarityID Rarity => RarityID.Common;
 
         public override void OnHitPlayer(NPC npc, Player target)
         {

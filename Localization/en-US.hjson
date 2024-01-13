@@ -129,5 +129,274 @@ Mods: {
 				}
 			}
 		}
+
+		Modifiers: {
+			Armored: {
+				DisplayName: Armored
+				Tooltip: Defense is increased by 50%
+			}
+
+			Blue: {
+				DisplayName: Blue
+				Tooltip: Blue
+			}
+
+			Green: {
+				DisplayName: Green
+				Tooltip: Green
+			}
+
+			Healthy: {
+				DisplayName: Healthy
+				Tooltip: HP is increased by 50%
+			}
+
+			Impenetrable: {
+				DisplayName: Impenetrable
+				Tooltip: Piercing projectiles are destroyed on hit
+			}
+
+			Light: {
+				DisplayName: Light
+				Tooltip: Takes increased knockback and has redued gravity
+			}
+
+			Menacing: {
+				DisplayName: Menacing
+				Tooltip: Damage is increased by 50%
+			}
+
+			Orange: {
+				DisplayName: Orange
+				Tooltip: Orange
+			}
+
+			Purple: {
+				DisplayName: Purple
+				Tooltip: Purple
+			}
+
+			Rampaging: {
+				DisplayName: Rampaging
+				Tooltip: Deals extremely high knockback to you
+			}
+
+			Red: {
+				DisplayName: Red
+				Tooltip: Red
+			}
+
+			Regenerating: {
+				DisplayName: Regenerating
+				Tooltip: Regenerates 2% HP every second
+			}
+
+			Slow: {
+				DisplayName: Slow
+				Tooltip: Speed is decreased by 50%
+			}
+
+			Sluggish: {
+				DisplayName: Sluggish
+				Tooltip: Performs all actions half as fast
+			}
+
+			Splitting: {
+				DisplayName: Splitting
+				Tooltip: Spawns 2-3 smaller versions of itself with reduced stats on death
+			}
+
+			Swift: {
+				DisplayName: Swift
+				Tooltip: Speed is increased by 50%
+			}
+
+			Unrelenting: {
+				DisplayName: Unrelenting
+				Tooltip: Gains knockback immunity
+			}
+
+			Wealthy: {
+				DisplayName: Wealthy
+				Tooltip: Drops 5x more coins
+			}
+
+			Yellow: {
+				DisplayName: Yellow
+				Tooltip: Yellow
+			}
+
+			Accelerating: {
+				DisplayName: Accelerating
+				Tooltip: Constantly gains speed up to 4x normal speed. If they hit you or you hit them with a melee attack, their speed resets
+			}
+
+			Bloodthirsty: {
+				DisplayName: Bloodthirsty
+				Tooltip: Gains 25% damage every time they hit you
+			}
+
+			Bulletproof: {
+				DisplayName: Bulletproof
+				Tooltip: Gains 80% resistance to ranged damage
+			}
+
+			Flaming: {
+				DisplayName: Flaming
+				Tooltip: Spawns with a permanent On Fire debuff, leaves a trail of damaging flames, 50% increased speed
+			}
+
+			Fortifying: {
+				DisplayName: Fortifying
+				Tooltip: Defense decreased by 50%. Gains an aura that gives other enemies 50% damage resistance
+			}
+
+			Hexproof: {
+				DisplayName: Hexproof
+				Tooltip: Damage over time does not work on them
+			}
+
+			Huge: {
+				DisplayName: Huge
+				Tooltip: Size increased by 50%, HP increased by 25%, speed decreased by 15%
+			}
+
+			Infested: {
+				DisplayName: Infested
+				Tooltip: Periodically spawns Baby Spiders
+			}
+
+			Metallic: {
+				DisplayName: Metallic
+				Tooltip: Has increased defense, takes less knockback, and drops ore
+			}
+
+			Miniature: {
+				DisplayName: Miniature
+				Tooltip: Size decreased by 50%, HP reduced by 25%, speed increased by 20%
+			}
+
+			Possessed: {
+				DisplayName: Possessed
+				Tooltip: Replaces its normal AI with Ghost AI
+			}
+
+			Rallying: {
+				DisplayName: Rallying
+				Tooltip: Gains an aura that buffs other enemies: +25% damage and +25% speed
+			}
+
+			Shielded: {
+				DisplayName: Shielded
+				Tooltip: Gains 80% resistance to melee damage
+			}
+
+			Stealthy: {
+				DisplayName: Stealthy
+				Tooltip: Slowly turns nearly invsible, becomes fully visible when hit
+			}
+
+			Vaccinated: {
+				DisplayName: Vaccinated
+				Tooltip: Immune to all debuffs
+			}
+
+			Vampiric: {
+				DisplayName: Vampiric
+				Tooltip: Heals some HP when they deal damage
+			}
+
+			Veiled: {
+				DisplayName: Veiled
+				Tooltip: Gains 80% resistance to magic and summon damage
+			}
+
+			Chained: {
+				DisplayName: Chained
+				Tooltip: They spawn chained to you and cannot leave a radius around you
+			}
+
+			Devouring: {
+				DisplayName: Devouring
+				Tooltip: Devours any enemy it comes across with lesser or equal HP. When it does so, it heals itself and gains max HP and damage
+			}
+
+			Hyper: {
+				DisplayName: Hyper
+				Tooltip: Performs all actions twice as fast
+			}
+
+			Imaginary: {
+				DisplayName: Imaginary
+				Tooltip: Transparent. Ceases to exist when contact is made in any way
+			}
+
+			Juggernaut: {
+				DisplayName: Juggernaut
+				Tooltip: HP increased by 150%. Damage, defense, and size increased by 25%. Immune to knockback, but has Sluggish built in (performs actions half as fast)
+			}
+
+			Merchant: {
+				DisplayName: Merchant
+				Tooltip: Replaces its usual AI with Town NPC AI. It will give you one random free item from the Travelling Merchant's current shop then vanish
+				Interaction: Don't tell anyone, but take this. Pretend you never saw me..
+				AllIGot: That's all I got for you..
+			}
+
+			Rainbow: {
+				DisplayName: Rainbow
+				Tooltip: It's rainbow and drops 5x more drops
+			}
+
+			Showman: {
+				DisplayName: Showman
+				Tooltip: On death explodes into smoke and birds
+			}
+
+			Solidifed: {
+				DisplayName: Solidifed
+				Tooltip: Can no longer pass through tiles
+			}
+
+			Undying: {
+				DisplayName: Undying
+				Tooltip: Hangs on with 5 HP for 5 seconds before dying
+			}
+
+			Warping: {
+				DisplayName: Warping
+				Tooltip: When they reach half HP, you switch places with them
+			}
+
+			Worm: {
+				DisplayName: Worm
+				Tooltip: Spawns with several body segments that lag behind it. Gains knockback immunity and 2x HP
+			}
+
+			WormBody: {
+				DisplayName: ""
+				Tooltip: ""
+			}
+
+			Delirious: {
+				DisplayName: Delirious
+				Tooltip: Changes its AI periodically and sprays projectiles whenever it does
+			}
+
+			Duke: {
+				DisplayName: Duke
+				Tooltip: Replaces its normal AI with Duke Fishron AI
+			}
+
+			Nested: {
+				DisplayName: Nested
+				Tooltip: 200% HP, 200% size, 60% move speed, immune to knockback, spawns mini versions of itself every so often when hurt
+			}
+
+			Royal: {
+				DisplayName: Royal
+				Tooltip: 200% HP, 200% size, 60% move speed, immune to knockback, spawns mini versions of itself every so often when hurt
+			}
+		}
 	}
 }

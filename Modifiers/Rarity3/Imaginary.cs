@@ -7,9 +7,8 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class Imaginary : Modifier
     {
-        public override string Name => "Imaginary";
-        public override string Description => "Transparent. Ceases to exist when contact is made in any way";
-        public override int Rarity => 3;
+        public override string Key => "Imaginary";
+        public override RarityID Rarity => RarityID.Rare;
 
         public override bool PreAI(NPC npc)
         {

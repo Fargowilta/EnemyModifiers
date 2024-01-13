@@ -4,15 +4,15 @@ using FargoEnemyModifiers.NetCode;
 using FargoEnemyModifiers.Utilities;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace FargoEnemyModifiers.Modifiers
 {
     public class Merchant : Modifier
     {
-        public override string Name => "Merchant";
-        public override string Description => "Replaces its usual AI with Town NPC AI. It will give you one random free item from the Travelling Merchant's current shop then vanish";
-        public override int Rarity => 3;
+        public override string Key => "Merchant";
+        public override RarityID Rarity => RarityID.Rare;
 
         public override bool ExtraCondition(NPC npc)
         {
@@ -77,7 +77,7 @@ namespace FargoEnemyModifiers.Modifiers
 
             if (hasInteracted)
             {
-                chat = "That's all I got for you..";
+                chat = Language.GetTextValue("Mods.FargoEnemyModifiers.Modifiers.Merchant.AllIGot");
                 counter = 120;
             }
             else
@@ -88,7 +88,7 @@ namespace FargoEnemyModifiers.Modifiers
                 
                 // Player.QuickSpawnItem(Direct) has a built-in multiplayer sync
                 _interactingPlayer.QuickSpawnItemDirect(npc.GetSource_Loot(), item);
-                chat = "Don't tell anyone, but take this. Pretend you never saw me..";
+                chat = Language.GetTextValue("Mods.FargoEnemyModifiers.Modifiers.Merchant.Interaction");
 
                 hasInteracted = true;
                 counter = 300; //countdown to poof

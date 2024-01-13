@@ -1,12 +1,12 @@
-﻿using Terraria;
+﻿using FargoEnemyModifiers.Utilities;
+using Terraria;
 
 namespace FargoEnemyModifiers.Modifiers
 {
     public class Juggernaut : Modifier
     {
-        public override string Name => "Juggernaut";
-        public override string Description => " HP increased by 150%. Damage, defense, and size increased by 25%. Immune to knockback, but has Sluggish built in (performs actions half as fast)";
-        public override int Rarity => 3;
+        public override string Key => "Juggernaut";
+        public override RarityID Rarity => RarityID.Rare;
 
         public override float HealthMultiplier => 2.5f;
 

@@ -9,9 +9,8 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class Infested : Modifier
     {
-        public override string Name => "Infested";
-        public override string Description => "Periodically spawns Baby Spiders";
-        public override int Rarity => 2;
+        public override string Key => "Infested";
+        public override RarityID Rarity => RarityID.Uncommon;
         public override AiOverrideStyle AiOverride => AiOverrideStyle.PostVanilla;
 
         private int counter;

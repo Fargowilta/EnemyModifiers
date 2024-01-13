@@ -5,9 +5,8 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class Solidified : Modifier
     {
-        public override string Name => "Solidified";
-        public override string Description => "Can no longer pass through tiles";
-        public override int Rarity => 3;
+        public override string Key => "Solidified";
+        public override RarityID Rarity => RarityID.Rare;
         public override AiOverrideStyle AiOverride => AiOverrideStyle.PreVanilla;
 
         private bool firstTick = true;

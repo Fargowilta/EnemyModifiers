@@ -1,10 +1,10 @@
-﻿namespace FargoEnemyModifiers.Modifiers
+using FargoEnemyModifiers.Utilities;
+namespace FargoEnemyModifiers.Modifiers
 {
     public class Miniature : Modifier
     {
-        public override string Name => "Miniature";
-        public override string Description => "Size decreased by 50%, HP reduced by 25%, speed increased by 20%";
-        public override int Rarity => 2;
+        public override string Key => "Miniature";
+        public override RarityID Rarity => RarityID.Uncommon;
 
         public override float HealthMultiplier => 0.75f;
 

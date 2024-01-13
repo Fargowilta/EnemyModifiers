@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using System.Collections.Generic;
+using FargoEnemyModifiers.Utilities;
 using Terraria;
 using Terraria.ID;
 
@@ -7,9 +8,8 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class Metallic : Modifier
     {
-        public override string Name => "Metallic";
-        public override string Description => "Has increased defense, takes less knockback, and drops ore";
-        public override int Rarity => 2;
+        public override string Key => "Metallic";
+        public override RarityID Rarity => RarityID.Uncommon;
 
         public override float KnockBackMultiplier => 0.8f;
         public override float DefenseMultiplier => 2f;

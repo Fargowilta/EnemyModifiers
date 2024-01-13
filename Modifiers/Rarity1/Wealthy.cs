@@ -1,13 +1,13 @@
-﻿using Microsoft.Xna.Framework;
+﻿using FargoEnemyModifiers.Utilities;
+using Microsoft.Xna.Framework;
 using Terraria;
 
 namespace FargoEnemyModifiers.Modifiers
 {
     public class Wealthy : Modifier
     {
-        public override string Name => "Wealthy";
-        public override string Description => "Drops 5x more coins";
-        public override int Rarity => 1;
+        public override string Key => "Wealthy";
+        public override RarityID Rarity => RarityID.Common;
 
         public override Color? GetAlpha()
         {

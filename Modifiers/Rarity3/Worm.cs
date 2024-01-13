@@ -1,13 +1,13 @@
 ﻿using System;
+using FargoEnemyModifiers.Utilities;
 using Terraria;
 
 namespace FargoEnemyModifiers.Modifiers
 {
     public class Worm : Modifier
     {
-        public override string Name => "Worm";
-        public override string Description => "Spawns with several body segments that lag behind it. Gains knockback immunity and 2x HP";
-        public override int Rarity => 3;
+        public override string Key => "Worm";
+        public override RarityID Rarity => RarityID.Rare;
         public override float HealthMultiplier => 2f;
         public override float KnockBackMultiplier => 0f;
 

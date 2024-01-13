@@ -5,9 +5,8 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class Undying : Modifier
     {
-        public override string Name => "Undying";
-        public override string Description => "Hangs on with 5 HP for 5 seconds before dying";
-        public override int Rarity => 3;
+        public override string Key => "Undying";
+        public override RarityID Rarity => RarityID.Rare;
         public override AiOverrideStyle AiOverride => AiOverrideStyle.PreVanilla;
 
         bool undyingActivated = false;

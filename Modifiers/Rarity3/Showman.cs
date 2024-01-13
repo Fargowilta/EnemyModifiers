@@ -7,9 +7,8 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class Showman : Modifier
     {
-        public override string Name => "Showman";
-        public override string Description => "On death explodes into smoke and birds";
-        public override int Rarity => 3;
+        public override string Key => "Showman";
+        public override RarityID Rarity => RarityID.Rare;
 
         private readonly List<int> _possibleBirds = new List<int> {
             NPCID.Bird,

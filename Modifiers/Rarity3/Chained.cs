@@ -1,4 +1,5 @@
 ﻿using System;
+using FargoEnemyModifiers.Utilities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -9,9 +10,8 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class Chained : Modifier
     {
-        public override string Name => "Chained";
-        public override string Description => "They spawn chained to you and cannot leave a radius around you";
-        public override int Rarity => 3;
+        public override string Key => "Chained";
+        public override RarityID Rarity => RarityID.Rare;
 
         public virtual int MaxDistance => 500;
 

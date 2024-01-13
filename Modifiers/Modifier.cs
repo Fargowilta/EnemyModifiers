@@ -2,19 +2,19 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.Localization;
 
 namespace FargoEnemyModifiers.Modifiers
 {
     public abstract class Modifier
     {
-        public abstract string Name { get; }
+        public abstract string Key { get; }
 
-        public abstract string Description
-        {
-            get;
-        }
+        public virtual string Name => Language.GetTextValue("Mods.FargoEnemyModifiers.Modifiers." + Key + ".DisplayName");
 
-        public abstract int Rarity
+        public virtual string Description => Language.GetTextValue("Mods.FargoEnemyModifiers.Modifiers." + Key + ".Description");
+
+        public abstract RarityID Rarity
         {
             get;
         }

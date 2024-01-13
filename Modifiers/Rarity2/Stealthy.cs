@@ -5,9 +5,8 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class Stealthy : Modifier
     {
-        public override string Name => "Stealthy";
-        public override string Description => "Slowly turns nearly invsible, becomes fully visible when hit";
-        public override int Rarity => 2;
+        public override string Key => "Stealthy";
+        public override RarityID Rarity => RarityID.Uncommon;
         public override AiOverrideStyle AiOverride => AiOverrideStyle.PreVanilla;
 
         public override bool AllowAnnounceModifier()

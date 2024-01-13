@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using FargoEnemyModifiers.Utilities;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 
@@ -6,9 +7,8 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class Royal : Modifier
     {
-        public override string Name => "Royal";
-        public override string Description => "200% HP, 200% size, 60% move speed, immune to knockback, spawns mini versions of itself every so often when hurt";
-        public override int Rarity => 4;
+        public override string Key => "Royal";
+        public override RarityID Rarity => RarityID.Mythic;
 
         public override float HealthMultiplier => 2f;
         public override float SizeMultiplier => 2f;

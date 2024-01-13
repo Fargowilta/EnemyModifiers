@@ -1,5 +1,6 @@
-﻿//using Microsoft.Xna.Framework;
+//using Microsoft.Xna.Framework;
 //using System;
+//using FargoEnemyModifiers.Utilities;
 //using Terraria;
 //using Terraria.ID;
 //using Terraria.ModLoader;
@@ -8,10 +9,9 @@
 //{
 //    public class Nested : Modifier
 //    {
-//        public override string Name => "Nested";
-//        public override string Description => "200% HP, 200% size, 60% move speed, immune to knockback, spawns mini versions of itself every so often when hurt";
-//        public override int Rarity => 4;
-
+//        public override string Key => "Nested";
+//        public override RarityID Rarity => RarityID.Mythic;
+//
 //        public override float HealthMultiplier => 2f;
 //        public override float SizeMultiplier => 3f;
 //        public override float SpeedMultiplier => 0.6f;

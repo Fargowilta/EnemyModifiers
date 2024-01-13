@@ -1,10 +1,11 @@
-﻿namespace FargoEnemyModifiers.Modifiers
+﻿using FargoEnemyModifiers.Utilities;
+
+namespace FargoEnemyModifiers.Modifiers
 {
     public class Slow : Modifier
     {
-        public override string Name => "Slow";
-        public override string Description => "Speed is decreased by 50%";
-        public override int Rarity => 1;
+        public override string Key => "Slow";
+        public override RarityID Rarity => RarityID.Common;
 
         public override float SpeedMultiplier => 0.5f;
     }

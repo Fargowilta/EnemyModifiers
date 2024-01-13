@@ -7,9 +7,8 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class Rallying : Modifier
     {
-        public override string Name => "Rallying";
-        public override string Description => "Gains an aura that buffs other enemies: +25% damage and +25% speed";
-        public override int Rarity => 2;
+        public override string Key => "Rallying";
+        public override RarityID Rarity => RarityID.Uncommon;
         public override AiOverrideStyle AiOverride => AiOverrideStyle.PreVanilla;
 
         public override void AI(NPC npc)

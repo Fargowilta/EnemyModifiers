@@ -1,13 +1,13 @@
-﻿using Terraria;
+﻿using FargoEnemyModifiers.Utilities;
+using Terraria;
 using Terraria.ID;
 
 namespace FargoEnemyModifiers.Modifiers
 {
     public class Possessed : Modifier
     {
-        public override string Name => "Possessed";
-        public override string Description => "Replaces its normal AI with Ghost AI";
-        public override int Rarity => 2;
+        public override string Key => "Possessed";
+        public override RarityID Rarity => RarityID.Uncommon;
 
         private int counter;
 

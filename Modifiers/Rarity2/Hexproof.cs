@@ -1,12 +1,12 @@
-﻿using Terraria;
+﻿using FargoEnemyModifiers.Utilities;
+using Terraria;
 
 namespace FargoEnemyModifiers.Modifiers
 {
     public class HexProof : Modifier
     {
-        public override string Name => "Hex-proof";
-        public override string Description => "Damage over time does not work on them";
-        public override int Rarity => 2;
+        public override string Key => "Hex-proof";
+        public override RarityID Rarity => RarityID.Uncommon;
 
         public override void UpdateLifeRegen(NPC npc, ref int damage)
         {
