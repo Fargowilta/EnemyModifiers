@@ -270,6 +270,12 @@ namespace FargoEnemyModifiers
 
         private bool IsBlacklistedModifier(int type)
         {
+            // If we get more of these, it would be nice to have a const list/array
+            if (Main.netMode != NetmodeID.SinglePlayer && type == (int)ModifierID.Worm)
+            {
+                return true;
+            }
+
             if (EnemyModifiersServerConfig.Instance.ModifierBlacklist == null)
             {
                 return false;
