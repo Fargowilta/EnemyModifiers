@@ -123,6 +123,8 @@ Mods: {
 				Orange.Label: Orange
 				Purple.Label: Purple
 				Yellow.Label: Yellow
+				Swarming.Label: Swarming
+				Solidified.Label: Solidified
 			}
 
 			ModifierPicker: {
@@ -401,6 +403,11 @@ Mods: {
 			WormBody: {
 				DisplayName: ""
 				Tooltip: ""
+			}
+
+			Swarming: {
+				DisplayName: Swarming
+				Tooltip: Spawns with several copies of itself. 4x the HP and shared health pool
 			}
 
 			Delirious: {
