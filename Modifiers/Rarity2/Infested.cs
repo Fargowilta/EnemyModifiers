@@ -9,6 +9,7 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class Infested : Modifier
     {
+        public override ModifierID ModifierID => ModifierID.Infested;
         public override string Key => "Infested";
         public override RarityID Rarity => RarityID.Uncommon;
         public override AiOverrideStyle AiOverride => AiOverrideStyle.PostVanilla;

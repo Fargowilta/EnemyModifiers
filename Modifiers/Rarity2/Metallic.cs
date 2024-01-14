@@ -8,6 +8,7 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class Metallic : Modifier
     {
+        public override ModifierID ModifierID => ModifierID.Metallic;
         public override string Key => "Metallic";
         public override RarityID Rarity => RarityID.Uncommon;
 

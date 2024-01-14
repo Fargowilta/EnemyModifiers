@@ -6,6 +6,7 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class Worm : Modifier
     {
+        public override ModifierID ModifierID => ModifierID.Worm;
         public override string Key => "Worm";
         public override RarityID Rarity => RarityID.Rare;
         public override float HealthMultiplier => 2f;
@@ -36,7 +37,7 @@ namespace FargoEnemyModifiers.Modifiers
                 {
                     Modifier newMod = (Activator.CreateInstance(EnemyModifiers.Modifiers[modifierType].GetType()) as Modifier);
 
-                    if (newMod.Name == "Worm")
+                    if (newMod.Key == "Worm")
                     {
                         continue;
                     }

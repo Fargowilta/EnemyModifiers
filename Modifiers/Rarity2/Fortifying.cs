@@ -7,6 +7,7 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class Fortifying : Modifier
     {
+        public override ModifierID ModifierID => ModifierID.Fortifying;
         public override string Key => "Fortifying";
         public override RarityID Rarity => RarityID.Uncommon;
         public override AiOverrideStyle AiOverride => AiOverrideStyle.PreVanilla;

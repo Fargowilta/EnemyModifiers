@@ -5,6 +5,7 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class Solidified : Modifier
     {
+        public override ModifierID ModifierID => ModifierID.Solidified;
         public override string Key => "Solidified";
         public override RarityID Rarity => RarityID.Rare;
         public override AiOverrideStyle AiOverride => AiOverrideStyle.PreVanilla;

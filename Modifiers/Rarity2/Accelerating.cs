@@ -5,6 +5,7 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class Accelerating : Modifier
     {
+        public override ModifierID ModifierID => ModifierID.Accelerating;
         public override string Key => "Accelerating";
         public override RarityID Rarity => RarityID.Uncommon;
 

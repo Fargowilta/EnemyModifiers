@@ -5,6 +5,7 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class Juggernaut : Modifier
     {
+        public override ModifierID ModifierID => ModifierID.Juggernaut;
         public override string Key => "Juggernaut";
         public override RarityID Rarity => RarityID.Rare;
 

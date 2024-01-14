@@ -7,14 +7,15 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class Devouring : Modifier
     {
+        public override ModifierID ModifierID => ModifierID.Devouring;
+        public override string Key => "Devouring";
+        public override RarityID Rarity => RarityID.Rare;
+        public override AiOverrideStyle AiOverride => AiOverrideStyle.PreVanilla;
+
         protected int baseHeight;
         protected int baseWidth;
 
         protected int startup = 6;
-
-        public override string Key => "Devouring";
-        public override RarityID Rarity => RarityID.Rare;
-        public override AiOverrideStyle AiOverride => AiOverrideStyle.PreVanilla;
 
         public override void Setup(NPC npc)
         {

@@ -6,6 +6,7 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class Vaccinated : Modifier
     {
+        public override ModifierID ModifierID => ModifierID.Vaccinated;
         public override string Key => "Vaccinated";
         public override RarityID Rarity => RarityID.Uncommon;
         public override AiOverrideStyle AiOverride => AiOverrideStyle.PreVanilla;

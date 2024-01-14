@@ -8,6 +8,7 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class Splitting : Modifier
     {
+        public override ModifierID ModifierID => ModifierID.Splitting;
         public override string Key => "Splitting";
         public override RarityID Rarity => RarityID.Common;
 
@@ -34,7 +35,7 @@ namespace FargoEnemyModifiers.Modifiers
                 {
                     Modifier newMod = (Activator.CreateInstance(EnemyModifiers.Modifiers[modifierType].GetType()) as Modifier);
 
-                    if (newMod.Name == "Splitting")
+                    if (newMod.Key == "Splitting")
                     {
                         continue;
                     }

@@ -5,6 +5,7 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class Hyper : Modifier
     {
+        public override ModifierID ModifierID => ModifierID.Hyper;
         public override string Key => "Hyper";
         public override RarityID Rarity => RarityID.Rare;
 

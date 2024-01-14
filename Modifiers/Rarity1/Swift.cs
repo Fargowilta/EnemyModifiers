@@ -4,6 +4,7 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class Swift : Modifier
     {
+        public override ModifierID ModifierID => ModifierID.Swift;
         public override string Key => "Swift";
         public override RarityID Rarity => RarityID.Common;
 

@@ -11,6 +11,7 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class Merchant : Modifier
     {
+        public override ModifierID ModifierID => ModifierID.Merchant;
         public override string Key => "Merchant";
         public override RarityID Rarity => RarityID.Rare;
 

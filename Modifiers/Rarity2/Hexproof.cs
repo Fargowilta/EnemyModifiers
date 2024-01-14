@@ -5,6 +5,7 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class HexProof : Modifier
     {
+        public override ModifierID ModifierID => ModifierID.Hexproof;
         public override string Key => "Hexproof";
         public override RarityID Rarity => RarityID.Uncommon;
 

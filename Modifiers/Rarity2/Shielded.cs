@@ -6,6 +6,7 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class Shielded : Modifier
     {
+        public override ModifierID ModifierID => ModifierID.Shielded;
         public override string Key => "Shielded";
         public override RarityID Rarity => RarityID.Uncommon;
 

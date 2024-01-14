@@ -6,6 +6,7 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class Rampaging : Modifier
     {
+        public override ModifierID ModifierID => ModifierID.Rampaging;
         public override string Key => "Rampaging";
         public override RarityID Rarity => RarityID.Common;
 

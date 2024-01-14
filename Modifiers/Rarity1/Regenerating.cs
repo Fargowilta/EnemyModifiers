@@ -6,6 +6,7 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class Regenerating : Modifier
     {
+        public override ModifierID ModifierID => ModifierID.Regenerating;
         public override string Key => "Regenerating";
         public override RarityID Rarity => RarityID.Common;
         public override AiOverrideStyle AiOverride => AiOverrideStyle.PreVanilla;

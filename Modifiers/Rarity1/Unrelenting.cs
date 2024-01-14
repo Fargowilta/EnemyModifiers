@@ -4,6 +4,7 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class Unrelenting : Modifier
     {
+        public override ModifierID ModifierID => ModifierID.Unrelenting;
         public override string Key => "Unrelenting";
         public override RarityID Rarity => RarityID.Common;
 

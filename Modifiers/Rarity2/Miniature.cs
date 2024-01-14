@@ -3,6 +3,7 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class Miniature : Modifier
     {
+        public override ModifierID ModifierID => ModifierID.Miniature;
         public override string Key => "Miniature";
         public override RarityID Rarity => RarityID.Uncommon;
 

@@ -5,6 +5,7 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class Undying : Modifier
     {
+        public override ModifierID ModifierID => ModifierID.Undying;
         public override string Key => "Undying";
         public override RarityID Rarity => RarityID.Rare;
         public override AiOverrideStyle AiOverride => AiOverrideStyle.PreVanilla;

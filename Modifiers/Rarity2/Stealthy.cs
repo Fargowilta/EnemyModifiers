@@ -5,6 +5,7 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class Stealthy : Modifier
     {
+        public override ModifierID ModifierID => ModifierID.Stealthy;
         public override string Key => "Stealthy";
         public override RarityID Rarity => RarityID.Uncommon;
         public override AiOverrideStyle AiOverride => AiOverrideStyle.PreVanilla;

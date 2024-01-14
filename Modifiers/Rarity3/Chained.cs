@@ -10,6 +10,7 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class Chained : Modifier
     {
+        public override ModifierID ModifierID => ModifierID.Chained;
         public override string Key => "Chained";
         public override RarityID Rarity => RarityID.Rare;
 

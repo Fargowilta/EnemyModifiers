@@ -5,6 +5,7 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class Bloodthirsty : Modifier
     {
+        public override ModifierID ModifierID => ModifierID.Bloodthirsty;
         public override string Key => "Bloodthirsty";
         public override RarityID Rarity => RarityID.Uncommon;
 

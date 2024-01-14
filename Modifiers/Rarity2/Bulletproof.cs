@@ -6,6 +6,7 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class Bulletproof : Modifier
     {
+        public override ModifierID ModifierID => ModifierID.Bulletproof;
         public override string Key => "Bulletproof";
         public override RarityID Rarity => RarityID.Uncommon;
 

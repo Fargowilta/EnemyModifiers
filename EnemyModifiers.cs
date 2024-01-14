@@ -38,6 +38,9 @@ namespace FargoEnemyModifiers
                     Modifiers.Add(modifier);
                 }
             }
+
+            // Alphabetical sort is not viable anymore
+            Modifiers.Sort((x, y) => x.ModifierID.CompareTo(y.ModifierID));
         }
 
         public override void Unload()

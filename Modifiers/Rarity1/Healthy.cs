@@ -4,6 +4,7 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class Healthy : Modifier
     {
+        public override ModifierID ModifierID => ModifierID.Healthy;
         public override string Key => "Healthy";
         public override RarityID Rarity => RarityID.Common;
 

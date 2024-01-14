@@ -5,6 +5,7 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class Purple : Modifier
     {
+        public override ModifierID ModifierID => ModifierID.Purple;
         public override string Key => "Purple";
         public override RarityID Rarity => RarityID.Common;
         public override bool ColorChanger => true;
