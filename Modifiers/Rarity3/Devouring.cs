@@ -12,16 +12,7 @@ namespace FargoEnemyModifiers.Modifiers
         public override RarityID Rarity => RarityID.Rare;
         public override AiOverrideStyle AiOverride => AiOverrideStyle.PreVanilla;
 
-        protected int baseHeight;
-        protected int baseWidth;
-
         protected int startup = 6;
-
-        public override void Setup(NPC npc)
-        {
-            baseWidth = npc.width;
-            baseHeight = npc.height;
-        }
 
         public override void AI(NPC npc)
         {

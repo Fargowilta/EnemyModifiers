@@ -16,6 +16,7 @@ namespace FargoEnemyModifiers.Modifiers
 
         public override bool PreAI(NPC npc)
         {
+            npc.checkDead();
             if (clonesSpawned || Main.netMode == NetmodeID.MultiplayerClient)
                 return true;
 
@@ -31,6 +32,9 @@ namespace FargoEnemyModifiers.Modifiers
                 NPC newNPC = Main.npc[index];
                 newNPC.SetDefaults(npc.type);
                 newNPC.realLife = owner;
+                newNPC.GetGlobalNPC<EnemyModifiersGlobalNPC>().firstTick = false;
+                newNPC.GetGlobalNPC<EnemyModifiersGlobalNPC>().Modifiers.Add(new Swarmer());
+                newNPC.realLife = npc.whoAmI;
 
                 //apply same modifiers to all clones
                 foreach (int modifierType in npc.GetGlobalNPC<EnemyModifiersGlobalNPC>().modifierTypes)
@@ -43,6 +47,7 @@ namespace FargoEnemyModifiers.Modifiers
                     }
 
                     newNPC.GetGlobalNPC<EnemyModifiersGlobalNPC>().ApplyModifier(newNPC, modifierType);
+                    newMod.UpdateModifierStats(newNPC);
                 }
             }
 

@@ -410,6 +410,11 @@ Mods: {
 				Tooltip: Spawns with several copies of itself. 4x the HP and shared health pool
 			}
 
+			Swarmer: {
+				DisplayName: ""
+				Tooltip: ""
+			}
+
 			Delirious: {
 				DisplayName: Delirious
 				Tooltip: Changes its AI periodically and sprays projectiles whenever it does

@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using FargoEnemyModifiers.Modifiers;
 using FargoEnemyModifiers.NetCode;
+using FargoEnemyModifiers.Utilities;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -35,6 +36,8 @@ namespace FargoEnemyModifiers
             {
                 if (Activator.CreateInstance(type) is Modifier modifier && modifier.AutoLoad())
                 {
+                    if (modifier.Rarity == RarityID.Hidden)
+                        continue;
                     Modifiers.Add(modifier);
                 }
             }
