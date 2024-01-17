@@ -7,6 +7,7 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class WormBody : Modifier
     {
+        public override ModifierID ModifierID => ModifierID.WormBody;
         public override string Key => "WormBody";
         public override RarityID Rarity => RarityID.Hidden;
         public override float KnockBackMultiplier => 0f;

@@ -45,7 +45,7 @@ namespace FargoEnemyModifiers
 
         [DefaultValue(0)]
         [DrawTicks]
-        public ModifierID ModifierEnum;
+        public ConfigModifierID ModifierEnum;
 
         //[Header("Blacklists")]
         [Header("Blacklists")]
@@ -57,7 +57,7 @@ namespace FargoEnemyModifiers
         public class ModifierPicker
         {
             [DefaultValue(0)]
-            public ModifierID ModifierEnum;
+            public ConfigModifierID ModifierEnum;
         }
 
         private static List<NPCDefinition> getDefaultNPCBlacklist()

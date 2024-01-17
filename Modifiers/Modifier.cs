@@ -8,7 +8,7 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public abstract class Modifier
     {
-        public virtual ModifierID ModifierID { get; }
+        public abstract ModifierID ModifierID { get; }
         public abstract string Key { get; }
 
         public virtual string Name => Language.GetTextValue("Mods.FargoEnemyModifiers.Modifiers." + Key + ".DisplayName");

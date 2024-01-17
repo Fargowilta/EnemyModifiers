@@ -16,19 +16,21 @@ namespace FargoEnemyModifiers
         public static Mod Instance;
 
         //alphabetical list for forcing specific one
-        public static List<Modifier> Modifiers;
+        //public static List<Modifier> Modifiers;
+        public static Dictionary<ModifierID, Modifier> Modifiers;
 
-        public static TModifier GetModifier<TModifier>() where TModifier : Modifier =>
-            (TModifier) Modifiers.FirstOrDefault(x => x.GetType() == typeof(TModifier));
 
-        public static Modifier GetModifier(Modifier modifier) =>
-            Modifiers.FirstOrDefault(x => x.GetType() == modifier.GetType());
+//        public static TModifier GetModifier<TModifier>() where TModifier : Modifier =>
+//            (TModifier) Modifiers.FirstOrDefault(x => x.GetType() == typeof(TModifier));
+//
+//        public static Modifier GetModifier(Modifier modifier) =>
+//            Modifiers.FirstOrDefault(x => x.GetType() == modifier.GetType());
 
         public override void PostSetupContent()
         {
             Instance = this;
             
-            Modifiers = new List<Modifier>();
+            Modifiers = new Dictionary<ModifierID, Modifier>();
 
             //these are added alphabetically
             foreach (Type type in this.Code.GetTypes().Where(x =>
@@ -36,14 +38,14 @@ namespace FargoEnemyModifiers
             {
                 if (Activator.CreateInstance(type) is Modifier modifier && modifier.AutoLoad())
                 {
-                    if (modifier.Rarity == RarityID.Hidden)
-                        continue;
-                    Modifiers.Add(modifier);
+//                    if (modifier.Rarity == RarityID.Hidden)
+//                        continue;
+                    Modifiers.Add(modifier.ModifierID, modifier);
                 }
             }
 
             // Alphabetical sort is not viable anymore
-            Modifiers.Sort((x, y) => x.ModifierID.CompareTo(y.ModifierID));
+            // Modifiers.Sort((x, y) => x.ModifierID.CompareTo(y.ModifierID));
         }
 
         public override void Unload()
@@ -53,7 +55,7 @@ namespace FargoEnemyModifiers
 
         public override void HandlePacket(BinaryReader reader, int whoAmI)
         {
-            PacketID id = (PacketID) reader.ReadByte();
+            PacketID id = (PacketID)reader.ReadByte();
 
             switch (id)
             {
@@ -64,7 +66,8 @@ namespace FargoEnemyModifiers
                 // byte[]: modifiers
                 case PacketID.MobSpawn: // Server is sending modifier data to clients
                     if (Main.netMode != NetmodeID.MultiplayerClient) return;
-                    
+
+
                     int npcIndex = reader.ReadByte();
                     NPC npc = Main.npc[npcIndex]; // npc whoAmI
                     if (!npc.active)
@@ -80,7 +83,7 @@ namespace FargoEnemyModifiers
                         modifiers[i] = reader.ReadByte();
                     }
                     
-                    foreach (int modifier in modifiers)
+                    foreach (ModifierID modifier in modifiers)
                     {
                         modNpc.modifierTypes.Add(modifier);
                         modNpc.ApplyModifier(npc, modifier);
@@ -93,9 +96,9 @@ namespace FargoEnemyModifiers
                     if (Main.netMode != NetmodeID.Server) return;
                     
                     npcIndex = reader.ReadByte();
-                    npc = Main.npc[npcIndex];
+                    NPC npcToDespawn = Main.npc[npcIndex];
                     
-                    npc.active = false;
+                    npcToDespawn.active = false;
                     break;
             }
         }

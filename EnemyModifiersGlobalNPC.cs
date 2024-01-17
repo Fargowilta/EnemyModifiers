@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using FargoEnemyModifiers.Modifiers;
+using FargoEnemyModifiers.NetCode;
 using FargoEnemyModifiers.Utilities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -17,7 +19,7 @@ namespace FargoEnemyModifiers
 
         public List<Modifier> Modifiers = new List<Modifier>();
 
-        public List<int> modifierTypes = new List<int>();
+        public List<ModifierID> modifierTypes = new List<ModifierID>();
 
         public virtual bool Rallied { get; set; }
 
@@ -63,7 +65,7 @@ namespace FargoEnemyModifiers
                         {
                             for (int i = 0; i < EnemyModifiersServerConfig.Instance.ModifierAmount; i++)
                             {
-                                int modifierType = PickModifier(npc);
+                                ModifierID modifierType = PickModifier(npc);
                                 ApplyModifier(npc, modifierType);
 
                                 if (!(Main.rand.Next(100) < EnemyModifiersServerConfig.Instance.ChanceForExtraModifier))
@@ -82,7 +84,7 @@ namespace FargoEnemyModifiers
                                     EnemyModifiersGlobalNPC globalNPC = npc.GetGlobalNPC<EnemyModifiersGlobalNPC>();
 
                                     ModPacket packet = Mod.GetPacket();
-                                    packet.Write((byte)0);
+                                    packet.Write((byte)PacketID.MobSpawn);
                                     packet.Write((byte)npc.whoAmI);
                                     packet.Write((byte)globalNPC.modifierTypes.Count);
                                     foreach (int modifierType in globalNPC.modifierTypes)
@@ -230,35 +232,39 @@ namespace FargoEnemyModifiers
             _combinedModifierName += " ";
         }
 
-        public int PickModifier(NPC npc)
+        public ModifierID PickModifier(NPC npc)
         {
-            int modifierType;
+            ModifierID modifierType;
             Modifier modifier;
 
-            if (EnemyModifiersServerConfig.Instance.ForceModifier && !modifierTypes.Contains((int)EnemyModifiersServerConfig.Instance.ModifierEnum))
+            List<ModifierID> modifierKeys = EnemyModifiers.Modifiers.Keys.ToList();
+
+            if (EnemyModifiersServerConfig.Instance.ForceModifier && !modifierTypes.Contains((ModifierID)EnemyModifiersServerConfig.Instance.ModifierEnum))
             {
-                modifierType = (int)EnemyModifiersServerConfig.Instance.ModifierEnum;
+                modifierType = (ModifierID)EnemyModifiersServerConfig.Instance.ModifierEnum;
             }
             else
             {
                 do
                 {
-                    modifierType = Main.rand.Next(EnemyModifiers.Modifiers.Count);
+                    int modifierIndex = Main.rand.Next(EnemyModifiers.Modifiers.Count);
+                    modifierType = modifierKeys[modifierIndex];
                     modifier = EnemyModifiers.Modifiers[modifierType];
 
-                } while (IsBlacklistedModifier(modifierType)
-                || !modifier.ExtraCondition(npc) || !RarityCheck(modifier) || !AddColorChanger(modifier) || modifierTypes.Contains(modifierType));
+                } while (IsBlacklistedModifier(modifierType) ||
+                         !modifier.ExtraCondition(npc) ||
+                         !RarityCheck(modifier) ||
+                         !AddColorChanger(modifier) ||
+                         modifierTypes.Contains(modifierType) ||
+                         modifier.Rarity == RarityID.Hidden);
             }
 
             modifierTypes.Add(modifierType);
             return modifierType;
         }
 
-        public void ApplyModifier(NPC npc, int type)
+        public void ApplyModifier(NPC npc, ModifierID type)
         {
-            if (type < 0 || type >= EnemyModifiers.Modifiers.Count)
-                return;
-
             // Main.NewText("Applying " + type + " modifiers list: " + Modifiers.Count);
 
             Modifier modifier = Activator.CreateInstance(EnemyModifiers.Modifiers[type].GetType()) as Modifier;
@@ -268,10 +274,10 @@ namespace FargoEnemyModifiers
             Modifiers.Add(modifier);
         }
 
-        private bool IsBlacklistedModifier(int type)
+        private bool IsBlacklistedModifier(ModifierID type)
         {
             // If we get more of these, it would be nice to have a const list/array
-            if (Main.netMode != NetmodeID.SinglePlayer && type == (int)ModifierID.Worm)
+            if (Main.netMode != NetmodeID.SinglePlayer && type == ModifierID.Worm)
             {
                 return true;
             }
@@ -283,7 +289,7 @@ namespace FargoEnemyModifiers
 
             foreach (EnemyModifiersServerConfig.ModifierPicker picker in EnemyModifiersServerConfig.Instance.ModifierBlacklist)
             {
-                int blacklistedModifier = (int)picker.ModifierEnum;
+                ModifierID blacklistedModifier = (ModifierID)picker.ModifierEnum;
 
                 if (type == blacklistedModifier)
                 {

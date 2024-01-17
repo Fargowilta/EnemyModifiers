@@ -63,6 +63,10 @@
         //Nested,// starts big, kill several times keeps getting smaller - mythic
         Royal = 48, // 200% HP, 200% size, 60% move speed, spawns mini versions of itself every so oftrn when hurt
 
+        // Helper modifiers
+        WormBody = 201
+
+
 
 
         ////shiny - they glow in the dark and drop torches
@@ -152,6 +156,71 @@
         Reformed: heals you instead of damaging. All it’s attacks also damage any enemies 
         
         Harmless: replaces Ai with critter AI*/
+    }
+
+    // Apparently you can't filter values out of an enum, so this is used for config
+    public enum ConfigModifierID
+    {
+        //Sorted by rarity
+        //COMMON
+        Armored = 0, //Defense is increased by 50%
+        Blue = 1,
+        Green = 2,
+        Healthy = 3, // HP buff
+        Impenetrable = 4, // Piercing projectiles are destroyed on hit
+        Light = 5, // Takes increased knockback
+        Menacing = 6, //Damage is increased by 50%
+        Orange = 7,
+        Purple = 8,
+        Rampaging = 9, // Deals extremely high knockback to you
+        Red = 10,
+        Regenerating = 11, // Regenerates 10% HP every 5 seconds
+        Slow = 12, // Speed is decreased by 50%
+        Sluggish = 13, //Performs all actions half as fast
+        Splitting = 14, // Spawns 2-3 smaller versions of itself with reduced stats on death
+        Swift = 15, // Speed is increased by 50%
+        Unrelenting = 16, //Gains knockback immunity
+        Wealthy = 17, // Drops 5x more coins
+        Yellow = 18,
+
+        //UNCOMMON
+        Accelerating = 19, // Constantly gains speed up to 4x normal speed. If they hit you or you hit them with a melee attack, their speed resets
+        Bloodthirsty = 20, //Gains 25% damage every time they hit you
+        Bulletproof = 21, //Gains 80% resistance to ranged damage
+        Flaming = 22, //spawns on fire, moves at 2x speed, leaves trail of fire - uncommon
+        Fortifying = 23, // Defense decreased by 50%. Gains an aura that gives other enemies 50% damage resistance
+        Hexproof = 24, // Damage over time does not work on them
+        Huge = 25, //Size increased by 50%, HP increased by 25%, speed decreased by 15%
+        Infested = 26, // Periodically spawns Baby Spiders
+        Metallic = 27, //Increased DR, drops a random metal based on progression, also change hit sound - uncommon
+        Miniature = 28,//Size decreased by 50%, HP reduced by 25%, speed increased by 20%
+        Possessed = 29, // Replaces its normal AI with Ghost AI
+        Rallying = 30, //Gains an aura that buffs other enemies: +25% damage and +25% speed
+        Shielded = 31, // Gains 80% resistance to melee damage
+        Stealthy = 32, // Slowly turns nearly invsible, becomes fully visible when hit
+        Vaccinated = 33, //vaccinated - immune to all debuffs - uncommon
+        Vampiric = 34, //life steal on hit - uncommon
+        Veiled = 35, //Gains 80% resistance to magic and summon damage
+
+        //RARE
+        Chained = 36, // They spawn chained to you and cannot leave a radius around you
+        Devouring = 37, //Devours any enemy it comes across with lesser or equal HP. When it does so, it heals itself and gains max HP and damage
+        Hyper = 38, //Performs all actions twice as fast
+        Imaginary = 39, //slightly transparent, when attacked or contacts you it vanishes … - RARE
+        Juggernaut = 40, // HP increased by 150% and damage, defense, size increased by 25%. But has Sluggish built in (performs actions half as fast)
+        Merchant = 41, // Replaces its usual AI with Town NPC AI. It will give you one random free item from the Travelling Merchant's current shop then vanish
+        Rainbow = 42, // It's rainbow and Drops 5x more drops not including coins
+        Showman = 43, //explodes into smoke and birds on death
+        Solidified = 44, // tile collide - only on things that dont already - rare
+        Undying = 45,//hangs on at 1 HP for awhile - rare
+        //Warping, // When they reach half HP, you switch places with them
+        Worm = 46, // Spawns with several body segments that lag behind it. Gains knockback immunity and 2x HP
+        Swarming = 47, // Spawns with several copies of itself. 4x the HP and shared health pool
+
+        //MYTHIC
+        //Lethal,
+        //Nested,// starts big, kill several times keeps getting smaller - mythic
+        Royal = 48, // 200% HP, 200% size, 60% move speed, spawns mini versions of itself every so oftrn when hurt
     }
 }
 

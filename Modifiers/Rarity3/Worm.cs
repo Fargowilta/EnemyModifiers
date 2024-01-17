@@ -33,7 +33,7 @@ namespace FargoEnemyModifiers.Modifiers
                 newNPC.realLife = npc.whoAmI;
 
                 //apply same modifiers to all segments
-                foreach (int modifierType in npc.GetGlobalNPC<EnemyModifiersGlobalNPC>().modifierTypes)
+                foreach (ModifierID modifierType in npc.GetGlobalNPC<EnemyModifiersGlobalNPC>().modifierTypes)
                 {
                     Modifier newMod = (Activator.CreateInstance(EnemyModifiers.Modifiers[modifierType].GetType()) as Modifier);
 

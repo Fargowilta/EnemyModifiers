@@ -31,7 +31,7 @@ namespace FargoEnemyModifiers.Modifiers
 
                 baby.GetGlobalNPC<EnemyModifiersGlobalNPC>().firstTick = false;
 
-                foreach (int modifierType in npc.GetGlobalNPC<EnemyModifiersGlobalNPC>().modifierTypes)
+                foreach (ModifierID modifierType in npc.GetGlobalNPC<EnemyModifiersGlobalNPC>().modifierTypes)
                 {
                     Modifier newMod = (Activator.CreateInstance(EnemyModifiers.Modifiers[modifierType].GetType()) as Modifier);
 

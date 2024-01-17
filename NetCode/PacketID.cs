@@ -1,8 +1,9 @@
 ﻿namespace FargoEnemyModifiers.NetCode
 {
-    public enum PacketID
+    public enum PacketID : byte
     {
-        MobSpawn = 0,
-        ClientCausedDespawn = 1
+        Invalid = 0,
+        MobSpawn = 1,
+        ClientCausedDespawn = 2
     }
 }
