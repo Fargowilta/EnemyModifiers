@@ -64,7 +64,7 @@ Mods: {
 				}
 			}
 
-			ModifierID: {
+			ConfigModifierID: {
 				Tooltip: ""
 				Armored.Label: Armored
 				Impenetrable.Label: Impenetrable
@@ -407,12 +407,7 @@ Mods: {
 
 			Swarming: {
 				DisplayName: Swarming
-				Tooltip: Spawns with several copies of itself. 4x the HP and shared health pool
-			}
-
-			Swarmer: {
-				DisplayName: ""
-				Tooltip: ""
+				Tooltip: Spawns with several copies of itself when it spawns. 4x HP, 2x size
 			}
 
 			Delirious: {
