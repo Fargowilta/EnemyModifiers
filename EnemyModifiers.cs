@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using FargoEnemyModifiers.Modifiers;
 using FargoEnemyModifiers.NetCode;
-using FargoEnemyModifiers.Utilities;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -20,11 +19,11 @@ namespace FargoEnemyModifiers
         public static Dictionary<ModifierID, Modifier> Modifiers;
 
 
-//        public static TModifier GetModifier<TModifier>() where TModifier : Modifier =>
-//            (TModifier) Modifiers.FirstOrDefault(x => x.GetType() == typeof(TModifier));
-//
-//        public static Modifier GetModifier(Modifier modifier) =>
-//            Modifiers.FirstOrDefault(x => x.GetType() == modifier.GetType());
+        public static TModifier GetModifier<TModifier>() where TModifier : Modifier =>
+            (TModifier) Modifiers.FirstOrDefault(x => x.Value.GetType() == typeof(TModifier)).Value;
+
+        public static Modifier GetModifier(Modifier modifier) =>
+            Modifiers.FirstOrDefault(x => x.Value.GetType() == modifier.GetType()).Value;
 
         public override void PostSetupContent()
         {
@@ -32,20 +31,14 @@ namespace FargoEnemyModifiers
             
             Modifiers = new Dictionary<ModifierID, Modifier>();
 
-            //these are added alphabetically
             foreach (Type type in this.Code.GetTypes().Where(x =>
                 !x.IsAbstract && x.IsSubclassOf(typeof(Modifier)) && x.GetConstructor(new Type[0]) != null))
             {
                 if (Activator.CreateInstance(type) is Modifier modifier && modifier.AutoLoad())
                 {
-//                    if (modifier.Rarity == RarityID.Hidden)
-//                        continue;
                     Modifiers.Add(modifier.ModifierID, modifier);
                 }
             }
-
-            // Alphabetical sort is not viable anymore
-            // Modifiers.Sort((x, y) => x.ModifierID.CompareTo(y.ModifierID));
         }
 
         public override void Unload()
@@ -92,6 +85,9 @@ namespace FargoEnemyModifiers
                     modNpc.finalizeModifierName(npc);
                     
                     break;
+                // Packet:
+                // byte: packet id
+                // byte: npc whoAmI
                 case PacketID.ClientCausedDespawn:
                     if (Main.netMode != NetmodeID.Server) return;
                     
