@@ -1,13 +1,13 @@
-﻿//using Microsoft.Xna.Framework;
+﻿//using FargoEnemyModifiers.Utilities;
+//using Microsoft.Xna.Framework;
 //using Terraria;
 
 //namespace FargoEnemyModifiers.Modifiers
 //{
 //    public class Warping : Modifier
 //    {
-//        public override string Name => "Warping";
-//        public override string Description => "When they reach half HP, you switch places with them";
-//        public override int Rarity => 3;
+//        public override string Key => "Warping";
+//        public override RarityID Rarity => RarityID.Rare;
 
 //        protected bool warped;
 

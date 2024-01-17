@@ -1,4 +1,5 @@
 //using System;
+//using FargoEnemyModifiers.Utilities;
 //using Microsoft.Xna.Framework;
 //using Terraria;
 //using Terraria.DataStructures;
@@ -8,10 +9,9 @@
 //{
 //    public class Delirious : Modifier
 //    {
-//        public override string Name => "Delirious";
-//        public override string Description => "Changes its AI periodically and sprays projectiles whenever it does";
-//        public override int Rarity => 4;
-
+//        public override string Key => "Delirious";
+//        public override RarityID Rarity => RarityID.Mythic;
+//
 //        public override bool ExtraCondition(NPC npc)
 //        {
 //            return Main.hardMode;

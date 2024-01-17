@@ -1,15 +1,19 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using System;
+using FargoEnemyModifiers.NetCode;
+using FargoEnemyModifiers.Utilities;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
+using Terraria.ModLoader;
 
 namespace FargoEnemyModifiers.Modifiers
 {
     public class Merchant : Modifier
     {
-        public override string Name => "Merchant";
-        public override string Description => "Replaces its usual AI with Town NPC AI. It will give you one random free item from the Travelling Merchant's current shop then vanish";
-        public override int Rarity => 3;
+        public override ModifierID ModifierID => ModifierID.Merchant;
+        public override string Key => "Merchant";
+        public override RarityID Rarity => RarityID.Rare;
 
         public override bool ExtraCondition(NPC npc)
         {
@@ -19,6 +23,7 @@ namespace FargoEnemyModifiers.Modifiers
         private bool firstTick = true;
         private bool hasInteracted;
         private int counter;
+        private Player _interactingPlayer = null;
 
         public override bool PreAI(NPC npc)
         {
@@ -27,25 +32,36 @@ namespace FargoEnemyModifiers.Modifiers
                 firstTick = false;
             }
 
+            npc.aiStyle = NPCAIStyleID.Passive;
+            npc.friendly = true;
+            npc.homeless = true;
+
+            NPCID.Sets.NoTownNPCHappiness[npc.type] = true;
+            NPCID.Sets.ActsLikeTownNPC[npc.type] = true;
+
             if (hasInteracted)
             {
                 if (--counter <= 0)
                 {
+                    if (NetUtils.IsLocalClient(_interactingPlayer))
+                    {
+                        ModPacket packet = EnemyModifiers.Instance.GetPacket();
+                        packet.Write((byte) PacketID.ClientCausedDespawn);
+                        packet.Write((byte) npc.whoAmI);
+                        packet.Send();
+                    }
+
                     npc.active = false;
-                    GrossVanillaDodgeDust(npc);
-
-
+                    Effects.PuffOfSmoke(npc);
                 }
             }
-            else
-            {
-                npc.aiStyle = 7;
-                npc.friendly = true;
-                npc.homeless = true;
-                npc.townNPC = true;
-            }
 
-            return false;
+            return true;
+        }
+
+        public override bool? CanChat(NPC npc)
+        {
+            return true;
         }
 
         public override void GetChat(NPC npc, ref string chat)
@@ -62,13 +78,18 @@ namespace FargoEnemyModifiers.Modifiers
 
             if (hasInteracted)
             {
-                chat = "That's all I got for you..";
+                chat = Language.GetTextValue("Mods.FargoEnemyModifiers.Modifiers.Merchant.AllIGot");
                 counter = 120;
             }
             else
             {
-                Item.NewItem(npc.GetSource_Loot(), npc.Hitbox, item);
-                chat = "Don't tell anyone, but take this. Pretend you never saw me..";
+                int playerIndex = npc.FindClosestPlayer();
+                _interactingPlayer = Main.player[playerIndex];
+                if (!_interactingPlayer.active) return;
+                
+                // Player.QuickSpawnItem(Direct) has a built-in multiplayer sync
+                _interactingPlayer.QuickSpawnItemDirect(npc.GetSource_Loot(), item);
+                chat = Language.GetTextValue("Mods.FargoEnemyModifiers.Modifiers.Merchant.Interaction");
 
                 hasInteracted = true;
                 counter = 300; //countdown to poof
@@ -78,54 +99,6 @@ namespace FargoEnemyModifiers.Modifiers
         public override bool PreNPCLoot(NPC npc)
         {
             return false;
-        }
-
-        public static void GrossVanillaDodgeDust(Entity entity)
-        {
-            for (int index1 = 0; index1 < 100; ++index1)
-            {
-                int index2 = Dust.NewDust(entity.position, entity.width, entity.height, 31, 0.0f, 0.0f, 100, new Color(), 2f);
-                Main.dust[index2].position.X += Main.rand.Next(-20, 21);
-                Main.dust[index2].position.Y += Main.rand.Next(-20, 21);
-                Dust dust = Main.dust[index2];
-                dust.velocity *= 0.4f;
-                Main.dust[index2].scale *= 1f + Main.rand.Next(40) * 0.01f;
-                if (Main.rand.NextBool())
-                {
-                    Main.dust[index2].scale *= 1f + Main.rand.Next(40) * 0.01f;
-                    Main.dust[index2].noGravity = true;
-                }
-            }
-
-            int index3 = Gore.NewGore(entity.GetSource_FromThis(), new Vector2(entity.Center.X - 24, entity.Center.Y - 24), new Vector2(), Main.rand.Next(61, 64), 1f);
-            Main.gore[index3].scale = 1.5f;
-            Main.gore[index3].velocity.X = Main.rand.Next(-50, 51) * 0.01f;
-            Main.gore[index3].velocity.Y = Main.rand.Next(-50, 51) * 0.01f;
-            Main.gore[index3].velocity *= 0.4f;
-
-            int index4 = Gore.NewGore(entity.GetSource_FromThis(), new Vector2(entity.Center.X - 24, entity.Center.Y - 24), new Vector2(), Main.rand.Next(61, 64), 1f);
-            Main.gore[index4].scale = 1.5f;
-            Main.gore[index4].velocity.X = 1.5f + Main.rand.Next(-50, 51) * 0.01f;
-            Main.gore[index4].velocity.Y = 1.5f + Main.rand.Next(-50, 51) * 0.01f;
-            Main.gore[index4].velocity *= 0.4f;
-
-            int index5 = Gore.NewGore(entity.GetSource_FromThis(), new Vector2(entity.Center.X - 24, entity.Center.Y - 24), new Vector2(), Main.rand.Next(61, 64), 1f);
-            Main.gore[index5].scale = 1.5f;
-            Main.gore[index5].velocity.X = -1.5f - Main.rand.Next(-50, 51) * 0.01f;
-            Main.gore[index5].velocity.Y = 1.5f + Main.rand.Next(-50, 51) * 0.01f;
-            Main.gore[index5].velocity *= 0.4f;
-
-            int index6 = Gore.NewGore(entity.GetSource_FromThis(), new Vector2(entity.Center.X - 24, entity.Center.Y - 24), new Vector2(), Main.rand.Next(61, 64), 1f);
-            Main.gore[index6].scale = 1.5f;
-            Main.gore[index6].velocity.X = 1.5f - Main.rand.Next(-50, 51) * 0.01f;
-            Main.gore[index6].velocity.Y = -1.5f + Main.rand.Next(-50, 51) * 0.01f;
-            Main.gore[index6].velocity *= 0.4f;
-
-            int index7 = Gore.NewGore(entity.GetSource_FromThis(), new Vector2(entity.Center.X - 24, entity.Center.Y - 24), new Vector2(), Main.rand.Next(61, 64), 1f);
-            Main.gore[index7].scale = 1.5f;
-            Main.gore[index7].velocity.X = -1.5f - Main.rand.Next(-50, 51) * 0.01f;
-            Main.gore[index7].velocity.Y = -1.5f + Main.rand.Next(-50, 51) * 0.01f;
-            Main.gore[index7].velocity *= 0.4f;
         }
     }
 }

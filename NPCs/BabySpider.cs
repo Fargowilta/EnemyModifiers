@@ -1,7 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -46,7 +45,12 @@ namespace FargoEnemyModifiers.NPCs
             bool flag20 = false;
             float num593 = 500f;
 
-            Player target = Main.player[NPC.FindClosestPlayer()];
+            int player = NPC.FindClosestPlayer();
+            if (player == -1)
+            {
+                return; // This scenario can occur when the last player disconnects
+            }
+            Player target = Main.player[player];
 
             float num595 = Vector2.Distance(target.Center, NPC.Center);
             if (((Vector2.Distance(NPC.Center, value14) > num595 && num595 < num593) || !flag20) && Collision.CanHit(NPC.position, NPC.width, NPC.height, target.position, target.width, target.height))

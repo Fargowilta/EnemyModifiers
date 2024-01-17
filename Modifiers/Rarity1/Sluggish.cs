@@ -1,12 +1,13 @@
-﻿using Terraria;
+﻿using FargoEnemyModifiers.Utilities;
+using Terraria;
 
 namespace FargoEnemyModifiers.Modifiers
 {
     public class Sluggish : Modifier
     {
-        public override string Name => "Sluggish";
-        public override string Description => "Performs all actions half as fast";
-        public override int Rarity => 1;
+        public override ModifierID ModifierID => ModifierID.Sluggish;
+        public override string Key => "Sluggish";
+        public override RarityID Rarity => RarityID.Common;
 
         private bool sluggishGo;
 

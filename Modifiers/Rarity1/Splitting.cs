@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
+using FargoEnemyModifiers.Utilities;
 using Terraria;
 using Terraria.ID;
 
@@ -7,9 +8,9 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class Splitting : Modifier
     {
-        public override string Name => "Splitting";
-        public override string Description => "Spawns 2-3 smaller versions of itself with reduced stats on death";
-        public override int Rarity => 1;
+        public override ModifierID ModifierID => ModifierID.Splitting;
+        public override string Key => "Splitting";
+        public override RarityID Rarity => RarityID.Common;
 
         public override bool PreNPCLoot(NPC npc)
         {
@@ -30,11 +31,11 @@ namespace FargoEnemyModifiers.Modifiers
 
                 baby.GetGlobalNPC<EnemyModifiersGlobalNPC>().firstTick = false;
 
-                foreach (int modifierType in npc.GetGlobalNPC<EnemyModifiersGlobalNPC>().modifierTypes)
+                foreach (ModifierID modifierType in npc.GetGlobalNPC<EnemyModifiersGlobalNPC>().modifierTypes)
                 {
                     Modifier newMod = (Activator.CreateInstance(EnemyModifiers.Modifiers[modifierType].GetType()) as Modifier);
 
-                    if (newMod.Name == "Splitting")
+                    if (newMod.Key == "Splitting")
                     {
                         continue;
                     }

@@ -1,15 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
+using FargoEnemyModifiers.Utilities;
 using Terraria;
-using Terraria.WorldBuilding;
 
 namespace FargoEnemyModifiers.Modifiers
 {
     public class Worm : Modifier
     {
-        public override string Name => "Worm";
-        public override string Description => "Spawns with several body segments that lag behind it. Gains knockback immunity and 2x HP";
-        public override int Rarity => 3;
+        public override ModifierID ModifierID => ModifierID.Worm;
+        public override string Key => "Worm";
+        public override RarityID Rarity => RarityID.Rare;
         public override float HealthMultiplier => 2f;
         public override float KnockBackMultiplier => 0f;
 
@@ -34,11 +33,11 @@ namespace FargoEnemyModifiers.Modifiers
                 newNPC.realLife = npc.whoAmI;
 
                 //apply same modifiers to all segments
-                foreach (int modifierType in npc.GetGlobalNPC<EnemyModifiersGlobalNPC>().modifierTypes)
+                foreach (ModifierID modifierType in npc.GetGlobalNPC<EnemyModifiersGlobalNPC>().modifierTypes)
                 {
                     Modifier newMod = (Activator.CreateInstance(EnemyModifiers.Modifiers[modifierType].GetType()) as Modifier);
 
-                    if (newMod.Name == "Worm")
+                    if (newMod.Key == "Worm")
                     {
                         continue;
                     }

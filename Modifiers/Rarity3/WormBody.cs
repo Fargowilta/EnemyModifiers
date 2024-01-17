@@ -1,19 +1,23 @@
 ﻿using System;
+using FargoEnemyModifiers.Utilities;
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.Audio;
-using Terraria.ID;
 
 namespace FargoEnemyModifiers.Modifiers
 {
     public class WormBody : Modifier
     {
-        public override string Name => "";
-        public override string Description => "";
-        public override int Rarity => 0;
+        public override ModifierID ModifierID => ModifierID.WormBody;
+        public override string Key => "WormBody";
+        public override RarityID Rarity => RarityID.Hidden;
         public override float KnockBackMultiplier => 0f;
 
         protected bool firstTick = true;
+
+        public override bool AllowAnnounceModifier()
+        {
+            return false;
+        }
 
         public override bool AutoLoad() => false;
 

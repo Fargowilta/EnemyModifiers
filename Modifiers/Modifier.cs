@@ -1,23 +1,26 @@
-﻿using Microsoft.Xna.Framework;
+﻿using FargoEnemyModifiers.Utilities;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.ID;
+using Terraria.Localization;
 
 namespace FargoEnemyModifiers.Modifiers
 {
     public abstract class Modifier
     {
-        public abstract string Name { get; }
+        public abstract ModifierID ModifierID { get; }
+        public abstract string Key { get; }
 
-        public abstract string Description
+        public virtual string Name => Language.GetTextValue("Mods.FargoEnemyModifiers.Modifiers." + Key + ".DisplayName");
+
+        public virtual string Description => Language.GetTextValue("Mods.FargoEnemyModifiers.Modifiers." + Key + ".Description");
+
+        public abstract RarityID Rarity
         {
             get;
         }
 
-        public abstract int Rarity
-        {
-            get;
-        }
+        public virtual AiOverrideStyle AiOverride { get; } = AiOverrideStyle.None;
 
         public virtual bool ExtraCondition(NPC npc)
         {
@@ -170,8 +173,18 @@ namespace FargoEnemyModifiers.Modifiers
             return false;
         }
 
+        public virtual void HitEffect(NPC npc, NPC.HitInfo hit)
+        {
+
+        }
+
         public virtual void OnKill(NPC npc)
         {
+        }
+
+        public virtual bool? CanChat(NPC npc)
+        {
+            return null;
         }
 
         public virtual void GetChat(NPC npc, ref string chat)
