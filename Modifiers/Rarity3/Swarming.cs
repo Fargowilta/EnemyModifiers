@@ -28,7 +28,7 @@ namespace FargoEnemyModifiers.Modifiers
             for (int i = 0; i < 8; i++)
             {
                 int x = Main.rand.Next((int)npc.position.X - npc.width - 100, (int)npc.position.X + npc.width + 100);
-                int y = Main.rand.Next((int)npc.position.Y - npc.height - 100, (int)npc.position.Y + npc.height + 100);
+                int y = Main.rand.Next((int)npc.position.Y - npc.height - 100, (int)npc.position.Y);
 
                 int index = NPC.NewNPC(npc.GetSource_FromAI(), x, y, npc.type, npc.whoAmI);
 
