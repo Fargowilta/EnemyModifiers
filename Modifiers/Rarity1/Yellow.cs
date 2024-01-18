@@ -1,17 +1,13 @@
-﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FargoEnemyModifiers.Utilities;
+using Microsoft.Xna.Framework;
 
 namespace FargoEnemyModifiers.Modifiers
 {
     public class Yellow : Modifier
     {
-        public override string Name => "Yellow";
-        public override string Description => "Yellow";
-        public override int Rarity => 1;
+        public override ModifierID ModifierID => ModifierID.Yellow;
+        public override string Key => "Yellow";
+        public override RarityID Rarity => RarityID.Common;
         public override bool ColorChanger => true;
 
         public override Color? GetAlpha()

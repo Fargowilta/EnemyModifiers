@@ -1,18 +1,15 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using FargoEnemyModifiers.Modifiers;
-using Microsoft.CodeAnalysis;
+using FargoEnemyModifiers.NetCode;
+using FargoEnemyModifiers.Utilities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Mono.Cecil;
 using Terraria;
-using Terraria.Chat;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
-using Terraria.WorldBuilding;
 
 namespace FargoEnemyModifiers
 {
@@ -22,7 +19,7 @@ namespace FargoEnemyModifiers
 
         public List<Modifier> Modifiers = new List<Modifier>();
 
-        public List<int> modifierTypes = new List<int>();
+        public List<ModifierID> modifierTypes = new List<ModifierID>();
 
         public virtual bool Rallied { get; set; }
 
@@ -44,58 +41,63 @@ namespace FargoEnemyModifiers
         }
 
         public bool firstTick = true;
-
-        public const int ANNOUNCEMENT_DURATION = 300;
-        private int modifierNameLength;
-        public int combatTextIndex = -1;
-        private int nameSpawn = 0;
-        private bool noAnnouncement = false;
-        private string combinedModifierName;
+        private int _modifierNameLength;
+        private int _combatTextIndex = -1;
+        private RarityID _highestRarity = RarityID.Hidden;
+        private bool _nameSpawned;
+        private bool? _noAnnouncement = null;
+        private string _combinedModifierName;
+        private int _tickCounter;
 
         public override bool PreAI(NPC npc)
         {
             if (firstTick)
             {
-                if (Main.rand.Next(100) < EnemyModifiersConfig.Instance.ChanceForModifier)
+                if (Main.netMode == NetmodeID.SinglePlayer || Main.netMode == NetmodeID.Server)
                 {
-                    if (!((npc.boss && !EnemyModifiersConfig.Instance.BossModifiers) || npc.townNPC || npc.friendly || NPCID.Sets.CountsAsCritter[npc.type]
-                          || npc.dontTakeDamage || npc.realLife != -1 || npc.SpawnedFromStatue ||
-                          npc.type == NPCID.TargetDummy
-                          || EnemyModifiersConfig.Instance.NPCBlacklist.Contains(new NPCDefinition(npc.type))))
+                    if (!((npc.boss && !EnemyModifiersServerConfig.Instance.BossModifiers) ||
+                          npc.townNPC || npc.friendly || npc.CountsAsACritter ||
+                          npc.dontTakeDamage || npc.realLife != -1 || npc.SpawnedFromStatue ||
+                          npc.type == NPCID.TargetDummy || 
+                          EnemyModifiersServerConfig.Instance.NPCBlacklist.Contains(new NPCDefinition(npc.type))))
                     {
-                        if (Main.netMode == NetmodeID.MultiplayerClient) //client sends modifier request to server
+                        if (Main.rand.Next(100) < EnemyModifiersServerConfig.Instance.ChanceForModifier)
                         {
-                            PickModifier(npc);
-
-                            //ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral("modifier chosen: " + modifierType), new Color(175, 75, 255));
-
-                            ModPacket packet = Mod.GetPacket();
-                            packet.Write((byte)1);
-                            packet.Write((byte)npc.whoAmI);
-                            packet.Write((byte)Main.myPlayer);
-
-                            foreach (int modifierType in modifierTypes)
+                            for (int i = 0; i < EnemyModifiersServerConfig.Instance.ModifierAmount; i++)
                             {
-                                packet.Write((byte)modifierType);
-                            }
- 
-                            packet.Send();
-                        }
-                        else if(Main.netMode == NetmodeID.SinglePlayer)
-                        {
-                            for (int i = 0; i < EnemyModifiersConfig.Instance.ModifierAmount; i++)
-                            {
-                                int modifierType = PickModifier(npc);
+                                ModifierID modifierType = PickModifier(npc);
                                 ApplyModifier(npc, modifierType);
 
-                                if (!(Main.rand.Next(100) < EnemyModifiersConfig.Instance.ChanceForExtraModifier))
+                                if (!(Main.rand.Next(100) < EnemyModifiersServerConfig.Instance.ChanceForExtraModifier))
                                 {
                                     break;
                                 }
-                            }   
-                        }
+                            }
 
-                        finalizeModifierName(npc);
+                            switch (Main.netMode)
+                            {
+                                case NetmodeID.SinglePlayer:
+                                    finalizeModifierName(npc); // Server doesn't want that. MP Client handles it on packet receive.
+                                    break;
+                                case NetmodeID.Server:
+                                {
+                                    EnemyModifiersGlobalNPC globalNPC = npc.GetGlobalNPC<EnemyModifiersGlobalNPC>();
+
+                                    ModPacket packet = Mod.GetPacket();
+                                    packet.Write((byte)PacketID.MobSpawn);
+                                    packet.Write((byte)npc.whoAmI);
+                                    packet.Write((byte)globalNPC.modifierTypes.Count);
+                                    foreach (int modifierType in globalNPC.modifierTypes)
+                                    {
+                                        packet.Write((byte)modifierType);
+                                    }
+
+                                    packet.Send();
+                                    break;
+                                }
+                                // No implementation for NetmodeID.MultiplayerClient
+                            }
+                        }
                     }
                 }
                 
@@ -113,128 +115,157 @@ namespace FargoEnemyModifiers
                 retVal &= modifier.PreAI(npc);
             }
 
-            //spawn when on screen, rarities have their own color
-            if (EnemyModifiersConfig.Instance.ModifierAnnouncements && nameSpawn <= ANNOUNCEMENT_DURATION)
+            if (_noAnnouncement == null || !_noAnnouncement.Value)
             {
-                int highestRarity = 0;
-
-                foreach (Modifier modifier in Modifiers)
-                {
-                    if (!modifier.AllowAnnounceModifier())
-                    {
-                        noAnnouncement = true;
-                        break;
-                    }
-
-                    if (npc.realLife == -1)
-                    {
-                        if (Vector2.Distance(npc.Center, Main.player[Main.myPlayer].Center) < 800 && nameSpawn == 0)
-                        {
-                            nameSpawn = 1;
-                        }
-                    }
-                }
-
-                if (!noAnnouncement)
-                {
-                    if (nameSpawn == 1)
-                    {
-                        nameSpawn++;
-                        modifierNameLength = combinedModifierName.Length / 2 * 8;
-
-                        Color color = Color.White;
-
-                        foreach (Modifier modifier in Modifiers)
-                        {
-                            if (modifier.Rarity > highestRarity)
-                            {
-                                highestRarity = modifier.Rarity;
-                            }
-                        }
-
-                        switch (highestRarity)
-                        {
-                            case 1:
-                                color = Color.White;
-                                break;
-
-                            case 2:
-                                color = Color.Yellow;
-                                break;
-
-                            case 3:
-                                color = Color.Red;
-                                break;
-
-                            case 4:
-                                color = Main.DiscoColor;
-                                break;
-                        }
-
-                        combatTextIndex = CombatText.NewText(npc.Hitbox, color, combinedModifierName);
-
-                        Main.combatText[combatTextIndex].lifeTime = 2;
-                    }
-                    else if (nameSpawn != 0 && ((EnemyModifiersConfig.Instance.AnnouncementsForever) || (++nameSpawn <= ANNOUNCEMENT_DURATION)))
-                    {
-                        Main.combatText[combatTextIndex].lifeTime++;
-                        Main.combatText[combatTextIndex].position = new Vector2(npc.Center.X - (modifierNameLength), npc.Center.Y - 50);
-                        Main.combatText[combatTextIndex].alpha -= 0.0075f;
-                    }
-                }
+                ShowModifierName(npc);
             }
 
             return retVal;
         }
 
+        private void ShowModifierName(NPC npc)
+        {
+            if (Main.netMode == NetmodeID.Server)
+                return;
+
+            if (!EnemyModifiersClientConfig.Instance.announcementsEnabled)
+                return;
+
+            if (!npc.active)
+            {
+                return;
+            }
+
+            if (_noAnnouncement == null)
+            {
+                foreach (Modifier modifier in Modifiers)
+                {
+                    if (!modifier.AllowAnnounceModifier())
+                    {
+                        _noAnnouncement = true;
+                        break;
+                    }
+
+                    if ((int)modifier.Rarity > (int)_highestRarity)
+                    {
+                        _highestRarity = modifier.Rarity;
+                    }
+                }
+
+                _noAnnouncement = false;
+            }
+
+            if (!EnemyModifiersClientConfig.Instance.announcementsForever &&
+                _tickCounter >= (EnemyModifiersClientConfig.Instance.announcementsDuration * 60))
+            {
+                _noAnnouncement = true;
+                return;
+            }
+
+            if (_nameSpawned)
+            {
+                if (_combatTextIndex == -1)
+                    return;
+
+                CombatText text = Main.combatText[_combatTextIndex];
+                text.lifeTime =
+                    2; // Reset it to 2 instead of adding; adding causes issues with HYPER and SLUGGISH
+                text.position =
+                    new Vector2(npc.Center.X - (_modifierNameLength), npc.Center.Y - 50);
+                text.color = GetColor(_highestRarity);
+                _tickCounter++;
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(_combinedModifierName))
+                {
+                    return;
+                }
+
+                if (npc.realLife != -1)
+                {
+                    _nameSpawned = true;
+                    return;
+                }
+
+                _modifierNameLength = _combinedModifierName.Length / 2 * 8;
+                _combatTextIndex =
+                    CombatText.NewText(npc.Hitbox, GetColor(_highestRarity), _combinedModifierName);
+                if (_combatTextIndex == 100) // This occurs when too many texts spawn at once
+                {
+                    _combatTextIndex = -1;
+                    return;
+                }
+
+                Main.combatText[_combatTextIndex].lifeTime = 2;
+                _nameSpawned = true;
+            }
+        }
+
+        private Color GetColor(RarityID rarity)
+        {
+            return rarity switch
+            {
+                RarityID.Common => Color.White,
+                RarityID.Uncommon => Color.Yellow,
+                RarityID.Rare => Color.Red,
+                RarityID.Mythic => Main.DiscoColor,
+                _ => Color.White
+            };
+        }
+
         public void finalizeModifierName(NPC npc)
         {
             getCombinedModifierName();
-            npc.GivenName = combinedModifierName + npc.FullName;
+            npc.GivenName = _combinedModifierName + npc.FullName;
         }
 
         private void getCombinedModifierName()
         {
-            combinedModifierName = "";
+            _combinedModifierName = "";
 
             foreach (Modifier modifier in Modifiers)
             {
-                combinedModifierName = combinedModifierName + " " + modifier.Name;
+                _combinedModifierName = _combinedModifierName + " " + modifier.Name;
             }
 
-            combinedModifierName += " ";
+            _combinedModifierName += " ";
         }
 
-        public int PickModifier(NPC npc)
+        public ModifierID PickModifier(NPC npc)
         {
-            int modifierType;
+            ModifierID modifierType;
             Modifier modifier;
 
-            if (EnemyModifiersConfig.Instance.ForceModifier && !modifierTypes.Contains((int)EnemyModifiersConfig.Instance.ModifierEnum))
+            List<ModifierID> modifierKeys = EnemyModifiers.Modifiers.Keys.ToList();
+
+            if (EnemyModifiersServerConfig.Instance.ForceModifier && !modifierTypes.Contains((ModifierID)EnemyModifiersServerConfig.Instance.ModifierEnum))
             {
-                modifierType = (int)EnemyModifiersConfig.Instance.ModifierEnum;
+                modifierType = (ModifierID)EnemyModifiersServerConfig.Instance.ModifierEnum;
             }
             else
             {
                 do
                 {
-                    modifierType = Main.rand.Next(EnemyModifiers.Modifiers.Count);
+                    int modifierIndex = Main.rand.Next(EnemyModifiers.Modifiers.Count);
+                    modifierType = modifierKeys[modifierIndex];
                     modifier = EnemyModifiers.Modifiers[modifierType];
 
-                } while (IsBlacklistedModifier(modifierType)
-                || !modifier.ExtraCondition(npc) || !RarityCheck(modifier) || !AddColorChanger(modifier) || modifierTypes.Contains(modifierType));
+                } while (IsBlacklistedModifier(modifierType) ||
+                         !modifier.ExtraCondition(npc) ||
+                         !RarityCheck(modifier) ||
+                         !AddColorChanger(modifier) ||
+                         modifierTypes.Contains(modifierType) ||
+                         modifier.Rarity == RarityID.Hidden);
             }
 
             modifierTypes.Add(modifierType);
             return modifierType;
         }
 
-        public void ApplyModifier(NPC npc, int type)
+        public void ApplyModifier(NPC npc, ModifierID type)
         {
-            if (type < 0 || type >= EnemyModifiers.Modifiers.Count)
-                return;
-
-            //Main.NewText("Applying " + type + " modifiers list: " + Modifiers.Count);
+            // Main.NewText("Applying " + type + " modifiers list: " + Modifiers.Count);
 
             Modifier modifier = Activator.CreateInstance(EnemyModifiers.Modifiers[type].GetType()) as Modifier;
             modifier.Setup(npc);
@@ -243,16 +274,22 @@ namespace FargoEnemyModifiers
             Modifiers.Add(modifier);
         }
 
-        private bool IsBlacklistedModifier(int type)
+        private bool IsBlacklistedModifier(ModifierID type)
         {
-            if (EnemyModifiersConfig.Instance.ModifierBlacklist == null)
+            // If we get more of these, it would be nice to have a const list/array
+            if (Main.netMode != NetmodeID.SinglePlayer && type == ModifierID.Worm)
+            {
+                return true;
+            }
+
+            if (EnemyModifiersServerConfig.Instance.ModifierBlacklist == null)
             {
                 return false;
             }
 
-            foreach (EnemyModifiersConfig.ModifierPicker picker in EnemyModifiersConfig.Instance.ModifierBlacklist)
+            foreach (EnemyModifiersServerConfig.ModifierPicker picker in EnemyModifiersServerConfig.Instance.ModifierBlacklist)
             {
-                int blacklistedModifier = (int)picker.ModifierEnum;
+                ModifierID blacklistedModifier = (ModifierID)picker.ModifierEnum;
 
                 if (type == blacklistedModifier)
                 {
@@ -265,7 +302,7 @@ namespace FargoEnemyModifiers
 
         private bool RarityCheck(Modifier type)
         {
-            int rarity = type.Rarity;
+            int rarity = (int)type.Rarity;
 
             if (rarity == 1 || (rarity == 2 && Main.rand.NextBool(2)) || ( rarity == 3 && Main.rand.NextBool(3)) || ( rarity == 4 && Main.rand.NextBool(4)))
             {
@@ -317,10 +354,30 @@ namespace FargoEnemyModifiers
             if (Modifiers.Count != 0)
             {
                 Modifiers.ForEach(x => speedMulti *= x.SpeedMultiplier);
-                Modifiers.ForEach(x => x.AI(npc));
-                //modifier.AI(npc);
-
-                //speedMulti *= modifier.SpeedMultiplier;
+                foreach (Modifier modifier in Modifiers)
+                {
+                    switch (modifier.AiOverride)
+                    {
+                        case AiOverrideStyle.None:
+                            base.AI(npc);
+                            break;
+                        case AiOverrideStyle.Override:
+                            modifier.AI(npc);
+                            break;
+                        case AiOverrideStyle.PreVanilla:
+                            modifier.AI(npc);
+                            if (!npc.active) return;
+                            base.AI(npc);
+                            break;
+                        case AiOverrideStyle.PostVanilla:
+                            base.AI(npc);
+                            if (!npc.active) return;
+                            modifier.AI(npc);
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException(nameof(modifier.AiOverride), modifier.AiOverride, "Invalid AiOverrideStyle");
+                    }
+                }
             }
 
             if (Rallied)
@@ -350,6 +407,28 @@ namespace FargoEnemyModifiers
                 if (!Collision.SolidCollision(newPos, npc.width, npc.height))
                     npc.position = newPos;
             }
+        }
+
+        public override bool? CanChat(NPC npc)
+        {
+            bool? retVal = base.CanChat(npc);
+
+            foreach (Modifier modifier in Modifiers)
+            {
+                if (modifier.CanChat(npc) != null)
+                {
+                    if (retVal == null)
+                    {
+                        retVal = modifier.CanChat(npc);
+                    }
+                    else
+                    {
+                        retVal &= modifier.CanChat(npc);
+                    }
+                }
+            }
+
+            return retVal;
         }
 
         public override void GetChat(NPC npc, ref string chat)
@@ -463,6 +542,14 @@ namespace FargoEnemyModifiers
         }
 
         private bool firstLoot = true;
+
+        public override void HitEffect(NPC npc, NPC.HitInfo hit)
+        {
+            foreach (Modifier modifier in Modifiers)
+            {
+                modifier.HitEffect(npc, hit);
+            }
+        }
 
         public override void OnKill(NPC npc)
         {

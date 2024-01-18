@@ -1,12 +1,13 @@
-﻿using Terraria;
+﻿using FargoEnemyModifiers.Utilities;
+using Terraria;
 
 namespace FargoEnemyModifiers.Modifiers
 {
     public class Accelerating : Modifier
     {
-        public override string Name => "Accelerating";
-        public override string Description => "Constantly gains speed up to 4x normal speed. If they hit you or you hit them with a melee attack, their speed resets";
-        public override int Rarity => 2;
+        public override ModifierID ModifierID => ModifierID.Accelerating;
+        public override string Key => "Accelerating";
+        public override RarityID Rarity => RarityID.Uncommon;
 
         protected int counter;
 

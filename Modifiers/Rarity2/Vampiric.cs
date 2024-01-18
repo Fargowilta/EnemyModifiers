@@ -1,15 +1,13 @@
-﻿using Microsoft.Xna.Framework;
+﻿using FargoEnemyModifiers.Utilities;
 using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace FargoEnemyModifiers.Modifiers
 {
     public class Vampiric : Modifier
     {
-        public override string Name => "Vampiric";
-        public override string Description => "Heals some HP when they deal damage";
-        public override int Rarity => 2;
+        public override ModifierID ModifierID => ModifierID.Vampiric;
+        public override string Key => "Vampiric";
+        public override RarityID Rarity => RarityID.Uncommon;
 
         public override void OnHitPlayer(NPC npc, Player target)
         {

@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using FargoEnemyModifiers.Utilities;
+using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 
@@ -6,20 +7,12 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class Devouring : Modifier
     {
-        protected int baseHeight;
-        protected int baseWidth;
+        public override ModifierID ModifierID => ModifierID.Devouring;
+        public override string Key => "Devouring";
+        public override RarityID Rarity => RarityID.Rare;
+        public override AiOverrideStyle AiOverride => AiOverrideStyle.PreVanilla;
 
         protected int startup = 6;
-
-        public override string Name => "Devouring";
-        public override string Description => "Devours any enemy it comes across with lesser or equal HP. When it does so, it heals itself and gains max HP and damage";
-        public override int Rarity => 3;
-
-        public override void Setup(NPC npc)
-        {
-            baseWidth = npc.width;
-            baseHeight = npc.height;
-        }
 
         public override void AI(NPC npc)
         {

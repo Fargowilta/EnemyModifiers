@@ -1,4 +1,4 @@
-﻿################################################################################
+################################################################################
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
@@ -17,3 +17,6 @@
 /obj/Debug/net45/FargoEnemyModifiers.AssemblyInfoInputs.cache
 /obj/Debug/net45/FargoEnemyModifiers.AssemblyInfo.cs
 /obj/Debug/net45
+
+.idea/
+obj/

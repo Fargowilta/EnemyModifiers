@@ -1,13 +1,14 @@
-﻿using Terraria;
+﻿using FargoEnemyModifiers.Utilities;
+using Terraria;
 using Terraria.ModLoader;
 
 namespace FargoEnemyModifiers.Modifiers
 {
     public class Veiled : Modifier
     {
-        public override string Name => "Veiled";
-        public override string Description => "Gains 80% resistance to magic and summon damage";
-        public override int Rarity => 2;
+        public override ModifierID ModifierID => ModifierID.Veiled;
+        public override string Key => "Veiled";
+        public override RarityID Rarity => RarityID.Uncommon;
 
         public override void ModifyHitByItem(NPC npc, Player player, Item item, ref NPC.HitModifiers modifiers)
         {

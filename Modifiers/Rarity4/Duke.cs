@@ -1,4 +1,5 @@
-﻿//using System;
+//using System;
+//using FargoEnemyModifiers.Utilities;
 //using Microsoft.Xna.Framework;
 //using Terraria;
 //using Terraria.Audio;
@@ -7,10 +8,9 @@
 //{
 //    public class Duke : Modifier
 //    {
-//        public override string Name => "Duke";
-//        public override string Description => "Replaces its normal AI with Duke Fishron AI";
-//        public override int Rarity => 4;
-
+//        public override string Key => "Duke";
+//        public override RarityID Rarity => RarityID.Mythic;
+//
 //        public override bool ExtraCondition(NPC npc)
 //        {
 //            return Main.hardMode;

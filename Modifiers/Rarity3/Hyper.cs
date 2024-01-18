@@ -1,12 +1,13 @@
-﻿using Terraria;
+﻿using FargoEnemyModifiers.Utilities;
+using Terraria;
 
 namespace FargoEnemyModifiers.Modifiers
 {
     public class Hyper : Modifier
     {
-        public override string Name => "Hyper";
-        public override string Description => "Performs all actions twice as fast";
-        public override int Rarity => 3;
+        public override ModifierID ModifierID => ModifierID.Hyper;
+        public override string Key => "Hyper";
+        public override RarityID Rarity => RarityID.Rare;
 
         public override float SpeedMultiplier => 1.5f;
 

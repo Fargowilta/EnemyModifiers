@@ -1,13 +1,14 @@
-﻿using Microsoft.Xna.Framework;
+﻿using FargoEnemyModifiers.Utilities;
+using Microsoft.Xna.Framework;
 using Terraria;
 
 namespace FargoEnemyModifiers.Modifiers
 {
     public class Rainbow : Modifier
     {
-        public override string Name => "Rainbow";
-        public override string Description => "It's rainbow and drops 5x more drops";
-        public override int Rarity => 3;
+        public override ModifierID ModifierID => ModifierID.Rainbow;
+        public override string Key => "Rainbow";
+        public override RarityID Rarity => RarityID.Rare;
 
         public override int LootMultiplier => 4;
 

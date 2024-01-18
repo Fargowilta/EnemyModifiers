@@ -1,15 +1,15 @@
-﻿using Microsoft.Xna.Framework;
+﻿using FargoEnemyModifiers.Utilities;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace FargoEnemyModifiers.Modifiers
 {
     public class Vaccinated : Modifier
     {
-        public override string Name => "Vaccinated";
-        public override string Description => "Immune to all debuffs";
-        public override int Rarity => 2;
+        public override ModifierID ModifierID => ModifierID.Vaccinated;
+        public override string Key => "Vaccinated";
+        public override RarityID Rarity => RarityID.Uncommon;
+        public override AiOverrideStyle AiOverride => AiOverrideStyle.PreVanilla;
 
         private bool firstTick = true;
 

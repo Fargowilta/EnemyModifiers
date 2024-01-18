@@ -1,13 +1,14 @@
-﻿using Terraria;
+﻿using FargoEnemyModifiers.Utilities;
+using Terraria;
 using Terraria.ModLoader;
 
 namespace FargoEnemyModifiers.Modifiers
 {
     public class Bulletproof : Modifier
     {
-        public override string Name => "Bulletproof";
-        public override string Description => "Gains 80% resistance to ranged damage";
-        public override int Rarity => 2;
+        public override ModifierID ModifierID => ModifierID.Bulletproof;
+        public override string Key => "Bulletproof";
+        public override RarityID Rarity => RarityID.Uncommon;
 
         public override void ModifyHitByItem(NPC npc, Player player, Item item, ref NPC.HitModifiers modifiers)
         {

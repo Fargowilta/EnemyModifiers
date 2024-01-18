@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using FargoEnemyModifiers.Utilities;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 
@@ -6,9 +7,10 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class Flaming : Modifier
     {
-        public override string Name => "Flaming";
-        public override string Description => "Spawns with a permanent On Fire debuff, leaves a trail of damaging flames, 50% increased speed";
-        public override int Rarity => 2;
+        public override ModifierID ModifierID => ModifierID.Flaming;
+        public override string Key => "Flaming";
+        public override RarityID Rarity => RarityID.Uncommon;
+        public override AiOverrideStyle AiOverride => AiOverrideStyle.PreVanilla;
 
         public override float SpeedMultiplier => 1.5f;
 
@@ -19,6 +21,8 @@ namespace FargoEnemyModifiers.Modifiers
             npc.buffImmune[BuffID.OnFire] = false;
             npc.AddBuff(BuffID.OnFire, 2);
 
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+                return;
             if (counter++ >= 60)
             {
                 Projectile.NewProjectile(npc.GetSource_FromAI(), npc.Center, Vector2.Zero, ProjectileID.GreekFire1, npc.damage / 5, 0);

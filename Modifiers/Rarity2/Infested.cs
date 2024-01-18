@@ -1,4 +1,5 @@
-﻿using FargoEnemyModifiers.NPCs;
+﻿using FargoEnemyModifiers.Utilities;
+using FargoEnemyModifiers.NPCs;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -8,9 +9,10 @@ namespace FargoEnemyModifiers.Modifiers
 {
     public class Infested : Modifier
     {
-        public override string Name => "Infested";
-        public override string Description => "Periodically spawns Baby Spiders";
-        public override int Rarity => 2;
+        public override ModifierID ModifierID => ModifierID.Infested;
+        public override string Key => "Infested";
+        public override RarityID Rarity => RarityID.Uncommon;
+        public override AiOverrideStyle AiOverride => AiOverrideStyle.PostVanilla;
 
         private int counter;
 

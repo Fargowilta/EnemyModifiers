@@ -1,10 +1,12 @@
-﻿namespace FargoEnemyModifiers.Modifiers
+﻿using FargoEnemyModifiers.Utilities;
+
+namespace FargoEnemyModifiers.Modifiers
 {
     public class Menacing : Modifier
     {
-        public override string Name => "Menacing";
-        public override string Description => "Damage is increased by 50%";
-        public override int Rarity => 1;
+        public override ModifierID ModifierID => ModifierID.Menacing;
+        public override string Key => "Menacing";
+        public override RarityID Rarity => RarityID.Common;
 
         public override float DamageMultiplier => 1.5f;
     }

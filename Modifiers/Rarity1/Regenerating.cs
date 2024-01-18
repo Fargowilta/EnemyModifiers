@@ -1,12 +1,15 @@
-﻿using Terraria;
+using FargoEnemyModifiers.Utilities;
+using Terraria;
+using Terraria.ID;
 
 namespace FargoEnemyModifiers.Modifiers
 {
     public class Regenerating : Modifier
     {
-        public override string Name => "Regenerating";
-        public override string Description => "Regenerates 2% HP every second";
-        public override int Rarity => 1;
+        public override ModifierID ModifierID => ModifierID.Regenerating;
+        public override string Key => "Regenerating";
+        public override RarityID Rarity => RarityID.Common;
+        public override AiOverrideStyle AiOverride => AiOverrideStyle.PreVanilla;
 
         private int counter;
 
@@ -22,7 +25,10 @@ namespace FargoEnemyModifiers.Modifiers
                     if (npc.boss)
                         amtHealed /= 4;
                     npc.life += amtHealed;
-                    npc.HealEffect(amtHealed);
+                    if (Main.netMode != NetmodeID.Server)
+                    {
+                        npc.HealEffect(amtHealed);
+                    }
                     if (npc.life > npc.lifeMax)
                         npc.life = npc.lifeMax;
                     counter = 0;
