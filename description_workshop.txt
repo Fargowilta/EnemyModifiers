@@ -1,4 +1,4 @@
-Adds a variety of Modifiers for Enemies. Currently 48 of them 
+Adds a variety of Modifiers for Enemies. Currently 49 of them 
 They can do anything from increasing their base stats to buffing other enemies to dropping more loot
 
 Highly customizable:
@@ -53,29 +53,33 @@ Showman - On death explodes into smoke and birds
 Solidified - Can no longer pass through tiles (only affects enemies that normally do)
 Undying - Hangs on with 5 HP for 5 seconds before dying
 Worm - Spawns with several body segments that lag behind it. Gains knockback immunity and 2x HP
+Swarming - Upon spawning, creates 8 copies of itself (without modifiers). Has 4x the HP and 2x the size
 
 **MYTHIC** (Only appears in Hard Mode)
 Royal - 200% HP, 200% size, 60% move speed, immune to knockback, spawns mini versions of itself every so often when hurt
 
-NEW UPDATE - V 0.6.1
--Fixed town NPCs getting extremely long names
--Added Red, Blue, Yellow, Green, Orange, and Purple modifiers. They just color the enemy.
--Colored modifiers will now combine with each other instead of overriding
--Adjusted the Possessed modifier to not cancel out its usual AI, but add ghost AI in addition
--Worm body segments and Splitting spawns now inherit all other modifiers from the parent
--Added Eater of Worlds segments to the blacklist by default
--Fixed announcements staying even after the enemy died or despawned
--Fixed announcement colors not always being the highest modifier's rarity color
--Fixed Stealthy having a modifier announcement when paired with others
--Fixed Stealthy and Possessed not being transparent when paired with others
--Fixed enemies that do not take damage from getting modifiers
+NEW UPDATE - V 0.7
+The majority of this update was performed by TheAshenWolf! Big thanks for the support!
 
-NEW UPDATE - V 0.6
--Enemies can now have multiple modifiers at once (default setting is up to 3). 
-	-This is toggleable and each additional modifier has its own %chance
-	-There are now over 1 billion possible modifier combinations. Let me know if anything needs fixing 
+MULTIPLAYER
+-Modifiers now work correctly in multiplayer!! Further details:
+--Modifiers are now synced across clients
+--Modifier announcements are now client-side
+--Worm is disabled in multiplayer
+--Imaginary and Merchant mobs now correctly despawn on all clients
+--Merchant now correctly drops items in multiplayer
+--Regenerating no longer spawns multiple instances of text in multiplayer
+--Flaming now spawns one projectile at a time instead of one projectile per player
+--Fixed an error with Baby Spiders that sometimes popped up when the last client disconnected
 
--Added config for announcements to last forever
--Added extra loot/coins to a few of the harder modifiers
--Rainbow now also multiplies coins
--Fixed Possessed never announcing its modifier name
+FIXES
+-Merchant NPCs no longer have the happiness button 
+-Merchant NPCs no longer persist in the world after everyone leaves
+-Imaginary: no longer drops loot when insta-killed
+-Rampaging: now deals half as much knockback to knockback-immune players
+-Hyper: no longer keeps its modifier name alive after death
+-Metallic: nerfed ore drops from always 22 to random between 10 and 22
+-Royal: modifier name is now correctly rainbow-colored
+
+ADDITION
+-Added the Swarming modifier. Spawns a group of the same enemy with a shared health pool

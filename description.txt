@@ -1,13 +1,31 @@
-Adds a variety of Modifiers for Enemies. Currently 42 of them 
+Adds a variety of Modifiers for Enemies. Currently 49 of them 
 They can do anything from increasing their base stats to buffing other enemies to dropping more loot
 Percent chance is configurable, starting at 25%
 You can blacklist specific modifiers if you don't want to see them
 You can blacklist specific enemies from ever getting modifiers
 
 NEW UPDATE - V 0.7
+The majority of this update was performed by TheAshenWolf! Big thanks for the support!
 
+MULTIPLAYER
+-Modifiers now work correctly in multiplayer!! Further details:
+--Modifiers are now synced across clients
+--Modifier announcements are now client-side
+--Worm is disabled in multiplayer
+--Imaginary and Merchant mobs now correctly despawn on all clients
+--Merchant now correctly drops items in multiplayer
+--Regenerating no longer spawns multiple instances of text in multiplayer
+--Flaming now spawns one projectile at a time instead of one projectile per player
+--Fixed an error with Baby Spiders that sometimes popped up when the last client disconnected
 
+FIXES
+-Merchant NPCs no longer have the happiness button 
+-Merchant NPCs no longer persist in the world after everyone leaves
+-Imaginary: no longer drops loot when insta-killed
+-Rampaging: now deals half as much knockback to knockback-immune players
+-Hyper: no longer keeps its modifier name alive after death
+-Metallic: nerfed ore drops from always 22 to random between 10 and 22
+-Royal: modifier name is now correctly rainbow-colored
 
-NEW UPDATE - V 0.6.2
--Added several additional enemies to the blacklist by default including some from Mutant/Souls. More to come soon if requested
--Colors modifiers show up 5x less often when an enemy already has one
+ADDITION
+-Added the Swarming modifier. Spawns a group of the same enemy with a shared health pool
