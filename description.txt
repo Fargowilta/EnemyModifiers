@@ -4,6 +4,10 @@ Percent chance is configurable, starting at 25%
 You can blacklist specific modifiers if you don't want to see them
 You can blacklist specific enemies from ever getting modifiers
 
+NEW UPDATE - V 0.7
+
+
+
 NEW UPDATE - V 0.6.2
 -Added several additional enemies to the blacklist by default including some from Mutant/Souls. More to come soon if requested
 -Colors modifiers show up 5x less often when an enemy already has one

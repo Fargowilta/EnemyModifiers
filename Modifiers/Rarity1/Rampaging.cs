@@ -12,8 +12,10 @@ namespace FargoEnemyModifiers.Modifiers
 
         public override void OnHitPlayer(NPC npc, Player target)
         {
-            if (target.noKnockback) return;
             Vector2 velocity = Vector2.Normalize(target.Center - npc.Center) * 20;
+
+            if (target.noKnockback) velocity /= 2;
+
             target.velocity = velocity;
         }
     }

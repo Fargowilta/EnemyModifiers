@@ -49,7 +49,7 @@ namespace FargoEnemyModifiers.Modifiers
             }
 
             int itemDropped = Main.rand.NextFromCollection(possibleItems);
-            int amountDropped = Main.rand.Next(3, 22);
+            int amountDropped = Main.rand.Next(10, 23);
 
             Item.NewItem(npc.GetSource_DropAsItem(), npc.Center, itemDropped, amountDropped);
         }

@@ -8,6 +8,7 @@
 /.vs/VSWorkspaceState.json
 /.vs/slnx.sqlite
 .vs/slnx.sqlite
+.vs/
 /obj/Release/net45/FargoEnemyModifiers.csproj.CoreCompileInputs.cache
 /obj/Release/net45/FargoEnemyModifiers.AssemblyInfoInputs.cache
 /obj/Release/net45/FargoEnemyModifiers.AssemblyInfo.cs
