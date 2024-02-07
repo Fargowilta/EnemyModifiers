@@ -43,7 +43,7 @@ namespace FargoEnemyModifiers.Modifiers
                     baby.GetGlobalNPC<EnemyModifiersGlobalNPC>().ApplyModifier(baby, modifierType);
                 }
 
-                baby.GetGlobalNPC<EnemyModifiersGlobalNPC>().finalizeModifierName(npc);
+                baby.GetGlobalNPC<EnemyModifiersGlobalNPC>().FinalizeModifierName(npc);
 
                 if (Main.netMode == NetmodeID.Server)
                     NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, index);

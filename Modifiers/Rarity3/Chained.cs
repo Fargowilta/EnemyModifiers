@@ -73,7 +73,7 @@ namespace FargoEnemyModifiers.Modifiers
         }
 
         // chain voodoo
-        public override bool PreDraw(NPC npc, SpriteBatch spriteBatch, Color drawColor)
+        public override bool PreDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Vector2 position = npc.Center;
             Vector2 mountedCenter = Main.player[target].MountedCenter;

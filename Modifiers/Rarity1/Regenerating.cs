@@ -21,19 +21,24 @@ namespace FargoEnemyModifiers.Modifiers
 
                 if (counter >= 300)
                 {
-                    int amtHealed = npc.lifeMax / 10;
-                    if (npc.boss)
-                        amtHealed /= 4;
-                    npc.life += amtHealed;
-                    if (Main.netMode != NetmodeID.Server)
-                    {
-                        npc.HealEffect(amtHealed);
-                    }
-                    if (npc.life > npc.lifeMax)
-                        npc.life = npc.lifeMax;
+                    RegeneratingHeal(npc);
                     counter = 0;
                 }
             }
+        }
+
+        public static void RegeneratingHeal(NPC npc)
+        {
+            int amtHealed = npc.lifeMax / 10;
+            if (npc.boss)
+                amtHealed /= 4;
+            npc.life += amtHealed;
+            if (Main.netMode != NetmodeID.Server)
+            {
+                npc.HealEffect(amtHealed);
+            }
+            if (npc.life > npc.lifeMax)
+                npc.life = npc.lifeMax;
         }
     }
 }

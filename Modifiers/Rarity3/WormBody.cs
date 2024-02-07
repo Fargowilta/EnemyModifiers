@@ -25,7 +25,7 @@ namespace FargoEnemyModifiers.Modifiers
         {
             if (firstTick)
             {
-                UpdateModifierStats(npc);
+                UpdateModifierStats(npc, true);
             }
 
             firstTick = false;

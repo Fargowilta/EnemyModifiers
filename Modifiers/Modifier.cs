@@ -57,10 +57,14 @@ namespace FargoEnemyModifiers.Modifiers
         {
         }
 
-        public virtual void UpdateModifierStats(NPC npc)
+        public virtual void UpdateModifierStats(NPC npc, bool fillHP)
         {
-            npc.lifeMax = (int)(npc.lifeMax * HealthMultiplier);
-            npc.life = npc.lifeMax;
+            if (fillHP)
+            {
+                npc.lifeMax = (int)(npc.lifeMax * HealthMultiplier);
+                npc.life = npc.lifeMax;
+            }
+            
             npc.defDamage = (int)(npc.defDamage * DamageMultiplier);
             npc.damage = (int)(npc.damage * DamageMultiplier);
             npc.defDefense = (int)(npc.defDefense * DefenseMultiplier);
@@ -76,16 +80,21 @@ namespace FargoEnemyModifiers.Modifiers
             //vanilla rescale code
             originalScale = npc.scale;
 
+            RedoScale(npc);
+        }
+
+        protected void RedoScale(NPC npc)
+        {
             int scaledWidth = (int)(npc.width * npc.scale);
             int scaledHeight = (int)(npc.height * npc.scale);
 
             npc.position.X += scaledWidth / 2f;
             npc.position.Y += scaledHeight;
             npc.scale = originalScale * SizeMultiplier;
-            npc.width = (int)(npc.width * npc.scale);
-            npc.height = (int)(npc.height * npc.scale);
-
-            if (npc.height == 16 || npc.height == 32) 
+            npc.width = (int)((float)npc.width * npc.scale);
+            npc.height = (int)((float)npc.height * npc.scale);
+            
+            if (npc.height == 16 || npc.height == 32)
                 npc.height++;
 
             npc.position.X -= npc.width / 2f;
@@ -196,7 +205,7 @@ namespace FargoEnemyModifiers.Modifiers
             return null;
         }
 
-        public virtual bool PreDraw(NPC npc, SpriteBatch spriteBatch, Color drawColor)
+        public virtual bool PreDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             return true;
         }

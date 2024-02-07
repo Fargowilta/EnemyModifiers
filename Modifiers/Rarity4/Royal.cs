@@ -53,12 +53,6 @@ namespace FargoEnemyModifiers.Modifiers
 
                 if (Main.netMode == NetmodeID.Server)
                     NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, npcIndex);
-
-                //SizeMultiplier = 0.5f + ((float)npc.life / (float)npc.lifeMax * 1.5f);
-
-                //Main.NewText(SizeMultiplier);
-
-                //UpdateModifierStats(npc);
             }
         }
     }

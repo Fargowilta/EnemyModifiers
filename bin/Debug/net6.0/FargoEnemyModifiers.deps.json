@@ -134,7 +134,7 @@
         "runtime": {
           "Microsoft.Build.Locator.dll": {
             "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.4.1.10311"
+            "fileVersion": "1.6.10.57384"
           }
         }
       },

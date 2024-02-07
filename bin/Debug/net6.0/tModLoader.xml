@@ -789,7 +789,7 @@
         </member>
         <member name="P:Terraria.DataStructures.IEntitySource_OnHurt.Victim">
             <summary>
-            The entity being attacked. Nnormally a Player, but could be an NPC if a mod decides to use this source in such a way
+            The entity being attacked. Normally a Player, but could be an NPC if a mod decides to use this source in such a way
             </summary>
         </member>
         <member name="T:Terraria.DataStructures.EntitySource_OnHurt">
@@ -830,7 +830,7 @@
         </member>
         <member name="T:Terraria.DataStructures.EntitySource_ShakeTree">
             <summary>
-            Used when items/bomb projectiles/npcs fall out of trees being cut down
+            Used when items/bomb projectiles/NPCs fall out of trees being cut down
             </summary>
         </member>
         <member name="T:Terraria.DataStructures.EntitySource_SpawnNPC">
@@ -999,7 +999,7 @@
         </member>
         <member name="F:Terraria.DataStructures.FishingAttempt.waterNeededToFish">
             <summary>
-            The number of liquid tiles needed for proper fishing. If <see cref="F:Terraria.DataStructures.FishingAttempt.waterTilesCount"/> is less than this, then the player will recieve a <see cref="F:Terraria.DataStructures.FishingAttempt.waterQuality"/> percent debuff to their fishing power.
+            The number of liquid tiles needed for proper fishing. If <see cref="F:Terraria.DataStructures.FishingAttempt.waterTilesCount"/> is less than this, then the player will receive a <see cref="F:Terraria.DataStructures.FishingAttempt.waterQuality"/> percent debuff to their fishing power.
             <br/> This debuff is automatically applied to <see cref="F:Terraria.DataStructures.FishingAttempt.fishingLevel"/>.
             </summary>
         </member>
@@ -1446,7 +1446,7 @@
         </member>
         <member name="T:Terraria.Dust">
             <summary>
-            Dust are particles effects used to add visual elements to weapons and other effects. Dust are completely visual and should never be used as a gameplay element. Dust count limits are imposed by the game to keep perfomance consistent, so Dust are not guaranteed to spawn when code attempts to spawn them.<para/>
+            Dust are particles effects used to add visual elements to weapons and other effects. Dust are completely visual and should never be used as a gameplay element. Dust count limits are imposed by the game to keep performance consistent, so Dust are not guaranteed to spawn when code attempts to spawn them.<para/>
             Vanilla Dust are enumerated in the <see cref="T:Terraria.ID.DustID"/> class.<para/>
             New Dust can be implemented using the <see cref="T:Terraria.ModLoader.ModDust"/> class.<para/>
             The <see href="https://github.com/tModLoader/tModLoader/wiki/Basic-Dust">Basic Dust Guide</see> teaches the basics on using Dust. In addition, the guide has resources teaching how to discover and use vanilla Dust.
@@ -1504,7 +1504,7 @@
         </member>
         <member name="F:Terraria.Dust.frame">
             <summary>
-            The portion of the sprite sheet that this dust will be drawn using. Typical vanilla dust spawn with a randomly choosen 8x8 frame from a set of 3 options, but modded dust can use whatever dimensions are desired. 
+            The portion of the sprite sheet that this dust will be drawn using. Typical vanilla dust spawn with a randomly chosen 8x8 frame from a set of 3 options, but modded dust can use whatever dimensions are desired. 
             </summary>
         </member>
         <member name="F:Terraria.Dust.shader">
@@ -1596,12 +1596,17 @@
         </member>
         <member name="F:Terraria.Entity.position">
             <summary>
-            The position of this Entity in world coordinates.
+            The position of this Entity in world coordinates. Note that this corresponds to the top left corner of the entity. Use <see cref="P:Terraria.Entity.Center"/> instead for logic that needs the position at the center of the entity.
             </summary>
         </member>
         <member name="F:Terraria.Entity.velocity">
             <summary>
             The velocity of this Entity in world coordinates per tick.
+            </summary>
+        </member>
+        <member name="F:Terraria.Entity.direction">
+            <summary>
+            The direction this entity is facing. A value of 1 means the entity is facing to the right. -1 means facing to the left.
             </summary>
         </member>
         <member name="F:Terraria.Entity.width">
@@ -1618,6 +1623,11 @@
             <summary>
             The Entity is currently in water.
             <br/> Projectile: Affects movement speed and some projectiles die when wet. <see cref="F:Terraria.Projectile.ignoreWater"/> prevents this.
+            </summary>
+        </member>
+        <member name="P:Terraria.Entity.Center">
+            <summary>
+            The center position of this entity in world coordinates. Calculated from <see cref="F:Terraria.Entity.position"/>, <see cref="F:Terraria.Entity.width"/>, and <see cref="F:Terraria.Entity.height"/>.
             </summary>
         </member>
         <member name="M:Terraria.GameContent.Bestiary.BestiaryDatabase.GetBestiaryEntriesByMod(Terraria.ModLoader.Mod)">
@@ -1785,7 +1795,7 @@
         </member>
         <member name="T:Terraria.GameContent.ItemDropRules.AlwaysAtleastOneSuccessDropRule">
             <summary>
-            Re-runs all drop rules if none succeded.
+            Re-runs all drop rules if none succeeded.
             </summary>
         </member>
         <member name="T:Terraria.GameContent.ItemDropRules.FewFromOptionsDropRule">
@@ -2711,6 +2721,11 @@
             <br>When using the gamepad in smart cursor mode, the cursor that is relatively far away from the player</br>
             </summary>
         </member>
+        <member name="T:Terraria.ID.DashID">
+            <summary>
+            Corresponds to values assigned to <see cref="F:Terraria.Player.dashType"/>.
+            </summary>
+        </member>
         <member name="F:Terraria.ID.DustID.Water">
             <summary>
             Use Dust.dustWater() if you want to calculate water dust based on water style
@@ -3555,13 +3570,13 @@
             <br/> Defaults to <see langword="false"/>.
             </summary>
             <remarks>
-            To make a torch placable underwater, use <see cref="F:Terraria.ID.ItemID.Sets.WaterTorches"/> as well.
+            To make a torch placeable underwater, use <see cref="F:Terraria.ID.ItemID.Sets.WaterTorches"/> as well.
             </remarks>
         </member>
         <member name="F:Terraria.ID.ItemID.Sets.WaterTorches">
             <summary>
             If <see langword="true"/> for a given item type (<see cref="F:Terraria.Item.type"/>), then that item is a water torch.
-            <br/> Funtionally identical to <see cref="F:Terraria.ID.ItemID.Sets.Torches"/>, but items in this set also function whilst underwater. Make sure to set <see cref="F:Terraria.ID.ItemID.Sets.Torches"/> as well if using this.
+            <br/> Functionally identical to <see cref="F:Terraria.ID.ItemID.Sets.Torches"/>, but items in this set also function whilst underwater. Make sure to set <see cref="F:Terraria.ID.ItemID.Sets.Torches"/> as well if using this.
             <br/> Defaults to <see langword="false"/>.
             </summary>
         </member>
@@ -3728,7 +3743,7 @@
         <member name="F:Terraria.ID.ItemUseStyleID.Shoot">
             <summary>
             Item is held in front of player pointing towards mouse. Item sprite should be oriented horizontally with handle at left and muzzle end at right. Set <c><see cref="F:Terraria.Item.staff"/>[Type] = true;</c> in SetStaticDefaults if the weapon sprite is oriented like a staff (handle at bottom left, end at top right).
-            <br/> Used by items such as guns, spellbooks, flails, yoyos, and spears
+            <br/> Used by items such as guns, spell books, flails, yoyos, and spears
             </summary>
         </member>
         <member name="F:Terraria.ID.ItemUseStyleID.DrinkLong">
@@ -3749,7 +3764,7 @@
         <member name="F:Terraria.ID.ItemUseStyleID.DrinkLiquid">
             <summary>
             Item is brought in front of player and rotated towards player.
-            <br/> Used by potions, drings, flasks, and hair dyes.
+            <br/> Used by potions, drinks, flasks, and hair dyes.
             </summary>
         </member>
         <member name="F:Terraria.ID.ItemUseStyleID.MowTheLawn">
@@ -3764,8 +3779,8 @@
         </member>
         <member name="F:Terraria.ID.ItemUseStyleID.Rapier">
             <summary>
-            Item is thurst in any direction towards the mouse.
-            Used by shortswords
+            Item is thrust in any direction towards the mouse.
+            Used by Shortswords
             </summary>
         </member>
         <member name="F:Terraria.ID.ItemUseStyleID.RaiseLamp">
@@ -4001,7 +4016,7 @@
         </member>
         <member name="F:Terraria.ID.NPCAIStyleID.Spider">
             <summary>
-            Behavior: Used for the wall climbing varieants of spiders, the ground variant is<br/>
+            Behavior: Used for the wall climbing variants of spiders, the ground variant is<br/>
             Used by: <see cref="F:Terraria.ID.NPCID.WallCreeperWall"/>, <see cref="F:Terraria.ID.NPCID.JungleCreeperWall"/>, <see cref="F:Terraria.ID.NPCID.BlackRecluseWall"/>, <see cref="F:Terraria.ID.NPCID.BloodCrawlerWall"/>, <see cref="F:Terraria.ID.NPCID.DesertScorpionWall"/>
             </summary>
         </member>
@@ -4768,7 +4783,7 @@
             <summary>
             If <see langword="true"/> for a given NPC type (<see cref="F:Terraria.NPC.type"/>), then that NPC is a critter that can spawn in towns.
             <br/> Town critters use <see cref="F:Terraria.ID.NPCAIStyleID.Passive"/>.
-            <br/> Defauts to <see langword="false"/>.
+            <br/> Defaults to <see langword="false"/>.
             </summary>
             <remarks>Make sure to also set <see cref="F:Terraria.ID.NPCID.Sets.CountsAsCritter"/> for NPCs in this set.</remarks>
         </member>
@@ -6503,6 +6518,19 @@
             <br/> Defaults to <c>0</c>.
             </summary>
         </member>
+        <member name="F:Terraria.ID.TileID.Sets.VineThreads">
+            <summary>
+            Sets the tile to use the wind physics drawing for vines. This is required for adding wind to any type of vine to properly draw the vines when blowing in the wind.<para/>
+            NOTE: This does NOT add wind to vines, this just allows them to be drawn using wind physics.
+            </summary>
+        </member>
+        <member name="F:Terraria.ID.TileID.Sets.ReverseVineThreads">
+            <summary>
+            Sets the tile to use the wind physics drawing for reverse vines, vines that go up instead of hanging down. This is required for adding wind to any type of reverse vine to properly draw the reverse vines when blowing in the wind.<para/>
+            This is only used for <see cref="F:Terraria.ID.TileID.Seaweed"/> (549).<para/>
+            NOTE: This does NOT add wind to reverse vines, this just allows them to be drawn using wind physics.
+            </summary>
+        </member>
         <member name="F:Terraria.ID.TileID.Sets.IgnoresNearbyHalfbricksWhenDrawn">
             <summary>
             Set to true to prevent this tile from being drawn slightly warped to fit with nearby half bricks. Tiles such as <see cref="F:Terraria.ID.TileID.Traps"/> and <see cref="F:Terraria.ID.TileID.PlanterBox"/> use this. This is only relevant for tiles set as <see cref="F:Terraria.Main.tileSolid"/> and not <see cref="F:Terraria.ID.TileID.Sets.NotReallySolid"/>. 
@@ -6542,6 +6570,16 @@
         <member name="F:Terraria.ID.TileID.Sets.Ore">
             <summary>
             Indicates that the tile is an ore. Used in worldgen code for various purposes and by Fairies.
+            </summary>
+        </member>
+        <member name="F:Terraria.ID.TileID.Sets.IsAMechanism">
+            <summary>
+            Indicates that the tile is an appropriate tile to be connected to a trigger tile (<see cref="F:Terraria.ID.TileID.Sets.IsATrigger"/>). Used during the "Remove Broken Traps" world generation step to remove wires and tiles in situations where the mechanism or trigger have been orphaned (not connected anymore).
+            </summary>
+        </member>
+        <member name="F:Terraria.ID.TileID.Sets.IsATrigger">
+            <summary>
+            Indicates that the tile is an appropriate tile to be connected to a mechanism tile (<see cref="F:Terraria.ID.TileID.Sets.IsAMechanism"/>). Used during the "Remove Broken Traps" world generation step to remove wires and tiles in situations where the mechanism or trigger have been orphaned (not connected anymore).
             </summary>
         </member>
         <member name="F:Terraria.ID.TileID.Sets.IsMultitile">
@@ -7539,7 +7577,7 @@
         </member>
         <member name="M:Terraria.Item.SetWeaponValues(System.Int32,System.Single,System.Int32)">
             <summary>
-            This method conviniently sets <see cref="F:Terraria.Item.damage"/>, <see cref="F:Terraria.Item.knockBack"/>, and <see cref="F:Terraria.Item.crit"/>.
+            This method conveniently sets <see cref="F:Terraria.Item.damage"/>, <see cref="F:Terraria.Item.knockBack"/>, and <see cref="F:Terraria.Item.crit"/>.
             </summary>
             <param name="dmg"></param>
             <param name="knockback"></param>
@@ -8403,6 +8441,11 @@
             <summary>
             The index in <see cref="F:Terraria.Main.player"/> of this client's Player.
             <br/> If this is <c>255</c>, this client is the server.
+            </summary>
+        </member>
+        <member name="F:Terraria.Main.npcChatCornerItem">
+            <summary>
+            The item type of the item icon to display at the bottom right corner of the NPC chat window. The Angler uses this functionality to display the fishing quest fish item, but it can be used to show any item. Assign during <see cref="M:Terraria.ModLoader.ModNPC.GetChat"/>. Defaults to 0.
             </summary>
         </member>
         <member name="F:Terraria.Main.clientPlayer">
@@ -11661,6 +11704,13 @@
             This class allows you to modify and use hooks for all NPCs, including vanilla mobs. Create an instance of an overriding class then call Mod.AddGlobalNPC to use this.
             </summary>
         </member>
+        <member name="M:Terraria.ModLoader.GlobalNPC.SetDefaultsFromNetId(Terraria.NPC)">
+            <summary>
+            Called after SetDefaults for NPCs with a negative <see cref="F:Terraria.NPC.netID"/><br/>
+            This hook is required because <see cref="M:Terraria.NPC.SetDefaultsFromNetId(System.Int32,Terraria.NPCSpawnParams)"/> only sets <see cref="F:Terraria.NPC.netID"/> after SetDefaults<br/>
+            Remember that <see cref="F:Terraria.NPC.type"/> does not support negative numbers and AppliesToEntity cannot distinguish between NPCs with the same type but differet netID<br/>
+            </summary>
+        </member>
         <member name="M:Terraria.ModLoader.GlobalNPC.OnSpawn(Terraria.NPC,Terraria.DataStructures.IEntitySource)">
             <summary>
             Gets called when any NPC spawns in world
@@ -12952,7 +13002,7 @@
             <summary>
             Use this to control whether or not this global should be run on the provided entity instance. <br/>
             </summary>
-            <param name="entity"> The entity for which the global instantion is being checked. </param>
+            <param name="entity"> The entity for which the global instantiation is being checked. </param>
             <param name="lateInstantiation">
             Whether this check occurs before or after the ModX.SetDefaults call.
             <br/> If you're relying on entity values that can be changed by that call, you should likely prefix your return value with the following:
@@ -13816,7 +13866,7 @@
         </member>
         <member name="M:Terraria.ModLoader.Mod.GetLocalizationKey(System.String)">
             <summary>
-            Creates a localization key following the pattern of "Mods.{ModName}.{suffix}". Use this with <see cref="M:Terraria.Localization.Language.GetOrRegister(System.String,System.Func{System.String})"/> to retrieve a <see cref="T:Terraria.Localization.LocalizedText"/> for custom localization keys. Alternatively <see cref="M:Terraria.ModLoader.Mod.GetLocalization(System.String,System.Func{System.String})"/> can be used directly instead. Custom localization keys need to be registered during the mod loading process to appear automtaically in the localization files.
+            Creates a localization key following the pattern of "Mods.{ModName}.{suffix}". Use this with <see cref="M:Terraria.Localization.Language.GetOrRegister(System.String,System.Func{System.String})"/> to retrieve a <see cref="T:Terraria.Localization.LocalizedText"/> for custom localization keys. Alternatively <see cref="M:Terraria.ModLoader.Mod.GetLocalization(System.String,System.Func{System.String})"/> can be used directly instead. Custom localization keys need to be registered during the mod loading process to appear automatically in the localization files.
             </summary>
             <param name="suffix"></param>
             <returns></returns>
@@ -13929,8 +13979,9 @@
         </member>
         <member name="M:Terraria.ModLoader.Mod.HandlePacket(System.IO.BinaryReader,System.Int32)">
             <summary>
-            Called whenever a net message / packet is received from a client (if this is a server) or the server (if this is a client). whoAmI is the ID of whomever sent the packet (equivalent to the Main.myPlayer of the sender), and reader is used to read the binary data of the packet. <br/>
-            Note that many packets are sent from a client to the server and then relayed to the remaining clients. The whoAmI when the packet arrives at the remaining clients will be the servers <see cref="F:Terraria.Main.myPlayer"/>, not the original clients <see cref="F:Terraria.Main.myPlayer"/>. For packets only sent from a client to the server, relying on <paramref name="whoAmI"/> to identify the clients player is fine, but for packets that are relayed, the clients player index will need to be part of the packet itself to correctly identify the client that sent the original packet. Use <c>packet.Write((byte) Main.myPlayer);</c> to write and <c>int player = reader.ReadByte();</c> to read.
+            Called whenever a net message / packet pertaining to this mod is received from a client (if this is a server) or the server (if this is a client). whoAmI is the ID of whomever sent the packet (equivalent to the Main.myPlayer of the sender), and reader is used to read the binary data of the packet. <para/>
+            Note that many packets are sent from a client to the server and then relayed to the remaining clients. The whoAmI when the packet arrives at the remaining clients will be the servers <see cref="F:Terraria.Main.myPlayer"/>, not the original clients <see cref="F:Terraria.Main.myPlayer"/>. For packets only sent from a client to the server, relying on <paramref name="whoAmI"/> to identify the clients player is fine, but for packets that are relayed, the clients player index will need to be part of the packet itself to correctly identify the client that sent the original packet. Use <c>packet.Write((byte) Main.myPlayer);</c> to write and <c>int player = reader.ReadByte();</c> to read. <para/>
+            The <see cref="M:Terraria.ModLoader.ModSystem.HijackGetData(System.Byte@,System.IO.BinaryReader@,System.Int32)"/> hook can be used to intercept any packet used by Terraria.
             </summary>
             <param name="reader">The reader.</param>
             <param name="whoAmI">The player the message is from. Only relevant for server code. For clients it will always be 255, the server. For the server it will be the whoAmI of the client.</param>
@@ -14488,7 +14539,7 @@
         <member name="T:Terraria.ModLoader.ModContent">
             <summary>
             Manages content added by mods.
-            Liasons between mod content and Terraria's arrays and oversees the Loader classes.
+            Liaisons between mod content and Terraria's arrays and oversees the Loader classes.
             </summary>
         </member>
         <member name="M:Terraria.ModLoader.ModContent.GetInstance``1">
@@ -16203,7 +16254,7 @@
             <summary> The type of the item this NPC drops for every 50 times it is defeated. For any ModNPC whose banner field is set to the type of this NPC, that ModNPC will drop this banner. </summary>
         </member>
         <member name="P:Terraria.ModLoader.ModNPC.SpawnModBiomes">
-            <summary> The ModBiome Types associated with this NPC spawning, if applicable. Used in Bestiary </summary>
+            <summary> The ModBiome Types associated with this NPC spawning, if applicable. Used in Bestiary.<para/>Vanilla biomes are added to the bestiary via <see cref="M:Terraria.ModLoader.ModNPC.SetBestiary(Terraria.GameContent.Bestiary.BestiaryDatabase,Terraria.GameContent.Bestiary.BestiaryEntry)"/> directly.</summary>
         </member>
         <member name="P:Terraria.ModLoader.ModNPC.TownNPCStayingHomeless">
             <summary> Setting this to true will make the NPC not appear in the housing menu nor make it find an house. </summary>
@@ -17525,7 +17576,7 @@
         </member>
         <member name="M:Terraria.ModLoader.ModPlayer.OnHitNPC(Terraria.NPC,Terraria.NPC.HitInfo,System.Int32)">
             <summary>
-            Allows you to create special effects when this player hits an NPC by swinging a melee weapon (for example how the Pumpkin Sword creates pumpkin heads).
+            Allows you to create special effects when this player hits an NPC.
             </summary>
             <param name="target"></param>
             <param name="hit"></param>
@@ -20689,6 +20740,14 @@
               partially consumed before the clear)
             </remarks>
         </member>
+        <member name="M:Terraria.ModLoader.UI.ModBrowser.TimeHelper.HumanTimeSpanString(System.DateTime,System.Boolean)">
+            <summary>
+            Returns a localized string in the form of "X timeunit(s) ago" comparing the current time to the provided DateTime. Use <paramref name="localTime"/> to indicate if the provided DateTime is expressed as local time or coordinated universal time (UTC).
+            </summary>
+            <param name="yourDate"></param>
+            <param name="localTime"></param>
+            <returns></returns>
+        </member>
         <member name="M:Terraria.ModLoader.UI.ModBrowser.UIModBrowser.DownloadModsAndReturnToBrowser(System.Collections.Generic.List{Terraria.Social.Base.ModPubId_t})">
             <summary>
                 Enqueues a list of mods, if found on the browser (also used for ModPacks)
@@ -20986,9 +21045,9 @@
         <member name="F:Terraria.NPC.aiStyle">
             <summary>
             Selects which vanilla code to use for the AI method. Vanilla NPC AI styles are enumerated in the <see cref="T:Terraria.ID.NPCAIStyleID"/> class. Modders can use vanilla aiStyle and optionally <see cref="P:Terraria.ModLoader.ModNPC.AIType"/> to mimic AI code already in the game. This is usually only useful as a prototyping tool since it is difficult to customize existing aiStyle code. See <see cref="P:Terraria.ModLoader.ModNPC.AIType"/> and <see href="https://github.com/tModLoader/tModLoader/blob/1.4.4/ExampleMod/Content/NPCs/PartyZombie.cs">PartyZombie</see> to see how to use vanilla ai. If you are using custom AI code, there is no need to set this field.
-            <br/> Customizing an existing aiStyle usually requires following the <see href="https://github.com/tModLoader/tModLoader/wiki/Advanced-Vanilla-Code-Adaption#example-projectile-or-npc-ai-code">Vanilla Code Adaption Guide</see>.
-            <br/> If you are using completely custom AI, set this to -1 since an aiStyle of 0 will face the player automatically, which may interfere with your logic.
-            <br/> Defaults to 0.
+            <para/> Customizing an existing aiStyle usually requires following the <see href="https://github.com/tModLoader/tModLoader/wiki/Advanced-Vanilla-Code-Adaption#example-projectile-or-npc-ai-code">Vanilla Code Adaption Guide</see>.
+            <para/> An aiStyle of 0 will face the player automatically, while an aiStyle of -1 is used for completely custom ai.
+            <para/> Defaults to 0 for vanilla NPC and -1 for modded NPC.
             </summary>
         </member>
         <member name="F:Terraria.NPC.damage">
@@ -21758,6 +21817,16 @@
             8 => Flask of Poison (affected weapons proc Poisoned on hit)<br/>
             </summary>
         </member>
+        <member name="F:Terraria.Player.pulleyDir">
+            <summary>
+            While attached to a rope or similar tile (<see cref="F:Terraria.Player.pulley"/>), this value represents the how close to the rope the player is. A value of 1 means the player is centered on the rope, while a value of 2 represents that the player has nudged away from the rope but is still attached. <see cref="F:Terraria.Entity.direction"/> is used still for the players direction.
+            </summary>
+        </member>
+        <member name="F:Terraria.Player.pulley">
+            <summary>
+            If true, the player is attached to a rope or similar tile.
+            </summary>
+        </member>
         <member name="F:Terraria.Player.spikedBoots">
             <summary>
             Used by the Shoe Spikes and Climbing Claws to allow for holding onto walls (of tiles, not to be confused with actual walls).<br/>
@@ -22250,6 +22319,12 @@
             <param name="customCurrency"></param>
             <returns>true if the player had enough currency to pay the price.</returns>
         </member>
+        <member name="M:Terraria.Player.ChangeDir(System.Int32)">
+            <summary>
+            Changes the player's direction (<see cref="F:Terraria.Entity.direction"/>) while adjusting arm and item rotations to be consistent. Will also account for <see cref="F:Terraria.Player.pulley"/> and <see cref="F:Terraria.Player.pulleyDir"/>. The player direction change will be prevented if the player is on a rope but there isn't space for the player to face the new direction.
+            </summary>
+            <param name="dir"></param>
+        </member>
         <member name="M:Terraria.Player.GetAdjustedItemScale(Terraria.Item)">
             <summary>
             Used to determine what the overall scale of an item should be.<br></br>
@@ -22425,12 +22500,14 @@
             <summary>
             Gets the crit chance modifier for this damage type on this player.
             This returns a reference, and as such, you can freely modify this method's return value with operators.
+            <para/> Note that crit values are percentage values ranging from 0 to 100, unlike damage multipliers. Adding 4, for example, would add 4% to the crit chance.
             </summary>
         </member>
         <member name="M:Terraria.Player.GetCritChance(Terraria.ModLoader.DamageClass)">
             <summary>
             Gets the crit chance modifier for this damage type on this player.
             This returns a reference, and as such, you can freely modify this method's return value with operators.
+            <para/> Note that crit values are percentage values ranging from 0 to 100, unlike damage multipliers. Adding 4, for example, would add 4% to the crit chance.
             </summary>
         </member>
         <member name="M:Terraria.Player.GetAttackSpeed``1">
@@ -22439,36 +22516,42 @@
             This returns a reference, and as such, you can freely modify this method's return values with operators.
             Setting this such that it results in zero or a negative value will throw an exception.
             NOTE: Due to the nature of attack speed modifiers, modifications to Flat will do nothing for this modifier.
+            <para/> Note that attack speed is a multiplier. Adding 0.15f, for example, would add 15% to the attack speed stat.
             </summary>
         </member>
         <member name="M:Terraria.Player.GetAttackSpeed(Terraria.ModLoader.DamageClass)">
             <summary>
             Gets the attack speed modifier for this damage type on this player.
             This returns a reference, and as such, you can freely modify this method's return values with operators.
+            <para/> Note that attack speed is a multiplier. Adding 0.15f, for example, would add 15% to the attack speed stat.
             </summary>
         </member>
         <member name="M:Terraria.Player.GetArmorPenetration``1">
             <summary>
             Gets the armor penetration modifier for this damage type on this player.
             This returns a reference, and as such, you can freely modify this method's return value with operators.
+            <para/> Note that armor penetration value are typically whole numbers. Adding 5, for example, would add 5 to the armor penetration stat, similar to the Shark Tooth Necklace accessory.
             </summary>
         </member>
         <member name="M:Terraria.Player.GetArmorPenetration(Terraria.ModLoader.DamageClass)">
             <summary>
             Gets the armor penetration modifier for this damage type on this player.
             This returns a reference, and as such, you can freely modify this method's return value with operators.
+            <para/> Note that armor penetration value are typically whole numbers. Adding 5, for example, would add 5 to the armor penetration stat, similar to the Shark Tooth Necklace accessory.
             </summary>
         </member>
         <member name="M:Terraria.Player.GetKnockback``1">
             <summary>
             Gets the knockback modifier for this damage type on this player.
             This returns a reference, and as such, you can freely modify this method's return value with operators.
+            <para/> Note that knockback values are multipliers. Adding 0.12f, for example, would add 12% to the knockback stat.
             </summary>
         </member>
         <member name="M:Terraria.Player.GetKnockback(Terraria.ModLoader.DamageClass)">
             <summary>
             Gets the knockback modifier for this damage type on this player.
             This returns a reference, and as such, you can freely modify this method's return value with operators.
+            <para/> Note that knockback values are multipliers. Adding 0.12f, for example, would add 12% to the knockback stat.
             </summary>
         </member>
         <member name="M:Terraria.Player.GetTotalDamage``1">
@@ -23702,7 +23785,7 @@
             <param name="amount">The stack -> how many result items given when the recipe is crafted. (eg. 1 wood -> 4 wood platform)</param>
             <exception cref="T:Terraria.ModLoader.Exceptions.RecipeException">A Recipe can only be created inside recipe related methods</exception>
         </member>
-        <member name="M:Terraria.Social.Steam.SteamedWraps.Download(Steamworks.PublishedFileId_t,Terraria.ModLoader.UI.DownloadManager.IDownloadProgress,System.Boolean)">
+        <member name="M:Terraria.Social.Steam.SteamedWraps.ModDownloadInstance.Download(Steamworks.PublishedFileId_t,Terraria.ModLoader.UI.DownloadManager.IDownloadProgress,System.Boolean)">
             <summary>
             Updates and/or Downloads the Item specified by publishId
             </summary>
@@ -24355,6 +24438,12 @@
             Intended to be used to set all the persistent data about a tile. For example, when loading a schematic from serialized NonFrameBits.
             </summary>
         </member>
+        <member name="M:Terraria.UI.InGameNotificationsTracker.AddNotification(Terraria.UI.IInGameNotification)">
+            <summary>
+            Adds an in-game notification to the tracker.
+            </summary>
+            <param name="notification">The notification to add.</param>
+        </member>
         <member name="M:Terraria.UI.ItemSlot.ModSlotDyeSwap(Terraria.Item,System.Boolean@)">
             <summary>
             Alters the ItemSlot.DyeSwap method for modded slots;
@@ -24491,6 +24580,16 @@
             <param name="width"></param>
             <param name="height"></param>
         </member>
+        <member name="F:Terraria.WorldBuilding.GenVars.statueList">
+            <summary>
+            Statue options for natural world generation placement. Each Point16 corresponds to a tile type and tile style pair.
+            </summary>
+        </member>
+        <member name="F:Terraria.WorldBuilding.GenVars.StatuesWithTraps">
+            <summary>
+            Statues in this list will be generated with a connecting wire terminating in a pressure plate tile. The values in this list correspond to the indexes of the statue options within <see cref="F:Terraria.WorldBuilding.GenVars.statueList"/>. Make sure to also set <see cref="F:Terraria.ID.TileID.Sets.IsAMechanism"/> for the tile type, otherwise the trap and wires will be removed during the "Remove Broken Traps" world generation step.
+            </summary>
+        </member>
         <member name="M:Terraria.WorldGen.Convert(System.Int32,System.Int32,System.Int32,System.Int32)">
             <summary>
             Converts biome variant tiles and walls to a target biome.<br/>
@@ -24509,6 +24608,19 @@
             This optional parameter, which defaults to 4, determines the "radius" of that square in tiles, counting outward from the central tile.<br/>
             Set to 0 if you only want to convert a single tile. In other cases, use this parameter wisely.
             </param>
+        </member>
+        <member name="M:Terraria.WorldGen.KillTile(System.Int32,System.Int32,System.Boolean,System.Boolean,System.Boolean)">
+            <summary>
+            Attempts to destroy the tile at the provided tile coordinates.<para/>
+            Callers can use <paramref name="fail"/>, <paramref name="effectOnly"/>, and <paramref name="noItem"/> to dictate if the intention is to not actually kill the tile, only spawn kill tile effects, and not drop items respectively. For example, worms typically use <c>fail: true, effectOnly: true</c> to spawn dust indicating the worm burrowing through the ground. <para/>
+            <see cref="M:Terraria.ModLoader.ModTile.KillTile(System.Int32,System.Int32,System.Boolean@,System.Boolean@,System.Boolean@)"/> and <see cref="M:Terraria.ModLoader.GlobalTile.KillTile(System.Int32,System.Int32,System.Int32,System.Boolean@,System.Boolean@,System.Boolean@)"/> will be called to modify those values.<para/>
+            Note that this method will destroy a single tile and then call the tile framing code. The <paramref name="noItem"/> parameter is only relevant for 1x1 tiles, not multi-tiles. The tile framing code is what triggers multi-tiles to destroy all of their remaining tiles and drop their placement item. <see cref="M:Terraria.ModLoader.GlobalTile.Drop(System.Int32,System.Int32,System.Int32)"/> must be used by the caller if the intention is to prevent item drops from a multi-tile.<para/>
+            </summary>
+            <param name="i"></param>
+            <param name="j"></param>
+            <param name="fail">Prevents the tile from being destroyed, but still plays a hit sound</param>
+            <param name="effectOnly">Prevents the tile from being destroyed but still spawns hit dust and prevents the hit sound.</param>
+            <param name="noItem">Prevents the item from dropping. Only relevant for 1x1 tiles.</param>
         </member>
         <member name="M:UwUPnP.Gateway.GetGenericPortMappingEntry(System.Int32)">
             <summary>2.4.14.GetGenericPortMappingEntry</summary>

@@ -1,4 +1,4 @@
-Adds a variety of Modifiers for Enemies. Currently 49 of them 
+Adds a variety of Modifiers for Enemies. Currently 70 of them 
 They can do anything from increasing their base stats to buffing other enemies to dropping more loot
 
 Highly customizable:
@@ -7,17 +7,23 @@ Highly customizable:
 Current List of Modifiers:
 
 **COMMON**
-Blue, Green, Orange, Purple, Red, Yellow - colors the enemy
+Blue, Green, Orange, Pink, Purple, Red, Yellow - colors the enemy
 Armored - Defense is increased by 50%
+Big - 25% increased size and HP, 20% increased damage, 10% reduced speed
 Healthy - Increases HP by 50%
 Impenetrable - Piercing projectiles are destroyed on hit
 Light - Takes increased knockback
+Lovestruck - Deals 50% less damage and spawns bursts of hearts on hit and on death. Drops 2x loot
 Menacing - Damage is increased by 50%
+Poor - Drops no loot, moves 25% slower and has 25% less HP
 Rampaging - Deals extremely high knockback to you
 Regenerating - Regenerates 10% HP every 5 seconds
+Shiny - Glows in the dark and drops torches
 Slow - Speed is decreased by 50%
 Sluggish - Performs all actions half as fast
+Small - 25% reduced size, damage and HP. 20% increased speed
 Splitting - Spawns 2-3 smaller versions of itself with reduced stats on death
+Stinky - It's stinky and applies stinky on hit. Deals 25% more damage
 Swift - Speed is increased by 50%
 Unrelenting - Gains knockback immunity
 Wealthy - Drops 5x more coins
@@ -28,6 +34,7 @@ Bloodthirsty - Gains 25% damage every time they hit you
 Bulletproof - Gains 80% resistance to ranged damage
 Flaming - Spawns with a permanent On Fire debuff, leaves a trail of damaging flames, 50% increased speed
 Fortifying - Defense decreased by 50%. Gains an aura that gives other enemies 50% damage resistance
+Frenzied - Gains increased damage and speed as HP drops up to double damage and double speed. Turns red past 50% HP
 Hexproof - Damage over time does not work on them
 Huge - Size increased by 50%, HP increased by 25%, speed decreased by 15%
 Infested - Periodically spawns Baby Spiders
@@ -35,51 +42,53 @@ Metallic - Has increased defense, takes less knockback, and drops ore
 Miniature - Size decreased by 50%, HP reduced by 25%, speed increased by 20%
 Possessed - Replaces its normal AI with Ghost AI
 Rallying - Gains an aura that buffs other enemies: +25% damage and +25% speed
+Reflective - Reflects projectiles for 1.5 second every 15 seconds. Turns grey when doing so, you have 0.5 seconds to react
+Scary - Has an aura of confusion
 Shielded - Gains 80% resistance to melee damage
+Sleepy - After not taking damage for 10 seconds, falls asleep. GEtting hit while asleep deals bonus damage and wakes them
 Stealthy - Slowly turns nearly invsible, becomes fully visible when hit
 Vaccinated - Immune to all debuffs
 Vampiric - Heals some HP when they deal damage
 Veiled - Gains 80% resistance to magic and summon damage
+Volatile - Explodes on death
 
 **RARE**
+Aquarian - Occassionally duke dashes
+Celebratory - Spawns confetti occasionally. Explodes into fireworks on death
 Chained - They spawn chained to you and cannot leave a radius around you
-Devouring - Devours any enemy it comes across with lesser or equal HP. When it does so, it heals itself and gains max HP and damage
+Devouring - Devours any enemy it comes across with lesser or equal HP. When it does so, it heals itself and gains max HP, damage, and size
+Disguised - Changes its sprite to a blue slime
+Fluctuating - 2x HP, Grows bigger and smaller over time. Defense and damage changes with size. Max 2.5x damage and defense. Min 0.25 damage and defense
 Hyper - Performs all actions twice as fast
 Imaginary - Transparent. Ceases to exist when contact is made in any way
 Juggernaut - HP increased by 150%, damage, defense, and size increased by 25%. But has Sluggish built in (performs actions half as fast)
+Medic - Heals all other enemies in a radius. Healing value is equilavent to Regenerating
 Merchant - Replaces its usual AI with Town NPC AI. It will give you one random free item from the Travelling Merchant's current shop then vanish
 Rainbow - It's rainbow and Drops 5x more drops not including coins
+Shimmering - Phases in and out of visibility, moves 25% faster, drops 2x loot
 Showman - On death explodes into smoke and birds
+Skeletal - Spawns with 2 skeletron hands
 Solidified - Can no longer pass through tiles (only affects enemies that normally do)
+Sticky - Leaves a trail of cobwebs
+Swarming - Upon spawning, creates 8 copies of itself (without modifiers). Has 4x the HP and 2x the size
 Undying - Hangs on with 5 HP for 5 seconds before dying
 Worm - Spawns with several body segments that lag behind it. Gains knockback immunity and 2x HP
-Swarming - Upon spawning, creates 8 copies of itself (without modifiers). Has 4x the HP and 2x the size
 
 **MYTHIC** (Only appears in Hard Mode)
+Modifying - Adds a new modifier every 10 seconds up to the max allowed
 Royal - 200% HP, 200% size, 60% move speed, immune to knockback, spawns mini versions of itself every so often when hurt
 
-NEW UPDATE - V 0.7
-The majority of this update was performed by TheAshenWolf! Big thanks for the support!
-
-MULTIPLAYER
--Modifiers now work correctly in multiplayer!! Further details:
---Modifiers are now synced across clients
---Modifier announcements are now client-side
---Worm is disabled in multiplayer
---Imaginary and Merchant mobs now correctly despawn on all clients
---Merchant now correctly drops items in multiplayer
---Regenerating no longer spawns multiple instances of text in multiplayer
---Flaming now spawns one projectile at a time instead of one projectile per player
---Fixed an error with Baby Spiders that sometimes popped up when the last client disconnected
-
-FIXES
--Merchant NPCs no longer have the happiness button 
--Merchant NPCs no longer persist in the world after everyone leaves
--Imaginary: no longer drops loot when insta-killed
--Rampaging: now deals half as much knockback to knockback-immune players
--Hyper: no longer keeps its modifier name alive after death
--Metallic: nerfed ore drops from always 22 to random between 10 and 22
--Royal: modifier name is now correctly rainbow-colored
-
-ADDITION
--Added the Swarming modifier. Spawns a group of the same enemy with a shared health pool
+NEW UPDATE - V 0.8
+-Added Modifying, Aquarian, Reflective, Flucuating,
+Shiny, Skeletal, Volatile, Disguised, Stinky, Lovestruck, 
+Poor, Pink, Frenzied, Shimmering, Big, Small, Scary, 
+Celebratory, Sleepy, Sticky, and Medic modifiers
+-Added Golden Slime hit effect to Wealthy
+-Fixed Wealthy potentially multiplying coins way too much when paird with other loot multipliers (like Rainbow)
+-Devouring now increases damage more from meals. It also increases in size as it eats and absorbs any modifiers from its meals
+-Changed Rainbow from Rare to Mythic and now grants 2x HP and 10x drops instead of 5x
+-Added Release Doves on hit to Showman
+-Increased Huge HP buff from 25% to 50%, added 40% more damage, reduced speed from 85% to 75%, reduced size from 150% to 140%
+-Miniature HP reduced from 75% to 50%, speed increased from 120% to 150%
+-Juggernaut damage and defense increased from 25% to 50%, size increased from 125% to 160%
+-Removed leading white space in modifier names

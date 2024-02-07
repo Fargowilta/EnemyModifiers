@@ -1,6 +1,9 @@
 Mods: {
 	FargoEnemyModifiers: {
-		NPCs.BabySpider.DisplayName: Baby Spider
+		NPCs: {
+			BabySpider.DisplayName: Baby Spider
+			SkeleArm.DisplayName: Skele Arm
+		}
 
 		Configs: {
 			EnemyModifiersServerConfig: {
@@ -125,6 +128,26 @@ Mods: {
 				Yellow.Label: Yellow
 				Swarming.Label: Swarming
 				Solidified.Label: Solidified
+				Modifying.Label: Modifying
+				Aquarian.Label: Aquarian
+				Reflective.Label: Reflective
+				Sentry.Label: Sentry
+				Fluctuating.Label: Fluctuating
+				Shiny.Label: Shiny
+				Skeletal.Label: Skeletal
+				Volatile.Label: Volatile
+				Disguised.Label: Disguised
+				Stinky.Label: Stinky
+				Lovestruck.Label: Lovestruck
+				Poor.Label: Poor
+				Pink.Label: Pink
+				Frenzied.Label: Frenzied
+				Shimmering.Label: Shimmering
+				Big.Label: Big
+				Small.Label: Small
+				Scary.Label: Scary
+				Celebratory.Label: Celebratory
+				Sleepy.Label: Sleepy
 			}
 
 			ModifierPicker: {
@@ -285,7 +308,7 @@ Mods: {
 
 			Huge: {
 				DisplayName: Huge
-				Tooltip: Size increased by 50%, HP increased by 25%, speed decreased by 15%
+				Tooltip: Size and damage increased by 40%, HP increased by 50%, speed decreased by 25%
 			}
 
 			Infested: {
@@ -300,7 +323,7 @@ Mods: {
 
 			Miniature: {
 				DisplayName: Miniature
-				Tooltip: Size decreased by 50%, HP reduced by 25%, speed increased by 20%
+				Tooltip: Size and HP decreased by 50%, damage reduced by 25%, speed increased by 50%
 			}
 
 			Possessed: {
@@ -360,7 +383,7 @@ Mods: {
 
 			Juggernaut: {
 				DisplayName: Juggernaut
-				Tooltip: HP increased by 150%. Damage, defense, and size increased by 25%. Immune to knockback, but has Sluggish built in (performs actions half as fast)
+				Tooltip: 60% increased size. 250% increased HP increased. 50% increased damage and defense.  Immune to knockback, but has Sluggish built in (performs actions half as fast). Drops 2x loot
 			}
 
 			Merchant: {
@@ -415,9 +438,9 @@ Mods: {
 				Tooltip: Changes its AI periodically and sprays projectiles whenever it does
 			}
 
-			Duke: {
-				DisplayName: Duke
-				Tooltip: Replaces its normal AI with Duke Fishron AI
+			Aquarian: {
+				DisplayName: Aquarian
+				Tooltip: Occassionally duke dashes
 			}
 
 			Nested: {
@@ -429,6 +452,108 @@ Mods: {
 				DisplayName: Royal
 				Tooltip: 200% HP, 200% size, 60% move speed, immune to knockback, spawns mini versions of itself every so often when hurt
 			}
+
+			Modifying: {
+				DisplayName: Modifying
+				Tooltip: Adds a new modifier every 10 seconds up to the max allowed
+			}
+
+			Reflective: {
+				DisplayName: Reflective
+				Tooltip: Reflects projectiles for 1.5 second every 15 seconds. Turns grey when doing so, you have 0.5 seconds to react
+			}
+
+			Fluctuating: {
+				DisplayName: Fluctuating
+				Tooltip: 2x HP, Grows bigger and smaller over time. Defense and damage changes with size. Max 2.5x damage and defense. Min 0.25 damage and defense
+			}
+
+			Shiny: {
+				DisplayName: Shiny
+				Tooltip: Glows in the dark and drops torches
+			}
+
+			Skeletal: {
+				DisplayName: Skeletal
+				Tooltip: Spawns with 2 skeletron hands
+			}
+
+			Volatile: {
+				DisplayName: Volatile
+				Tooltip: Explodes on death
+			}
+
+			Disguised: {
+				DisplayName: Disguised
+				Tooltip: Changes its sprite to a blue slime
+			}
+
+			Stinky: {
+				DisplayName: Stinky
+				Tooltip: It's stinky and applies stinky on hit. Deals 25% more damage
+			}
+
+			Lovestruck: {
+				DisplayName: Lovestruck
+				Tooltip: Deals 50% less damage and spawns bursts of hearts on hit and on death. Drops 2x loot
+			}
+
+			Poor: {
+				DisplayName: Poor
+				Tooltip: Drops no loot, moves 25% slower and has 25% less HP
+			}
+
+			Pink: {
+				DisplayName: Pink
+				Tooltip: Colored Pink
+			}
+
+			Frenzied: {
+				DisplayName: Frenzied
+				Tooltip: Gains increased damage and speed as HP drops up to double damage and double speed. Turns red past 50% HP
+			}
+
+			Shimmering: {
+				DisplayName: Shimmering
+				Tooltip: Phases in and out of visibility, moves 25% faster, drops 2x loot
+			}
+
+			Big: {
+				DisplayName: Big
+				Tooltip: 25% increased size and HP, 20% increased damage, 10% reduced speed
+			}
+
+			Small: {
+				DisplayName: Small
+				Tooltip: 25% reduced size, damage and HP. 20% increased speed
+			}
+
+			Scary: {
+				DisplayName: Scary
+				Tooltip: Has an aura of confusion
+			}
+
+			Celebratory: {
+				DisplayName: Celebratory
+				Tooltip: Spawns confetti occasionally. Explodes into fireworks on death
+			}
+
+			Sleepy: {
+				DisplayName: Sleepy
+				Tooltip: After not taking damage for 10 seconds, falls asleep. GEtting hit while asleep deals bonus damage and wakes them
+			}
+
+			Sticky: {
+				DisplayName: Sticky
+				Tooltip: Leaves a trail of cobwebs
+			}
+
+			Medic: {
+				DisplayName: Medic
+				Tooltip: Heals all other enemies in a radius. Healing value is equilavent to Regenerating
+			}
 		}
+
+		Projectiles.Explosion.DisplayName: Explosion
 	}
 }

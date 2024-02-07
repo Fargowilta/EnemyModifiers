@@ -23,6 +23,13 @@
         Unrelenting = 16, //Gains knockback immunity
         Wealthy = 17, // Drops 5x more coins
         Yellow = 18,
+        Shiny = 53,
+        Stinky = 57,
+        Lovestruck = 58,
+        Poor = 59,
+        Pink = 60,
+        Big = 63,
+        Small = 64,
 
         //UNCOMMON
         Accelerating = 19, // Constantly gains speed up to 4x normal speed. If they hit you or you hit them with a melee attack, their speed resets
@@ -42,6 +49,11 @@
         Vaccinated = 33, //vaccinated - immune to all debuffs - uncommon
         Vampiric = 34, //life steal on hit - uncommon
         Veiled = 35, //Gains 80% resistance to magic and summon damage
+        Reflective = 51,
+        Volatile = 55,
+        Frenzied = 61,
+        Scary = 65,
+        Sleepy = 67,
 
         //RARE
         Chained = 36, // They spawn chained to you and cannot leave a radius around you
@@ -56,12 +68,22 @@
         Undying = 45,//hangs on at 1 HP for awhile - rare
         //Warping, // When they reach half HP, you switch places with them
         Worm = 46, // Spawns with several body segments that lag behind it. Gains knockback immunity and 2x HP
-        Swarming = 47, // Spawns with several copies of itself. 4x the HP and shared health pool
+        Swarming = 47, // Upon spawning, creates 8 copies of itself (without modifiers). Has 4x the HP and 2x the size
+        Aquarian = 50,
+        Fluctuating = 52,
+        Skeletal = 54,
+        Disguised = 56,
+        Shimmering = 62,
+        Celebratory = 66,
+        Sticky = 68,
+        Medic = 69,
 
         //MYTHIC
         //Lethal,
         //Nested,// starts big, kill several times keeps getting smaller - mythic
         Royal = 48, // 200% HP, 200% size, 60% move speed, spawns mini versions of itself every so oftrn when hurt
+        Modifying = 49,
+        
 
         // Helper modifiers
         WormBody = 201
@@ -69,93 +91,7 @@
 
 
 
-        ////shiny - they glow in the dark and drop torches
-        //evasive - dodge attacks
-        //
-
-
-
-
-
-
-
-
-
-
-        //Delerious, // Changes its AI periodically and sprays projectiles whenever it does
-        //Duke, //Replaces its normal AI with Duke Fishron AI
-
-
-
-
-
-        //Medic,// Heals all enemies around it like fortifying. (Same as Regenerating, just for enemies around it instead of itself.)
-
-        //Pyro,// immune to lava, heals from fire debuffs - 
-
-
-        //Sticky, //: leaves cobwebs in its wake
-
-        // Unstable, //teleports randomly ie chaos elemental - mythic rare
-
-        //Shapeshifting, //shapeshifting - randomly becomes a different npc type with the same stats and this modifier
-
-
-
-
-
-        ////public const int Draining = 62; //draining - life steal aura (derpling) OR drains other enemies
-
-        //Flammable, //Flammable - takes increased dot damage
-        //Puppet, //Puppet - hit box is somewhere else controlled by a thing
-        //Hydrophobic, //Hydrophobic - takes damage when in water or wet
-
-
-
-
-        //Contagious, //contagious-any debuffs it has will also be applied to you if it hits you. gains a random debuff every 5 seconds
-
-        ////public const int Reflective = 59; //reflective - reflects proj periodically (make clear)
-
-        ////public const int Explosive = 63; //explosive - starts ticking when near, kill it fast or it explodes (no tile damage)
-
-        //public const int Multiplying = 66; //cloning - emode illum bats
-
-
-        //allergic - increased damage from bees
-        //unpredictable - inflict any debuff on hit
-        //aggressive - can dash towards you
-
-        //sad - a rain cloud is always above them
-        //protected - gains iframes between attacks
-        //shroomified - spawn spores on death
-        //greedy - collects nearby items, steals money on hit
-
-
-        /*
-         * 
-
-        Transmutating- any other npc it touches becomes a copy of whatever this one is
-        
-        Dyed: has a random rare dye effect
-        Talkative: Says random dialogue lines on hit. (Copied from town NPCs?)
-        Greedy: Drops player’s money on hit
-        Simulacrum: Has Brain of Cthulhu illusion clones
-        
-        Glacial: Has a aura around it that massively slows all projectiles in it.
-        Driver: Has the Blazing Wheel AI
-        
-        Decaying: Gains an aura that decays all entities inside it, dealing damage over time. The closer you are to the enemy, the more damage you take
-        Vegetative: fully stationary but has the plantera mouth hooks around itself
-
-        Magnetizing (debatable name): slightly sucks everything in
-        Repelling: Periodically repels all projectiles away from it
-        Draining: sucks stats from you 
-        Poor: drops no money, has less HP, picks up any items it comes across 
-        
-        Reformed: heals you instead of damaging. All it’s attacks also damage any enemies 
-        
-        Harmless: replaces Ai with critter AI*/
+       
     }
 
     // Apparently you can't filter values out of an enum, so this is used for config
@@ -182,6 +118,13 @@
         Unrelenting = 16, //Gains knockback immunity
         Wealthy = 17, // Drops 5x more coins
         Yellow = 18,
+        Shiny = 53,
+        Stinky = 57,
+        Lovestruck = 58,
+        Poor = 59,
+        Pink = 60,
+        Big = 63,
+        Small = 64,
 
         //UNCOMMON
         Accelerating = 19, // Constantly gains speed up to 4x normal speed. If they hit you or you hit them with a melee attack, their speed resets
@@ -201,6 +144,11 @@
         Vaccinated = 33, //vaccinated - immune to all debuffs - uncommon
         Vampiric = 34, //life steal on hit - uncommon
         Veiled = 35, //Gains 80% resistance to magic and summon damage
+        Reflective = 51,
+        Volatile = 55,
+        Frenzied = 61,
+        Scary = 65,
+        Sleepy = 67,
 
         //RARE
         Chained = 36, // They spawn chained to you and cannot leave a radius around you
@@ -216,11 +164,22 @@
         //Warping, // When they reach half HP, you switch places with them
         Worm = 46, // Spawns with several body segments that lag behind it. Gains knockback immunity and 2x HP
         Swarming = 47, // Spawns with several copies of itself. 4x the HP and shared health pool
+        Aquarian = 50,
+        Fluctuating = 52,
+        Skeletal = 54,
+        Disguised = 56,
+        Shimmering = 62,
+        Celebratory = 66,
+        Sticky = 68,
+        Medic = 69,
+
 
         //MYTHIC
         //Lethal,
         //Nested,// starts big, kill several times keeps getting smaller - mythic
         Royal = 48, // 200% HP, 200% size, 60% move speed, spawns mini versions of itself every so oftrn when hurt
+        Modifying = 49,
+        
     }
 }
 

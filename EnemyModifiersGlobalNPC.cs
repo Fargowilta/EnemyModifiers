@@ -46,6 +46,7 @@ namespace FargoEnemyModifiers
         private RarityID _highestRarity = RarityID.Hidden;
         private bool _nameSpawned;
         private bool? _noAnnouncement = null;
+        private string _originalName;
         private string _combinedModifierName;
         private int _tickCounter;
 
@@ -53,6 +54,8 @@ namespace FargoEnemyModifiers
         {
             if (firstTick)
             {
+                _originalName = npc.FullName;
+
                 if (Main.netMode == NetmodeID.SinglePlayer || Main.netMode == NetmodeID.Server)
                 {
                     if (!((npc.boss && !EnemyModifiersServerConfig.Instance.BossModifiers) ||
@@ -77,7 +80,7 @@ namespace FargoEnemyModifiers
                             switch (Main.netMode)
                             {
                                 case NetmodeID.SinglePlayer:
-                                    finalizeModifierName(npc); // Server doesn't want that. MP Client handles it on packet receive.
+                                    FinalizeModifierName(npc); // Server doesn't want that. MP Client handles it on packet receive.
                                     break;
                                 case NetmodeID.Server:
                                 {
@@ -110,7 +113,7 @@ namespace FargoEnemyModifiers
 
             bool retVal = base.PreAI(npc);
 
-            foreach (Modifier modifier in Modifiers)
+            foreach (Modifier modifier in Modifiers.ToList())
             {
                 retVal &= modifier.PreAI(npc);
             }
@@ -123,7 +126,7 @@ namespace FargoEnemyModifiers
             return retVal;
         }
 
-        private void ShowModifierName(NPC npc)
+        public void ShowModifierName(NPC npc)
         {
             if (Main.netMode == NetmodeID.Server)
                 return;
@@ -173,6 +176,12 @@ namespace FargoEnemyModifiers
                 text.position =
                     new Vector2(npc.Center.X - (_modifierNameLength), npc.Center.Y - 50);
                 text.color = GetColor(_highestRarity);
+                
+                //Color lightNearNPC =  (Lighting.GetColor((int)(npc.Center.X / 16), (int)(npc.Center.Y / 16)));
+
+                //text.alpha = (lightNearNPC.R + lightNearNPC.G + lightNearNPC.B) / 255;
+                //Main.NewText((lightNearNPC.R + lightNearNPC.G + lightNearNPC.B) + " " + text.alpha);
+
                 _tickCounter++;
             }
             else
@@ -202,6 +211,13 @@ namespace FargoEnemyModifiers
             }
         }
 
+        public void ResetAnnouncement()
+        {
+            _nameSpawned = false;
+            _noAnnouncement = null;
+            _tickCounter = 0;
+        }
+
         private Color GetColor(RarityID rarity)
         {
             return rarity switch
@@ -214,13 +230,13 @@ namespace FargoEnemyModifiers
             };
         }
 
-        public void finalizeModifierName(NPC npc)
+        public void FinalizeModifierName(NPC npc)
         {
-            getCombinedModifierName();
-            npc.GivenName = _combinedModifierName + npc.FullName;
+            GetCombinedModifierName();
+            npc.GivenName = (_combinedModifierName + _originalName);
         }
 
-        private void getCombinedModifierName()
+        public void GetCombinedModifierName()
         {
             _combinedModifierName = "";
 
@@ -229,6 +245,7 @@ namespace FargoEnemyModifiers
                 _combinedModifierName = _combinedModifierName + " " + modifier.Name;
             }
 
+            _combinedModifierName= _combinedModifierName.Trim();
             _combinedModifierName += " ";
         }
 
@@ -269,7 +286,7 @@ namespace FargoEnemyModifiers
 
             Modifier modifier = Activator.CreateInstance(EnemyModifiers.Modifiers[type].GetType()) as Modifier;
             modifier.Setup(npc);
-            modifier.UpdateModifierStats(npc);
+            modifier.UpdateModifierStats(npc, true);
 
             Modifiers.Add(modifier);
         }
@@ -344,7 +361,7 @@ namespace FargoEnemyModifiers
                 if (head.GetGlobalNPC<EnemyModifiersGlobalNPC>().Modifiers.Count != 0)
                 {
                     Modifiers = new List<Modifier>(head.GetGlobalNPC<EnemyModifiersGlobalNPC>().Modifiers);
-                    Modifiers.ForEach(x => x.UpdateModifierStats(npc));
+                    Modifiers.ForEach(x => x.UpdateModifierStats(npc, true));
                     //modifier.UpdateModifierStats(npc);
                 }
             }
@@ -354,7 +371,7 @@ namespace FargoEnemyModifiers
             if (Modifiers.Count != 0)
             {
                 Modifiers.ForEach(x => speedMulti *= x.SpeedMultiplier);
-                foreach (Modifier modifier in Modifiers)
+                foreach (Modifier modifier in Modifiers.ToList())
                 {
                     switch (modifier.AiOverride)
                     {
@@ -638,10 +655,12 @@ namespace FargoEnemyModifiers
 
             foreach (Modifier modifier in Modifiers)
             {
-                retVal &= modifier.PreDraw(npc, spriteBatch, drawColor);
+                retVal &= modifier.PreDraw(npc, spriteBatch, screenPos, drawColor);
             }
             
             return retVal;
         }
+
+        
     }
 }

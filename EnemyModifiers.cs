@@ -82,7 +82,7 @@ namespace FargoEnemyModifiers
                         modNpc.ApplyModifier(npc, modifier);
                     }
                 
-                    modNpc.finalizeModifierName(npc);
+                    modNpc.FinalizeModifierName(npc);
                     
                     break;
                 // Packet:
