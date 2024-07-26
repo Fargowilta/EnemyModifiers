@@ -1,4 +1,6 @@
-﻿namespace FargoEnemyModifiers.Modifiers
+﻿using System.Security.AccessControl;
+
+namespace FargoEnemyModifiers.Modifiers
 {
     public enum ModifierID
     {
@@ -30,6 +32,7 @@
         Pink = 60,
         Big = 63,
         Small = 64,
+        Fishy = 74,
 
         //UNCOMMON
         Accelerating = 19, // Constantly gains speed up to 4x normal speed. If they hit you or you hit them with a melee attack, their speed resets
@@ -54,6 +57,8 @@
         Frenzied = 61,
         Scary = 65,
         Sleepy = 67,
+        Polite = 73,
+        Smoky = 75,
 
         //RARE
         Chained = 36, // They spawn chained to you and cannot leave a radius around you
@@ -77,13 +82,19 @@
         Celebratory = 66,
         Sticky = 68,
         Medic = 69,
+        Sorcerous = 70, //Occasionally shoots Chaos Balls towards the player (ala Goblin Sorcerers or Tim) whose damage scales with the enemy’s stats (only post goblins)
+        Creepy = 71,
+        Shy = 72,
+        Dramatic = 76,
+        Buzzing = 77,
 
         //MYTHIC
         //Lethal,
         //Nested,// starts big, kill several times keeps getting smaller - mythic
         Royal = 48, // 200% HP, 200% size, 60% move speed, spawns mini versions of itself every so oftrn when hurt
         Modifying = 49,
-        
+        //Monumental = 78,
+
 
         // Helper modifiers
         WormBody = 201
@@ -125,6 +136,7 @@
         Pink = 60,
         Big = 63,
         Small = 64,
+        Fishy = 74,
 
         //UNCOMMON
         Accelerating = 19, // Constantly gains speed up to 4x normal speed. If they hit you or you hit them with a melee attack, their speed resets
@@ -149,6 +161,8 @@
         Frenzied = 61,
         Scary = 65,
         Sleepy = 67,
+        Polite = 73,
+        Smoky = 75,
 
         //RARE
         Chained = 36, // They spawn chained to you and cannot leave a radius around you
@@ -172,6 +186,11 @@
         Celebratory = 66,
         Sticky = 68,
         Medic = 69,
+        Sorcerous = 70,
+        Creepy = 71,
+        Shy = 72,
+        Dramatic = 76,
+        Buzzing = 77,
 
 
         //MYTHIC
@@ -179,7 +198,31 @@
         //Nested,// starts big, kill several times keeps getting smaller - mythic
         Royal = 48, // 200% HP, 200% size, 60% move speed, spawns mini versions of itself every so oftrn when hurt
         Modifying = 49,
+        //Monumental = 78,
         
     }
 }
+
+//COMMON
+//Extroverted: Gains increased damage/speed the more enemies are alive
+//Introverted: Gains increased damage/speed the less enemies are alive
+
+//UNCOMMON
+//Valuable, counts for 10x kills for banners
+
+//RARE
+//Popular: Spawns with around 10 to 20 of the same entity (not on bosses)
+
+//engineer: spawns the martian turrets every few seconds
+
+//MYTHIC
+//Monumental: huge size, huge HP, never moves (can fire projectiles), spawns whatever the original npc was around it, undamageable until you kill 25 of the same enemy. drops 20x loot. 
+
+
+
+
+
+
+
+
 

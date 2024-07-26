@@ -1,41 +1,15 @@
-Adds a variety of Modifiers for Enemies. Currently 49 of them 
+Adds a variety of Modifiers for Enemies. Currently 70 of them 
 They can do anything from increasing their base stats to buffing other enemies to dropping more loot
 Percent chance is configurable, starting at 25%
 You can blacklist specific modifiers if you don't want to see them
 You can blacklist specific enemies from ever getting modifiers
 
-**NEW UPDATE - V 0.8**
-
-**-New modifiers:**
---Modifying - Adds a new modifier every 10 seconds up to the max allowed
---Aquarian - Occassionally duke dashes
---Reflective - Reflects projectiles for 1.5 second every 15 seconds. Turns grey when doing so, you have 0.5 seconds to react
---Flucuating - 2x HP, Grows bigger and smaller over time. Defense and damage changes with size. Max 2.5x damage and defense. Min 0.25 damage and defense
---Shiny - Glows in the dark and drops torches
---Skeletal - Spawns with 2 skeletron hands
---Volatile - Explodes on death
---Disguised - Changes its sprite to a blue slime
---Stinky - It's stinky and applies stinky on hit. Deals 25% more damage
---Lovestruck - Deals 50% less damage and spawns bursts of hearts on hit and on death. Drops 2x loot
---Poor - Drops no loot, moves 25% slower and has 25% less HP
---Pink - colored pink
---Frenzied - Gains increased damage and speed as HP drops up to double damage and double speed. Turns red past 50% HP
---Shimmering - Phases in and out of visibility, moves 25% faster, drops 2x loot
---Big - 25% increased size and HP, 20% increased damage, 10% reduced speed
---Small - 25% reduced size, damage and HP. 20% increased speed
---Scary - Has an aura of confusion
---Celebratory - Spawns confetti occasionally. Explodes into fireworks on death
---Sleepy - After not taking damage for 10 seconds, falls asleep. GEtting hit while asleep deals bonus damage and wakes them
---Sticky - Leaves a trail of cobwebs
---Medic - Heals all other enemies in a radius. Healing value is equilavent to Regenerating
-
-**Changes/Fixes**
--Added Golden Slime hit effect to Wealthy
--Fixed Wealthy potentially multiplying coins way too much when paird with other loot multipliers (like Rainbow)
--Devouring now increases damage more from meals. It also increases in size as it eats and absorbs any modifiers from its meals
--Changed Rainbow from Rare to Mythic and now grants 2x HP and 10x drops instead of 5x
--Added Release Doves on hit to Showman
--Increased Huge HP buff from 25% to 50%, added 40% more damage, reduced speed from 85% to 75%, reduced size from 150% to 140%
--Miniature HP reduced from 75% to 50%, speed increased from 120% to 150%
--Juggernaut damage and defense increased from 25% to 50%, size increased from 125% to 160%
--Removed leading white space in modifier names
+**NEW UPDATE - V 0.9**
+-Added Sorcerous, Creepy, Shy, Polite, Fishy, Smoky, Dramatic, and Buzzing
+-Possessed will now only appear post EoC
+-Skeletal will now only appear post Skeletron
+-Poor will no longer apply to bosses
+-Devouring will not eat the Eternia Crystal
+-Devouring will stop gaining modifiers when it has as many as the set max amount
+-Devouring will not absorb copies of modifiers it already had
+-Nerfed Lovestruck hearts to only spawn every half second

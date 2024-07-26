@@ -18,20 +18,36 @@ namespace FargoEnemyModifiers.Modifiers.Rarity2
         public override AiOverrideStyle AiOverride => AiOverrideStyle.PostVanilla;
         public override int LootMultiplier => 2;
         public override float DamageMultiplier => 0.5f;
+
+        private int counter = 0;
         
         public override void AI(NPC npc)
         {
+            if (counter > 0)
+            {
+                counter--;
+            }
+
             npc.AddBuff(BuffID.Lovestruck, 2);
         }
 
         public override void OnHitByItem(NPC npc, Player player)
         {
-            heartBurst(npc);
+            if (counter == 0)
+            {
+                heartBurst(npc);
+                counter = 30;
+            }
+            
         }
 
         public override void OnHitByProjectile(NPC npc, Projectile projectile)
         {
-            heartBurst(npc);
+            if (counter == 0)
+            {
+                heartBurst(npc);
+                counter = 30;
+            }
         }
 
         public override void OnKill(NPC npc)

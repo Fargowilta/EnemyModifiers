@@ -1,4 +1,5 @@
 ﻿using FargoEnemyModifiers.Utilities;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -22,7 +23,6 @@ namespace FargoEnemyModifiers.Modifiers
                 return;
             }
 
-
             if (startup > 0)
             {
                 startup--;
@@ -35,7 +35,7 @@ namespace FargoEnemyModifiers.Modifiers
                 
                     if (otherNpc.active && npc.whoAmI != otherNpc.whoAmI && otherNpc.realLife != npc.whoAmI && npc.realLife != otherNpc.whoAmI
                         && otherNpc.Hitbox.Intersects(npc.Hitbox) && otherNpc.lifeMax <= npc.lifeMax
-                        && !otherNpc.dontTakeDamage && !otherNpc.immortal)
+                        && !otherNpc.dontTakeDamage && !otherNpc.immortal && otherNpc.type != NPCID.DD2EterniaCrystal)
                     {
                         int lifeGained = otherNpc.lifeMax / 4;
                         if (lifeGained > 0)
@@ -51,25 +51,32 @@ namespace FargoEnemyModifiers.Modifiers
 
                         EnemyModifiersGlobalNPC globalNPCBase = npc.GetGlobalNPC<EnemyModifiersGlobalNPC>();
 
-                        //absorb any modifiers
-                        bool newMods = false;
 
-                        foreach (ModifierID modifier in otherNpc.GetGlobalNPC<EnemyModifiersGlobalNPC>().modifierTypes)
+                        if (globalNPCBase.modifierTypes.Count < EnemyModifiersServerConfig.Instance.ModifierAmount)
                         {
-                            if (!globalNPCBase.modifierTypes.Contains(modifier))
+                            //absorb any modifiers
+                            bool newMods = false;
+
+                            foreach (ModifierID modifier in otherNpc.GetGlobalNPC<EnemyModifiersGlobalNPC>().modifierTypes)
                             {
-                                //ModifierID modifierType = globalNPC.PickModifier(npc);
-                                globalNPCBase.ApplyModifier(npc, modifier);
-                                newMods= true;
-                                
-                            }
-                        }
+                                if (!modifiersContains(globalNPCBase.modifierTypes, modifier))
+                                {
+                                    globalNPCBase.ApplyModifier(npc, modifier);
+                                    newMods = true;
+                                }
 
-                        if (newMods)
-                        {
-                            globalNPCBase.FinalizeModifierName(npc);
-                            globalNPCBase.ResetAnnouncement();
-                            globalNPCBase.ShowModifierName(npc);
+                                if (globalNPCBase.modifierTypes.Count >= EnemyModifiersServerConfig.Instance.ModifierAmount)
+                                {
+                                    break;
+                                }
+                            }
+
+                            if (newMods)
+                            {
+                                globalNPCBase.FinalizeModifierName(npc);
+                                globalNPCBase.ResetAnnouncement();
+                                globalNPCBase.ShowModifierName(npc);
+                            }
                         }
 
                         otherNpc.GetGlobalNPC<EnemyModifiersGlobalNPC>().DropLoot = false;
@@ -81,6 +88,21 @@ namespace FargoEnemyModifiers.Modifiers
                     }
                 }
             }
+        }
+
+        private bool modifiersContains(List<ModifierID> modifierTypes, ModifierID modifier)
+        {
+            foreach (ModifierID modifierType in modifierTypes)
+            {
+                if (((int)modifierType).Equals(((int)modifier)))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+
+
         }
     }
 }

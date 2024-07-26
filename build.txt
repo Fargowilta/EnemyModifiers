@@ -1,4 +1,4 @@
 displayName = Fargo's Enemy Modifiers
 author = Fargowilta
-version = 0.8
+version = 0.9
 sortAfter = Fargowiltas

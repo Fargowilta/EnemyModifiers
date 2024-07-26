@@ -16,6 +16,11 @@ namespace FargoEnemyModifiers.Modifiers.Rarity1
         public override float SpeedMultiplier => 0.75f;
         public override float HealthMultiplier => 0.75f;
 
+        public override bool ExtraCondition(NPC npc)
+        {
+            return !npc.boss;
+        }
+
         public override bool PreNPCLoot(NPC npc)
         {
             npc.value = 0;

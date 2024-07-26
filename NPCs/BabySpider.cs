@@ -30,15 +30,6 @@ namespace FargoEnemyModifiers.NPCs
             NPC.aiStyle = -1;
         }
 
-        //public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
-        //{
-        //    bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-        //        BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.SpiderNest,
-        //        new FlavorTextBestiaryInfoElement("Mods.FargoEnemyModifiers.Bestiary.BabySpider")
-        //    });
-
-        //}
-
         public override void AI()
         {
             Vector2 value14 = NPC.position;
@@ -120,15 +111,6 @@ namespace FargoEnemyModifiers.NPCs
                 NPC.velocity.Y = 16f;
                 return;
             }
-
-            //if (this.velocity.X != velocity.X)
-            //{
-            //	this.velocity.X = velocity.X * -0.6f;
-            //}
-            //if (this.velocity.Y != velocity.Y && velocity.Y > 2f)
-            //{
-            //	this.velocity.Y = velocity.Y * -0.6f;
-            //}
         }
 
         public override void FindFrame(int frameHeight)

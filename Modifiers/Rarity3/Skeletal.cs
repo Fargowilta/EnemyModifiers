@@ -17,6 +17,11 @@ namespace FargoEnemyModifiers.Modifiers.Rarity3
         public override RarityID Rarity => RarityID.Rare;
         public override AiOverrideStyle AiOverride => AiOverrideStyle.PreVanilla;
 
+        public override bool ExtraCondition(NPC npc)
+        {
+            return NPC.downedBoss3;
+        }
+
         private bool firstTick = true;
 
         public override void AI(NPC npc)

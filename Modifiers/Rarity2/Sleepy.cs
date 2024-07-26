@@ -38,8 +38,12 @@ namespace FargoEnemyModifiers.Modifiers.Rarity2
                 if (zCounter++ >= 10)
                 {
                     int index = CombatText.NewText(npc.Hitbox, Color.Black, "Z");
-                    Main.combatText[index].velocity = new Vector2(Main.rand.Next(-2, 2), -5);
-                    zCounter = 0;
+
+                    if (index != 100)
+                    {
+                        Main.combatText[index].velocity = new Vector2(Main.rand.Next(-2, 2), -5);
+                        zCounter = 0;
+                    }
                 }
 
                 npc.velocity = Vector2.Zero;

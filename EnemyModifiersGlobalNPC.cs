@@ -6,6 +6,7 @@ using FargoEnemyModifiers.NetCode;
 using FargoEnemyModifiers.Utilities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Mono.Cecil;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -276,7 +277,6 @@ namespace FargoEnemyModifiers
                          modifier.Rarity == RarityID.Hidden);
             }
 
-            modifierTypes.Add(modifierType);
             return modifierType;
         }
 
@@ -289,6 +289,7 @@ namespace FargoEnemyModifiers
             modifier.UpdateModifierStats(npc, true);
 
             Modifiers.Add(modifier);
+            modifierTypes.Add(type);
         }
 
         private bool IsBlacklistedModifier(ModifierID type)
@@ -299,10 +300,20 @@ namespace FargoEnemyModifiers
                 return true;
             }
 
-            if (EnemyModifiersServerConfig.Instance.ModifierBlacklist == null)
+            if (EnemyModifiersServerConfig.Instance.ModifierBlacklist /*ModifierToggles*/ == null)
             {
                 return false;
             }
+
+            //foreach (EnemyModifiersServerConfig.ModifierToggle toggle in EnemyModifiersServerConfig.Instance.ModifierToggles)
+            //{
+            //    ModifierID blacklistedModifier = (ModifierID)toggle.getEnumVal();
+
+            //    if (type == blacklistedModifier && !toggle.Enabled)
+            //    {
+            //        return true;
+            //    }
+            //}
 
             foreach (EnemyModifiersServerConfig.ModifierPicker picker in EnemyModifiersServerConfig.Instance.ModifierBlacklist)
             {

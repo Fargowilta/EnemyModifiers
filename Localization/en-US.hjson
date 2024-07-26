@@ -3,6 +3,7 @@ Mods: {
 		NPCs: {
 			BabySpider.DisplayName: Baby Spider
 			SkeleArm.DisplayName: Skele Arm
+			Creeper.DisplayName: Creeper
 		}
 
 		Configs: {
@@ -44,6 +45,7 @@ Mods: {
 				ModifierBlacklist: {
 					Label: Modifier Blacklist
 					Tooltip: These modifiers will not appear
+					Enabled.Tooltip: Hi
 				}
 
 				ModifierAmount: {
@@ -64,6 +66,11 @@ Mods: {
 				Headers: {
 					ModifierConfiguration: Modifier Configuration Header
 					Blacklists: Blacklists Header
+				}
+
+				ModifierToggles: {
+					Label: Modifier Toggles
+					Tooltip: ""
 				}
 			}
 
@@ -148,13 +155,34 @@ Mods: {
 				Scary.Label: Scary
 				Celebratory.Label: Celebratory
 				Sleepy.Label: Sleepy
+				Sorcerous.Label: Sorcerous
+				Creepy.Label: Creepy
+				Shy.Label: Shy
+				Polite.Label: Polite
+				Fishy.Label: Fishy
+				Smoky.Label: Smoky
+				Dramatic.Label: Dramatic
+				Buzzing.Label: Buzzing
+				Monumental.Label: Monumental
 			}
 
-			ModifierPicker: {
+			ModifierToggle: {
 				Tooltip: ""
 
-				ModifierEnum: {
-					Label: Modifier to Blacklist
+				Enabled: {
+					Label: Enabled
+					Tooltip: Whether or not this modifier will appear
+				}
+
+				Headers.FirstHeader: First Header Header
+
+				Name: {
+					Label: Name
+					Tooltip: ""
+				}
+
+				enumVal: {
+					Label: enum Val
 					Tooltip: ""
 				}
 			}
@@ -176,6 +204,15 @@ Mods: {
 				announcementsDuration: {
 					Label: Announcements Duration
 					Tooltip: The modifiers will be shown for this many seconds
+				}
+			}
+
+			ModifierPicker: {
+				Tooltip: ""
+
+				ModifierEnum: {
+					Label: Modifier Enum
+					Tooltip: ""
 				}
 			}
 		}
@@ -395,7 +432,7 @@ Mods: {
 
 			Rainbow: {
 				DisplayName: Rainbow
-				Tooltip: It's rainbow and drops 5x more drops
+				Tooltip: It's rainbow, has 2x HP, and drops 10x more loot
 			}
 
 			Showman: {
@@ -540,7 +577,7 @@ Mods: {
 
 			Sleepy: {
 				DisplayName: Sleepy
-				Tooltip: After not taking damage for 10 seconds, falls asleep. GEtting hit while asleep deals bonus damage and wakes them
+				Tooltip: After not taking damage for 10 seconds, falls asleep. Getting hit while asleep deals bonus damage and wakes them
 			}
 
 			Sticky: {
@@ -551,6 +588,46 @@ Mods: {
 			Medic: {
 				DisplayName: Medic
 				Tooltip: Heals all other enemies in a radius. Healing value is equilavent to Regenerating
+			}
+
+			Sorcerous: {
+				DisplayName: Sorcerous
+				Tooltip: Occasionally shoots Chaos Balls towards the player (only post goblins)
+			}
+
+			Creepy: {
+				DisplayName: Creepy
+				Tooltip: Spawns with 10 creepers
+			}
+
+			Shy: {
+				DisplayName: Shy
+				Tooltip: Stops moving and takes much less damage while looking at them
+			}
+
+			Polite: {
+				DisplayName: Polite
+				Tooltip: Greets you when first seeing you and when dying
+			}
+
+			Fishy: {
+				DisplayName: Fishy
+				Tooltip: Drops the quest fish and is wet
+			}
+
+			Smoky: {
+				DisplayName: Smoky
+				Tooltip: Creates smoke
+			}
+
+			Dramatic: {
+				DisplayName: Dramatic
+				Tooltip: Has it's own spawning and defeated messages. Only applies to non bosses
+			}
+
+			Buzzing: {
+				DisplayName: Buzzing
+				Tooltip: Creates bees when taking damage. Only appears post EoC
 			}
 		}
 

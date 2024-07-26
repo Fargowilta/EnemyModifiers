@@ -10,6 +10,11 @@ namespace FargoEnemyModifiers.Modifiers
         public override string Key => "Possessed";
         public override RarityID Rarity => RarityID.Uncommon;
 
+        public override bool ExtraCondition(NPC npc)
+        {
+            return NPC.downedBoss1;
+        }
+
         public override AiOverrideStyle AiOverride => AiOverrideStyle.PreVanilla;
         
         public override void AI(NPC npc)
