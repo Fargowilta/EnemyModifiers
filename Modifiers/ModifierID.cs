@@ -106,7 +106,7 @@ namespace FargoEnemyModifiers.Modifiers
     }
 
     // Apparently you can't filter values out of an enum, so this is used for config
-    public enum ConfigModifierID
+    public enum ConfigModifierID : int
     {
         //Sorted by rarity
         //COMMON

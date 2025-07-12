@@ -300,30 +300,253 @@ namespace FargoEnemyModifiers
                 return true;
             }
 
-            if (EnemyModifiersServerConfig.Instance.ModifierBlacklist /*ModifierToggles*/ == null)
+            switch (type)
             {
-                return false;
+                case ModifierID.Armored:
+                    return !EnemyModifiersServerConfig.Instance.Armored;
+
+                case ModifierID.Blue:
+                    return !EnemyModifiersServerConfig.Instance.Blue;
+
+                case ModifierID.Green:
+                    return !EnemyModifiersServerConfig.Instance.Green;
+
+                case ModifierID.Healthy:
+                    return !EnemyModifiersServerConfig.Instance.Healthy;
+
+                case ModifierID.Impenetrable:
+                    return !EnemyModifiersServerConfig.Instance.Impenetrable;
+
+                case ModifierID.Light:
+                    return !EnemyModifiersServerConfig.Instance.Light;
+
+                case ModifierID.Menacing:
+                    return !EnemyModifiersServerConfig.Instance.Menacing;
+
+                case ModifierID.Orange:
+                    return !EnemyModifiersServerConfig.Instance.Orange;
+
+                case ModifierID.Purple:
+                    return !EnemyModifiersServerConfig.Instance.Purple;
+
+                case ModifierID.Rampaging:
+                    return !EnemyModifiersServerConfig.Instance.Rampaging;
+
+                case ModifierID.Red:
+                    return !EnemyModifiersServerConfig.Instance.Red;
+
+                case ModifierID.Regenerating:
+                    return !EnemyModifiersServerConfig.Instance.Regenerating;
+
+                case ModifierID.Slow:
+                    return !EnemyModifiersServerConfig.Instance.Slow;
+
+                case ModifierID.Sluggish:
+                    return !EnemyModifiersServerConfig.Instance.Sluggish;
+
+                case ModifierID.Splitting:
+                    return !EnemyModifiersServerConfig.Instance.Splitting;
+
+                case ModifierID.Swift:
+                    return !EnemyModifiersServerConfig.Instance.Swift;
+
+                case ModifierID.Unrelenting:
+                    return !EnemyModifiersServerConfig.Instance.Unrelenting;
+
+                case ModifierID.Wealthy:
+                    return !EnemyModifiersServerConfig.Instance.Wealthy;
+
+                case ModifierID.Yellow:
+                    return !EnemyModifiersServerConfig.Instance.Yellow;
+
+                case ModifierID.Stinky:
+                    return !EnemyModifiersServerConfig.Instance.Stinky;
+
+                case ModifierID.Shiny:
+                    return !EnemyModifiersServerConfig.Instance.Shiny;
+
+                case ModifierID.Lovestruck:
+                    return !EnemyModifiersServerConfig.Instance.Lovestruck;
+
+                case ModifierID.Poor:
+                    return !EnemyModifiersServerConfig.Instance.Poor;
+
+                case ModifierID.Pink:
+                    return !EnemyModifiersServerConfig.Instance.Pink;
+
+                case ModifierID.Big:
+                    return !EnemyModifiersServerConfig.Instance.Big;
+
+                case ModifierID.Small:
+                    return !EnemyModifiersServerConfig.Instance.Small;
+
+                case ModifierID.Fishy:
+                    return !EnemyModifiersServerConfig.Instance.Fishy;
+
+                case ModifierID.Accelerating:
+                    return !EnemyModifiersServerConfig.Instance.Accelerating;
+
+                case ModifierID.Bloodthirsty:
+                    return !EnemyModifiersServerConfig.Instance.Bloodthirsty;
+
+                case ModifierID.Bulletproof:
+                    return !EnemyModifiersServerConfig.Instance.Bulletproof;
+
+                case ModifierID.Flaming:
+                    return !EnemyModifiersServerConfig.Instance.Flaming;
+
+                case ModifierID.Fortifying:
+                    return !EnemyModifiersServerConfig.Instance.Fortifying;
+
+                case ModifierID.Hexproof:
+                    return !EnemyModifiersServerConfig.Instance.Hexproof;
+
+                case ModifierID.Huge:
+                    return !EnemyModifiersServerConfig.Instance.Huge;
+
+                case ModifierID.Infested:
+                    return !EnemyModifiersServerConfig.Instance.Infested;
+
+                case ModifierID.Metallic:
+                    return !EnemyModifiersServerConfig.Instance.Metallic;
+
+                case ModifierID.Miniature:
+                    return !EnemyModifiersServerConfig.Instance.Miniature;
+
+                case ModifierID.Possessed:
+                    return !EnemyModifiersServerConfig.Instance.Possessed;
+
+                case ModifierID.Rallying:
+                    return !EnemyModifiersServerConfig.Instance.Rallying;
+
+                case ModifierID.Shielded:
+                    return !EnemyModifiersServerConfig.Instance.Shielded;
+
+                case ModifierID.Stealthy:
+                    return !EnemyModifiersServerConfig.Instance.Stealthy;
+
+                case ModifierID.Vaccinated:
+                    return !EnemyModifiersServerConfig.Instance.Vaccinated;
+
+                case ModifierID.Vampiric:
+                    return !EnemyModifiersServerConfig.Instance.Vampiric;
+
+                case ModifierID.Veiled:
+                    return !EnemyModifiersServerConfig.Instance.Veiled;
+
+                case ModifierID.Reflective:
+                    return !EnemyModifiersServerConfig.Instance.Reflective;
+
+                case ModifierID.Volatile:
+                    return !EnemyModifiersServerConfig.Instance.Volatile;
+
+                case ModifierID.Frenzied:
+                    return !EnemyModifiersServerConfig.Instance.Frenzied;
+
+                case ModifierID.Scary:
+                    return !EnemyModifiersServerConfig.Instance.Scary;
+
+                case ModifierID.Sleepy:
+                    return !EnemyModifiersServerConfig.Instance.Sleepy;
+
+                case ModifierID.Polite:
+                    return !EnemyModifiersServerConfig.Instance.Polite;
+
+                case ModifierID.Smoky:
+                    return !EnemyModifiersServerConfig.Instance.Smoky;
+
+                case ModifierID.Chained:
+                    return !EnemyModifiersServerConfig.Instance.Chained;
+
+                case ModifierID.Devouring:
+                    return !EnemyModifiersServerConfig.Instance.Devouring;
+
+                case ModifierID.Hyper:
+                    return !EnemyModifiersServerConfig.Instance.Hyper;
+
+                case ModifierID.Imaginary:
+                    return !EnemyModifiersServerConfig.Instance.Imaginery;
+
+                case ModifierID.Juggernaut:
+                    return !EnemyModifiersServerConfig.Instance.Juggernaut;
+
+                case ModifierID.Merchant:
+                    return !EnemyModifiersServerConfig.Instance.Merchant;
+
+                case ModifierID.Showman:
+                    return !EnemyModifiersServerConfig.Instance.Showman;
+
+                case ModifierID.Solidified:
+                    return !EnemyModifiersServerConfig.Instance.Solidifed;
+
+                case ModifierID.Undying:
+                    return !EnemyModifiersServerConfig.Instance.Undying;
+
+                case ModifierID.Worm:
+                    return !EnemyModifiersServerConfig.Instance.Worm;
+
+                case ModifierID.Swarming:
+                    return !EnemyModifiersServerConfig.Instance.Swarming;
+
+                case ModifierID.Aquarian:
+                    return !EnemyModifiersServerConfig.Instance.Aquarian;
+
+                case ModifierID.Fluctuating:
+                    return !EnemyModifiersServerConfig.Instance.Flucuating;
+
+                case ModifierID.Skeletal:
+                    return !EnemyModifiersServerConfig.Instance.Skeletal;
+
+                case ModifierID.Disguised:
+                    return !EnemyModifiersServerConfig.Instance.Disguised;
+
+                case ModifierID.Shimmering:
+                    return !EnemyModifiersServerConfig.Instance.Shimmering;
+
+                case ModifierID.Celebratory:
+                    return !EnemyModifiersServerConfig.Instance.Celebratory;
+
+                case ModifierID.Sticky:
+                    return !EnemyModifiersServerConfig.Instance.Sticky;
+
+                case ModifierID.Medic:
+                    return !EnemyModifiersServerConfig.Instance.Medic;
+
+                case ModifierID.Sorcerous:
+                    return !EnemyModifiersServerConfig.Instance.Sorcerous;
+
+                case ModifierID.Creepy:
+                    return !EnemyModifiersServerConfig.Instance.Creepy;
+
+                case ModifierID.Shy:
+                    return !EnemyModifiersServerConfig.Instance.Shy;
+
+                case ModifierID.Dramatic:
+                    return !EnemyModifiersServerConfig.Instance.Dramatic;
+
+                case ModifierID.Buzzing:
+                    return !EnemyModifiersServerConfig.Instance.Buzzing;
+
+                case ModifierID.Royal:
+                    return !EnemyModifiersServerConfig.Instance.Royal;
+
+                case ModifierID.Rainbow:
+                    return !EnemyModifiersServerConfig.Instance.Rainbow;
+
+                case ModifierID.Modifying:
+                    return !EnemyModifiersServerConfig.Instance.Modifying;
+
             }
 
-            //foreach (EnemyModifiersServerConfig.ModifierToggle toggle in EnemyModifiersServerConfig.Instance.ModifierToggles)
+            //foreach (EnemyModifiersServerConfig.ModifierPicker picker in EnemyModifiersServerConfig.Instance.ModifierBlacklist)
             //{
-            //    ModifierID blacklistedModifier = (ModifierID)toggle.getEnumVal();
+            //    ModifierID blacklistedModifier = (ModifierID)picker.ModifierEnum;
 
-            //    if (type == blacklistedModifier && !toggle.Enabled)
+            //    if (type == blacklistedModifier)
             //    {
             //        return true;
             //    }
             //}
-
-            foreach (EnemyModifiersServerConfig.ModifierPicker picker in EnemyModifiersServerConfig.Instance.ModifierBlacklist)
-            {
-                ModifierID blacklistedModifier = (ModifierID)picker.ModifierEnum;
-
-                if (type == blacklistedModifier)
-                {
-                    return true;
-                }
-            }
 
             return false;
         }

@@ -4,12 +4,10 @@ Percent chance is configurable, starting at 25%
 You can blacklist specific modifiers if you don't want to see them
 You can blacklist specific enemies from ever getting modifiers
 
-**NEW UPDATE - V 0.9**
--Added Sorcerous, Creepy, Shy, Polite, Fishy, Smoky, Dramatic, and Buzzing
--Possessed will now only appear post EoC
--Skeletal will now only appear post Skeletron
--Poor will no longer apply to bosses
--Devouring will not eat the Eternia Crystal
--Devouring will stop gaining modifiers when it has as many as the set max amount
--Devouring will not absorb copies of modifiers it already had
--Nerfed Lovestruck hearts to only spawn every half second
+**NEW UPDATE - V 0.9.1**
+-Reworked the Modifier blacklist into seperate toggles for each modifier which also have a description for each in game now
+-Sorcerous fires much slower
+-Swarming is now post EoC
+-Medic no longer heals friendly NPCs
+-Scary debuff no longer applies through walls
+-Fixed Celebratory just not working

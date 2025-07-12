@@ -79,17 +79,10 @@ Modifying - Adds a new modifier every 10 seconds up to the max allowed
 Rainbow - It's rainbow, has 2x HP, and Drops 10x more drops not including coins
 Royal - 200% HP, 200% size, 60% move speed, immune to knockback, spawns mini versions of itself every so often when hurt
 
-NEW UPDATE - V 0.8
--Added Modifying, Aquarian, Reflective, Flucuating,
-Shiny, Skeletal, Volatile, Disguised, Stinky, Lovestruck, 
-Poor, Pink, Frenzied, Shimmering, Big, Small, Scary, 
-Celebratory, Sleepy, Sticky, and Medic modifiers
--Added Golden Slime hit effect to Wealthy
--Fixed Wealthy potentially multiplying coins way too much when paird with other loot multipliers (like Rainbow)
--Devouring now increases damage more from meals. It also increases in size as it eats and absorbs any modifiers from its meals
--Changed Rainbow from Rare to Mythic and now grants 2x HP and 10x drops instead of 5x
--Added Release Doves on hit to Showman
--Increased Huge HP buff from 25% to 50%, added 40% more damage, reduced speed from 85% to 75%, reduced size from 150% to 140%
--Miniature HP reduced from 75% to 50%, speed increased from 120% to 150%
--Juggernaut damage and defense increased from 25% to 50%, size increased from 125% to 160%
--Removed leading white space in modifier names
+**NEW UPDATE - V 0.9.1**
+-Reworked the Modifier blacklist into seperate toggles for each modifier which also have a description for each in game now
+-Sorcerous fires much slower
+-Swarming is now post EoC
+-Medic no longer heals friendly NPCs
+-Scary debuff no longer applies through walls
+-Fixed Celebratory just not working

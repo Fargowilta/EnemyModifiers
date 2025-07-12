@@ -12,6 +12,11 @@ namespace FargoEnemyModifiers.Modifiers
         public override float HealthMultiplier => 4f;
         public override float SizeMultiplier => 2f;
 
+        public override bool ExtraCondition(NPC npc)
+        {
+            return NPC.downedBoss1;
+        }
+
         protected bool clonesSpawned;
 
         public override bool PreAI(NPC npc)

@@ -26,7 +26,7 @@ namespace FargoEnemyModifiers.Modifiers.Rarity3
 
         public override void AI(NPC npc)
         {
-            if (counter++ >= 90)
+            if (counter++ >= 300)
             {
                 NPC.NewNPC(npc.GetSource_FromAI(), (int)npc.position.X + npc.width / 2, (int)npc.position.Y - 8, NPCID.ChaosBall);
 

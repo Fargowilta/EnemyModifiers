@@ -24,7 +24,7 @@ namespace FargoEnemyModifiers.Modifiers.Rarity3
         {
             if (++counter >= 300)
             {
-                Projectile.NewProjectile(npc.GetSource_FromAI(), npc.Center, new Vector2(0,-2), ProjectileID.ConfettiGun, 0, 0, npc.whoAmI);
+                Projectile.NewProjectile(npc.GetSource_FromAI(), npc.Center, new Vector2(0,-2), ProjectileID.ConfettiGun, 0, 0, Main.myPlayer);
 
                 /*Projectile.NewProjectile(npc.GetSource_FromAI(), npc.Center, new Vector2(0, -2), ProjectileID.Bubble, 0, 0, npc.whoAmI)*/;
 
@@ -37,7 +37,7 @@ namespace FargoEnemyModifiers.Modifiers.Rarity3
         {
             for (int i = 0; i < 1; i++)
             {
-                Projectile.NewProjectile(npc.GetSource_FromAI(), npc.Center, new Vector2(Main.rand.Next(-10, 10), -25), Main.rand.Next(ProjectileID.RocketFireworksBoxRed, ProjectileID.RocketFireworksBoxYellow + 1), 0, 0, npc.whoAmI);
+                Projectile.NewProjectile(NPC.GetSource_None(), npc.Center, new Vector2(Main.rand.Next(-20, 20), -15), Main.rand.Next(ProjectileID.RocketFireworksBoxRed, ProjectileID.RocketFireworksBoxYellow + 1), 0, 0, Main.myPlayer);
             }
 
             

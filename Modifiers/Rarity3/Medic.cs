@@ -32,7 +32,7 @@ namespace FargoEnemyModifiers.Modifiers.Rarity3
                 {
                     NPC healedNPC = Main.npc[i];
 
-                    if (!healedNPC.active || healedNPC.whoAmI == npc.whoAmI || npc.townNPC || NPCID.Sets.CountsAsCritter[npc.type] ||
+                    if (!healedNPC.active || healedNPC.whoAmI == npc.whoAmI || npc.townNPC || npc.friendly || NPCID.Sets.CountsAsCritter[npc.type] ||
                         !(Vector2.Distance(npc.Center, healedNPC.Center) < range))
                         continue;
 

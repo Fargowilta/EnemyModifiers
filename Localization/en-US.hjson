@@ -64,126 +64,408 @@ Mods: {
 				}
 
 				Headers: {
-					ModifierConfiguration: Modifier Configuration Header
-					Blacklists: Blacklists Header
+					ModifierConfiguration: Modifier Configuration
+					Blacklists: Blacklists
+					ModifierToggleHeader: Modifier Toggles
+					Rarity1Header: Common Modifiers
+					Rarity2Header: Uncommon Modifiers
+					Rarity3Header: Rare Modifiers
+					Rarity4Header: Super Rare Modifiers
 				}
 
 				ModifierToggles: {
 					Label: Modifier Toggles
 					Tooltip: ""
 				}
-			}
 
-			ConfigModifierID: {
-				Tooltip: ""
-				Armored.Label: Armored
-				Impenetrable.Label: Impenetrable
-				Light.Label: Light
-				Menacing.Label: Menacing
-				Rampaging.Label: Rampaging
-				Regenerating.Label: Regenerating
-				Slow.Label: Slow
-				Sluggish.Label: Sluggish
-				Splitting.Label: Splitting
-				Swift.Label: Swift
-				Unrelenting.Label: Unrelenting
-				Wealthy.Label: Wealthy
-				Accelerating.Label: Accelerating
-				Bloodthirsty.Label: Bloodthirsty
-				Bulletproof.Label: Bulletproof
-				Fortifying.Label: Fortifying
-				Hexproof.Label: Hexproof
-				Huge.Label: Huge
-				Infested.Label: Infested
-				Miniature.Label: Miniature
-				Possessed.Label: Possessed
-				Rallying.Label: Rallying
-				Shielded.Label: Shielded
-				Stealthy.Label: Stealthy
-				Veiled.Label: Veiled
-				Chained.Label: Chained
-				Devouring.Label: Devouring
-				Hyper.Label: Hyper
-				Juggernaut.Label: Juggernaut
-				Merchant.Label: Merchant
-				Rainbow.Label: Rainbow
-				Warping.Label: Warping
-				Worm.Label: Worm
-				Delerious.Label: Delerious
-				Duke.Label: Duke
-				Healthy.Label: Healthy
-				Flaming.Label: Flaming
-				Medic.Label: Medic
-				Metallic.Label: Metallic
-				Pyro.Label: Pyro
-				Vaccinated.Label: Vaccinated
-				Vampiric.Label: Vampiric
-				Solidifed.Label: Solidifed
-				Undying.Label: Undying
-				Imaginary.Label: Imaginary
-				Sticky.Label: Sticky
-				Unstable.Label: Unstable
-				Nested.Label: Nested
-				Royal.Label: Royal
-				Showman.Label: Showman
-				Red.Label: Red
-				Lethal.Label: Lethal
-				Blue.Label: Blue
-				Green.Label: Green
-				Orange.Label: Orange
-				Purple.Label: Purple
-				Yellow.Label: Yellow
-				Swarming.Label: Swarming
-				Solidified.Label: Solidified
-				Modifying.Label: Modifying
-				Aquarian.Label: Aquarian
-				Reflective.Label: Reflective
-				Sentry.Label: Sentry
-				Fluctuating.Label: Fluctuating
-				Shiny.Label: Shiny
-				Skeletal.Label: Skeletal
-				Volatile.Label: Volatile
-				Disguised.Label: Disguised
-				Stinky.Label: Stinky
-				Lovestruck.Label: Lovestruck
-				Poor.Label: Poor
-				Pink.Label: Pink
-				Frenzied.Label: Frenzied
-				Shimmering.Label: Shimmering
-				Big.Label: Big
-				Small.Label: Small
-				Scary.Label: Scary
-				Celebratory.Label: Celebratory
-				Sleepy.Label: Sleepy
-				Sorcerous.Label: Sorcerous
-				Creepy.Label: Creepy
-				Shy.Label: Shy
-				Polite.Label: Polite
-				Fishy.Label: Fishy
-				Smoky.Label: Smoky
-				Dramatic.Label: Dramatic
-				Buzzing.Label: Buzzing
-				Monumental.Label: Monumental
-			}
-
-			ModifierToggle: {
-				Tooltip: ""
-
-				Enabled: {
-					Label: Enabled
-					Tooltip: Whether or not this modifier will appear
+				Armored: {
+					Label: Armored
+					Tooltip: Defense is increased by 50%
 				}
 
-				Headers.FirstHeader: First Header Header
-
-				Name: {
-					Label: Name
-					Tooltip: ""
+				Blue: {
+					Label: Blue
+					Tooltip: Colored blue
 				}
 
-				enumVal: {
-					Label: enum Val
-					Tooltip: ""
+				Green: {
+					Label: Green
+					Tooltip: Colored green
+				}
+
+				Healthy: {
+					Label: Healthy
+					Tooltip: HP is increased by 50%
+				}
+
+				Impenetrable: {
+					Label: Impenetrable
+					Tooltip: Piercing projectiles are destroyed on hit
+				}
+
+				Light: {
+					Label: Light
+					Tooltip: Takes increased knockback and has reduced gravity
+				}
+
+				Menacing: {
+					Label: Menacing
+					Tooltip: Damage is increased by 50%
+				}
+
+				Orange: {
+					Label: Orange
+					Tooltip: Colored orange
+				}
+
+				Purple: {
+					Label: Purple
+					Tooltip: Colored purple
+				}
+
+				Rampaging: {
+					Label: Rampaging
+					Tooltip: Deals extremely high knockback to you
+				}
+
+				Red: {
+					Label: Red
+					Tooltip: Colored red
+				}
+
+				Regenerating: {
+					Label: Regenerating
+					Tooltip: Regenerates 2% HP every second
+				}
+
+				Slow: {
+					Label: Slow
+					Tooltip: Speed is decreased by 50%
+				}
+
+				Sluggish: {
+					Label: Sluggish
+					Tooltip: Performs all actions half as fast
+				}
+
+				Splitting: {
+					Label: Splitting
+					Tooltip: Spawns 2-3 smaller versions on death
+				}
+
+				Swift: {
+					Label: Swift
+					Tooltip: Speed is increased by 50%
+				}
+
+				Unrelenting: {
+					Label: Unrelenting
+					Tooltip: Gains knockback immunity
+				}
+
+				Wealthy: {
+					Label: Wealthy
+					Tooltip: Drops 5x more coins
+				}
+
+				Yellow: {
+					Label: Yellow
+					Tooltip: Colored yellow
+				}
+
+				Stinky: {
+					Label: Stinky
+					Tooltip: It's stinky and applies stinky on hit. Deals 25% more damage
+				}
+
+				Shiny: {
+					Label: Shiny
+					Tooltip: Glows in the dark and drops torches
+				}
+
+				Lovestruck: {
+					Label: Lovestruck
+					Tooltip: Deals 50% less damage, spawns bursts of hearts, and drops 2x loot
+				}
+
+				Poor: {
+					Label: Poor
+					Tooltip: Drops no loot, moves 25% slower and has 25% less HP
+				}
+
+				Pink: {
+					Label: Pink
+					Tooltip: Colored pink
+				}
+
+				Big: {
+					Label: Big
+					Tooltip: 25% increased size and HP, 20% increased damage, 10% reduced speed
+				}
+
+				Small: {
+					Label: Small
+					Tooltip: 25% reduced size, damage and HP. 20% increased speed
+				}
+
+				Fishy: {
+					Label: Fishy
+					Tooltip: Drops the quest fish and is wet
+				}
+
+				Accelerating: {
+					Label: Accelerating
+					Tooltip: Gains speed up to 4x normal speed. Resets on hit
+				}
+
+				Bloodthirsty: {
+					Label: Bloodthirsty
+					Tooltip: Gains 25% damage every time they hit you
+				}
+
+				Bulletproof: {
+					Label: Bulletproof
+					Tooltip: Gains 80% resistance to ranged damage
+				}
+
+				Flaming: {
+					Label: Flaming
+					Tooltip: Spawns On Fire, leaves a trail of flames, 50% increased speed
+				}
+
+				Fortifying: {
+					Label: Fortifying
+					Tooltip: Gains an aura that gives other enemies 50% DR
+				}
+
+				Hexproof: {
+					Label: Hexproof
+					Tooltip: Damage over time does not work on them
+				}
+
+				Huge: {
+					Label: Huge
+					Tooltip: HP, size, and damage increased. Speed decreased
+				}
+
+				Infested: {
+					Label: Infested
+					Tooltip: Periodically spawns Baby Spiders
+				}
+
+				Metallic: {
+					Label: Metallic
+					Tooltip: Has 2x defense, takes less knockback, and drops ore
+				}
+
+				Miniature: {
+					Label: Miniature
+					Tooltip: HP, size, and damage decreased. Speed increased
+				}
+
+				Possessed: {
+					Label: Possessed
+					Tooltip: Replaces its normal AI with Ghost AI
+				}
+
+				Rallying: {
+					Label: Rallying
+					Tooltip: Gains an aura that buffs other enemies damage and speed
+				}
+
+				Shielded: {
+					Label: Shielded
+					Tooltip: Gains 80% resistance to melee damage
+				}
+
+				Stealthy: {
+					Label: Stealthy
+					Tooltip: Slowly turns nearly invisible, becomes fully visible when hit
+				}
+
+				Vaccinated: {
+					Label: Vaccinated
+					Tooltip: Immune to all debuffs
+				}
+
+				Vampiric: {
+					Label: Vampiric
+					Tooltip: Heals some HP when they deal damage
+				}
+
+				Veiled: {
+					Label: Veiled
+					Tooltip: Gains 80% resistance to magic and summon damage
+				}
+
+				Reflective: {
+					Label: Reflective
+					Tooltip: Reflects projectiles occasionally
+				}
+
+				Volatile: {
+					Label: Volatile
+					Tooltip: Explodes on death
+				}
+
+				Frenzied: {
+					Label: Frenzied
+					Tooltip: Gains increased damage and speed as HP drops
+				}
+
+				Scary: {
+					Label: Scary
+					Tooltip: Has an aura of confusion
+				}
+
+				Sleepy: {
+					Label: Sleepy
+					Tooltip: After not taking damage for 10 seconds, falls asleep
+				}
+
+				Polite: {
+					Label: Polite
+					Tooltip: Greets you when first seeing you and when dying
+				}
+
+				Smoky: {
+					Label: Smoky
+					Tooltip: Creates smoke
+				}
+
+				Chained: {
+					Label: Chained
+					Tooltip: Chained to you and cannot leave a radius around you
+				}
+
+				Devouring: {
+					Label: Devouring
+					Tooltip: Devours any enemy it comes across with lesser or equal HP
+				}
+
+				Hyper: {
+					Label: Hyper
+					Tooltip: Performs all actions twice as fast
+				}
+
+				Imaginery: {
+					Label: Imaginery
+					Tooltip: Transparent. Ceases to exist when contact is made
+				}
+
+				Juggernaut: {
+					Label: Juggernaut
+					Tooltip: Increased stats. No knockback. Sluggish. Drops 2x loot
+				}
+
+				Merchant: {
+					Label: Merchant
+					Tooltip: Friendly. It will give you one random free item then vanish
+				}
+
+				Showman: {
+					Label: Showman
+					Tooltip: On death explodes into smoke and birds
+				}
+
+				Solidifed: {
+					Label: Solidifed
+					Tooltip: Can no longer pass through tiles
+				}
+
+				Undying: {
+					Label: Undying
+					Tooltip: Hangs on with 5 HP for 5 seconds before dying
+				}
+
+				Worm: {
+					Label: Worm
+					Tooltip: Spawns with several body segments that lag behind it
+				}
+
+				Swarming: {
+					Label: Swarming
+					Tooltip: Spawns with several copies of itself when it spawns
+				}
+
+				Aquarian: {
+					Label: Aquarian
+					Tooltip: Occassionally duke dashes
+				}
+
+				Flucuating: {
+					Label: Flucuating
+					Tooltip: 2x HP, Grows bigger and smaller over time
+				}
+
+				Skeletal: {
+					Label: Skeletal
+					Tooltip: Spawns with 2 skeletron hands
+				}
+
+				Disguised: {
+					Label: Disguised
+					Tooltip: Changes its sprite to a blue slime
+				}
+
+				Shimmering: {
+					Label: Shimmering
+					Tooltip: Phases in and out of visibility, moves 25% faster, drops 2x loot
+				}
+
+				Celebratory: {
+					Label: Celebratory
+					Tooltip: Spawns confetti occasionally. Explodes into fireworks on death
+				}
+
+				Sticky: {
+					Label: Sticky
+					Tooltip: Leaves a trail of cobwebs
+				}
+
+				Medic: {
+					Label: Medic
+					Tooltip: Heals all other enemies in a radius
+				}
+
+				Sorcerous: {
+					Label: Sorcerous
+					Tooltip: Occasionally shoots Chaos Balls towards the player
+				}
+
+				Creepy: {
+					Label: Creepy
+					Tooltip: Spawns with 10 creepers
+				}
+
+				Shy: {
+					Label: Shy
+					Tooltip: Stops moving and takes much less damage while looking at them
+				}
+
+				Dramatic: {
+					Label: Dramatic
+					Tooltip: Has it's own spawning and defeated messages
+				}
+
+				Buzzing: {
+					Label: Buzzing
+					Tooltip: Creates bees when taking damage
+				}
+
+				Royal: {
+					Label: Royal
+					Tooltip: Increased stats. Spawns mini versions of itself
+				}
+
+				Rainbow: {
+					Label: Rainbow
+					Tooltip: It's rainbow and drops 5x more drops
+				}
+
+				Modifying: {
+					Label: Modifying
+					Tooltip: Adds a new modifier every 10 seconds up to the max allowed
 				}
 			}
 
@@ -214,6 +496,88 @@ Mods: {
 					Label: Modifier Enum
 					Tooltip: ""
 				}
+			}
+
+			ConfigModifierID: {
+				Tooltip: ""
+				Armored.Label: Armored
+				Blue.Label: Blue
+				Green.Label: Green
+				Healthy.Label: Healthy
+				Impenetrable.Label: Impenetrable
+				Light.Label: Light
+				Menacing.Label: Menacing
+				Orange.Label: Orange
+				Purple.Label: Purple
+				Rampaging.Label: Rampaging
+				Red.Label: Red
+				Regenerating.Label: Regenerating
+				Slow.Label: Slow
+				Sluggish.Label: Sluggish
+				Splitting.Label: Splitting
+				Swift.Label: Swift
+				Unrelenting.Label: Unrelenting
+				Wealthy.Label: Wealthy
+				Yellow.Label: Yellow
+				Shiny.Label: Shiny
+				Stinky.Label: Stinky
+				Lovestruck.Label: Lovestruck
+				Poor.Label: Poor
+				Pink.Label: Pink
+				Big.Label: Big
+				Small.Label: Small
+				Fishy.Label: Fishy
+				Accelerating.Label: Accelerating
+				Bloodthirsty.Label: Bloodthirsty
+				Bulletproof.Label: Bulletproof
+				Flaming.Label: Flaming
+				Fortifying.Label: Fortifying
+				Hexproof.Label: Hexproof
+				Huge.Label: Huge
+				Infested.Label: Infested
+				Metallic.Label: Metallic
+				Miniature.Label: Miniature
+				Possessed.Label: Possessed
+				Rallying.Label: Rallying
+				Shielded.Label: Shielded
+				Stealthy.Label: Stealthy
+				Vaccinated.Label: Vaccinated
+				Vampiric.Label: Vampiric
+				Veiled.Label: Veiled
+				Reflective.Label: Reflective
+				Volatile.Label: Volatile
+				Frenzied.Label: Frenzied
+				Scary.Label: Scary
+				Sleepy.Label: Sleepy
+				Polite.Label: Polite
+				Smoky.Label: Smoky
+				Chained.Label: Chained
+				Devouring.Label: Devouring
+				Hyper.Label: Hyper
+				Imaginary.Label: Imaginary
+				Juggernaut.Label: Juggernaut
+				Merchant.Label: Merchant
+				Rainbow.Label: Rainbow
+				Showman.Label: Showman
+				Solidified.Label: Solidified
+				Undying.Label: Undying
+				Worm.Label: Worm
+				Swarming.Label: Swarming
+				Aquarian.Label: Aquarian
+				Fluctuating.Label: Fluctuating
+				Skeletal.Label: Skeletal
+				Disguised.Label: Disguised
+				Shimmering.Label: Shimmering
+				Celebratory.Label: Celebratory
+				Sticky.Label: Sticky
+				Medic.Label: Medic
+				Sorcerous.Label: Sorcerous
+				Creepy.Label: Creepy
+				Shy.Label: Shy
+				Dramatic.Label: Dramatic
+				Buzzing.Label: Buzzing
+				Royal.Label: Royal
+				Modifying.Label: Modifying
 			}
 		}
 

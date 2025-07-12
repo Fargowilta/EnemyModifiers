@@ -32,7 +32,7 @@ namespace FargoEnemyModifiers.Modifiers.Rarity2
 
             float distance = Vector2.Distance(npc.Center, player.Center);
 
-            if (distance <= auraDist)
+            if (distance <= auraDist && Collision.CanHitLine(npc.Center, 1, 1, player.Center, 1, 1))
             {
                 player.AddBuff(BuffID.Confused, 60);
             }
